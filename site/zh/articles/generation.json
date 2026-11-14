@@ -118,11 +118,11 @@
       ]
     },
     {
-      "heading": "可动物体与关节资产生成",
+      "heading": "可动物体生成",
       "paragraphs": [
-        "可动对象不是在刚性网格上画一道缝。要让它真的能动，还得给出部件分解、层级、关节类型、轴和范围，往往还要导入仿真器。CAGE、NAP 与 SINGAPO 研究生成式部件结构和运动；ArtFormer 在文本条件下用树状结构组织几何代码和运动学关系。 [cite:cage] [cite:nap] [cite:singapo] [cite:artformer]",
-        "PAct 从单图预测部件几何和运动参数；Articulate AnyMesh 与 Articulate-Anything 尝试从多模态输入构造可用于仿真的结构化资产。评估至少应分层进行：部件是否可辨，关节轴和范围是否合理，运动时会不会穿透，控制器能否完成目标交互。 [cite:pact] [cite:articulate-anymesh] [cite:articulate-anything]",
-        "即使单个资产没问题，放进房间后仍要检查门能否打开、把手是否够得着、周围有没有遮挡。功能感知可先提出哪里可能能动，重建估计房间中的对象，真正执行再检验这些判断。"
+        "生成一个可开合的橱柜，需要分别建模柜体和柜门，并定义它们之间的关节，包括转轴位置和开合范围。这类模型通常称为 articulated objects。CAGE、NAP 与 SINGAPO 研究如何生成部件及其连接、运动关系；ArtFormer 根据文本生成部件几何，并用树结构组织部件之间的连接。 [cite:cage] [cite:nap] [cite:singapo] [cite:artformer]",
+        "PAct 从单张图像预测部件几何和运动参数；Articulate AnyMesh 为静态三维网格补上部件和关节；Articulate-Anything 则根据文本、图像或视频，生成定义部件和关节的代码，构建可用于仿真的模型。这些模型需要进一步检查：部件形状是否完整，关节轴和活动范围是否合理，运动时部件是否相互穿透，以及机器人能否完成开门等操作。 [cite:pact] [cite:articulate-anymesh] [cite:articulate-anything]",
+        "将生成的橱柜放入房间后，还需要检查柜门打开时会不会碰到其他家具、机器人能否够到把手。因此，单个物体的生成质量和它在具体场景中的使用效果，需要分别评估。"
       ],
       "paper_ids": [
         "cage",

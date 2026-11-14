@@ -472,7 +472,11 @@ html[lang="zh-CN"] .home-route > p { font-size: 14px; }
   .survey-title > p:last-child { font-size: 16px; }
 }
 
-html[lang="zh-CN"] .survey-hero h1 br:first-of-type { display: none; }
+html[lang="zh-CN"] .survey-hero h1 { font-size: clamp(30px, 4vw, 54px); white-space: nowrap; }
+html[lang="zh-CN"] .survey-hero h1 br { display: none; }
+html[lang="zh-CN"] .brand > span { white-space: nowrap; }
+html[lang="zh-CN"] .brand br { display: none; }
+html[lang="zh-CN"] .brand-secondary { color: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; }
 
 /* Read the explanation first, then return to the route or open its papers. */
 .home-route-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 9px; }

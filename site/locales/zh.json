@@ -120,7 +120,6 @@
   "Scene generation and asset authoring": "场景生成与资产构建",
   "Embodied agents and robotic interaction": "具身智能体与机器人交互",
   "Datasets, simulators, and benchmarks": "数据集、仿真器与评测基准",
-  "A guide to the research": "开放综述与论文索引",
   "Where should you start with 3D scenes?": "场景感知、重建、生成与机器人交互",
   "You might want to reconstruct a room from photos, generate a new one, or teach a robot to open a drawer. We explain the ideas behind these tasks and suggest what to read next.": "介绍主要研究任务与代表方法，结合论文图示和演示视频，整理项目主页、开源代码及评测资源。",
   "Pick a topic and start with the explanation. The papers are there when you're ready for the details.": "按研究方向整理基础方法、代表论文与相关章节。",
