@@ -208,6 +208,11 @@ def main():
         assert f"benchmark-{benchmark['id']}" in pages["benchmarks.html"].ids
         assert f"benchmark-{benchmark['id']}" in pages["zh/benchmarks.html"].ids
     for prefix in ("", "zh/"):
+        homepage = pages[prefix + "index.html"]
+        assert set(class_links(homepage, "scene-callout")) == {
+            "perception.html", "reconstruction.html", "generation.html", "robotics.html",
+        }, f"Teaser must explain and link all four research areas: {prefix}"
+        assert "scene-map-description" in homepage.ids, f"Missing teaser description: {prefix}"
         for topic in ARTICLE_ORDER:
             chapter = (output / (prefix + topic + ".html")).read_text()
             assert 'class="chapter-cover"' in chapter, f"Missing chapter cover: {prefix}{topic}"

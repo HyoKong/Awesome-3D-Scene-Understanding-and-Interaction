@@ -38,8 +38,46 @@
         </div>
         <figure class="hero-scene">
           <div class="scene-label"><span class="scene-dot" aria-hidden="true"></span> RoboCasa <span>{{t:An interactive environment}}</span></div>
-          <a href="survey.html#chapter-5" aria-label="{{t:Explore embodied agents and robotic interaction}}"><img src="{{ASSET_PREFIX}}assets/teaser-source/robocasa-kitchen-robot.png" alt="{{t:A mobile robot in a simulated kitchen with cupboards, drawers, and appliances.}}" width="1920" height="1080" fetchpriority="high"></a>
-          <figcaption><span>{{t:A mobile robot in a simulated kitchen.}}</span><a href="https://robocasa.ai/" target="_blank" rel="noopener noreferrer">{{t:RoboCasa · source ↗}}</a></figcaption>
+          <div class="scene-map" aria-describedby="scene-map-description">
+            <p class="sr-only" id="scene-map-description">{{t:Four survey topics are illustrated on the kitchen: cabinet recognition, reconstructed surfaces, generated room layouts, and a robot reaching toward a handle. The annotations are schematic.}}</p>
+            <div class="scene-canvas">
+              <img src="{{ASSET_PREFIX}}assets/teaser-source/robocasa-kitchen-robot.png" alt="{{t:A mobile robot in a simulated kitchen with cupboards, drawers, and appliances.}}" width="1920" height="1080" fetchpriority="high">
+              <svg class="scene-annotations" viewBox="0 0 1920 1080" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker id="scene-arrow-perception" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#16718b"/></marker>
+                  <marker id="scene-arrow-reconstruction" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7955b5"/></marker>
+                  <marker id="scene-arrow-generation" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#a15a14"/></marker>
+                  <marker id="scene-arrow-robotics" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#197758"/></marker>
+                </defs>
+                <g class="scene-evidence">
+                  <path class="scene-perception" d="M148 76 445 98 448 347 151 360Z" fill-opacity=".12"/>
+                  <g class="scene-reconstruction" fill="none">
+                    <path d="M1155 470 1593 510 1593 770 1155 700Z M1155 470 1190 435 1612 475 1593 510 M1593 770 1612 729 1612 475"/>
+                    <path d="M1301 483 1301 723 M1447 497 1447 747 M1155 585 1593 638" stroke-dasharray="6 5"/>
+                  </g>
+                  <path class="scene-generation" d="M136 820 700 700 1490 800 1100 1010Z" fill-opacity=".08" stroke-dasharray="9 7"/>
+                  <path class="scene-robotics" d="M875 560 Q755 493 637 582" fill="none" marker-end="url(#scene-arrow-robotics)"/>
+                </g>
+                <g class="scene-leaders" fill="none">
+                  <path class="scene-perception" d="M360 185 360 290" marker-end="url(#scene-arrow-perception)"/>
+                  <path class="scene-reconstruction" d="M1410 185 1410 490" marker-end="url(#scene-arrow-reconstruction)"/>
+                  <path class="scene-generation" d="M400 920 440 830" marker-end="url(#scene-arrow-generation)"/>
+                  <path class="scene-robotics" d="M1420 920 1120 840 875 560" marker-end="url(#scene-arrow-robotics)"/>
+                </g>
+              </svg>
+              <span class="scene-pin scene-perception" aria-hidden="true">1</span>
+              <span class="scene-pin scene-reconstruction" aria-hidden="true">2</span>
+              <span class="scene-pin scene-generation" aria-hidden="true">3</span>
+              <span class="scene-pin scene-robotics" aria-hidden="true">4</span>
+            </div>
+            <div class="scene-callouts" role="group" aria-label="{{t:Four research perspectives}}">
+              <a class="scene-callout scene-perception" href="perception.html"><span class="scene-key" aria-hidden="true">1</span><span><strong>{{t:Scene perception}}</strong><small>{{t:Recognize objects, parts, and motion}}</small></span></a>
+              <a class="scene-callout scene-reconstruction" href="reconstruction.html"><span class="scene-key" aria-hidden="true">2</span><span><strong>{{t:Scene reconstruction}}</strong><small>{{t:Recover the scene's 3D geometry}}</small></span></a>
+              <a class="scene-callout scene-generation" href="generation.html"><span class="scene-key" aria-hidden="true">3</span><span><strong>{{t:Scene generation}}</strong><small>{{t:Create layouts and environments}}</small></span></a>
+              <a class="scene-callout scene-robotics" href="robotics.html"><span class="scene-key" aria-hidden="true">4</span><span><strong>{{t:Robots & embodied agents}}</strong><small>{{t:Navigate, plan, and manipulate}}</small></span></a>
+            </div>
+          </div>
+          <figcaption><span>{{t:RoboCasa simulation · survey annotations}}</span><a href="https://robocasa.ai/" target="_blank" rel="noopener noreferrer">{{t:RoboCasa · source ↗}}</a></figcaption>
         </figure>
       </div>
     </header>
