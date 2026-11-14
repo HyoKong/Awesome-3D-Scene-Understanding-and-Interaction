@@ -122,9 +122,9 @@ p { margin-bottom: 1.25em; }
 .scene-callout.scene-reconstruction { top: 3%; right: 2%; }
 .scene-callout.scene-generation { bottom: 3%; left: 2%; }
 .scene-callout.scene-robotics { bottom: 3%; right: 2%; }
-.scene-key { flex: 0 0 17px; color: var(--scene-tint); font-size: 14px; font-weight: 700; line-height: 28px; }
-.scene-callout strong { display: block; color: #fff; font-size: 19px; font-weight: 700; line-height: 1.45; }
-.scene-callout small { display: block; margin-top: 4px; font-size: 14px; line-height: 1.5; }
+.scene-key { flex: 0 0 15px; color: var(--scene-tint); font-size: 12px; font-weight: 700; line-height: 25px; }
+.scene-callout strong { display: block; color: #fff; font-size: 17px; font-weight: 650; line-height: 1.45; }
+.scene-callout small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.5; }
 .scene-callout:hover strong { text-decoration: underline; text-underline-offset: 3px; }
 .scene-callout:focus-visible { outline-color: var(--scene-tint); }
 .hero-scene figcaption { display: flex; justify-content: space-between; gap: 20px; margin-top: 9px; color: #90a2a8; font-size: 10px; line-height: 1.7; }
@@ -589,7 +589,7 @@ body { background: #fdfbf6; }
   .scene-canvas::after { display: none; }
   .scene-callouts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; padding: 20px 6px 12px; }
   .scene-callout { position: static; width: auto; padding: 0; gap: 7px; border: 0; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; color: #e0eaee; }
-  .scene-callout strong { font-size: 15px; }
+  .scene-callout strong { font-size: 14px; }
   .scene-callout small { font-size: 12px; }
   .scene-key { flex-basis: 12px; font-size: 12px; line-height: 22px; }
   .scene-pin { width: 22px; height: 22px; font-size: 10px; }
