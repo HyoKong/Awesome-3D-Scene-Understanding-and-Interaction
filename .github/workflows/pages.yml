@@ -34,7 +34,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out the public survey
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Configure GitHub Pages
@@ -46,7 +46,7 @@ jobs:
           python3 scripts/validate_site.py
           node --check site/app.js
       - name: Upload only the generated website
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: _site
       - name: Deploy to GitHub Pages
