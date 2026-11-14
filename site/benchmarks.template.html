@@ -1,34 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{HTML_LANG}}">
 <head>
   <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore papers, reading routes, datasets, and benchmarks for 3D scene perception, reconstruction, generation, robotic manipulation, and embodied agents.">
+  <meta name="description" content="{{t:Explore papers, reading routes, datasets, and benchmarks for 3D scene perception, reconstruction, generation, robotic manipulation, and embodied agents.}}">
   <meta name="theme-color" content="#f7f8f5">
-  <title>Data and benchmarks | 3D Scene Understanding &amp; Interaction</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <title>{{t:Data and benchmarks | 3D Scene Understanding & Interaction}}</title>
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}styles.css">
+  <script src="{{ASSET_PREFIX}}app.js" defer></script>
+  <link rel="alternate" hreflang="en" href="{{EN_URL}}">
+  <link rel="alternate" hreflang="zh-CN" href="{{ZH_URL}}">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content">{{t:Skip to content}}</a>
   <header class="site-header">
-    <a class="brand" href="index.html" aria-label="3D Scene Understanding and Interaction home">
+    <a class="brand" href="index.html" aria-label="{{t:3D Scene Understanding and Interaction home}}">
       <svg viewBox="0 0 32 36" width="29" height="33" aria-hidden="true"><path d="M16 2 30 10v16L16 34 2 26V10Z M2 10l14 8 14-8 M16 18v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      <span>3D SCENE<br><span class="brand-secondary">UNDERSTANDING &amp; INTERACTION</span></span>
+      <span>{{t:3D SCENE}}<br><span class="brand-secondary">{{t:UNDERSTANDING & INTERACTION}}</span></span>
     </a>
-    <nav aria-label="Main navigation">
-      <a href="index.html#survey">Survey</a><a href="reading-routes.html">Reading routes</a><a href="library.html">Paper library</a><a href="benchmarks.html">Benchmarks</a>
+    <nav aria-label="{{t:Main navigation}}">
+      <a href="survey.html#survey">{{t:Survey}}</a><a href="reading-routes.html">{{t:Reading routes}}</a><a href="library.html">{{t:Paper library}}</a><a href="benchmarks.html">{{t:Benchmarks}}</a>
       <a class="repo-link" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">GitHub <span aria-hidden="true">↗</span></a>
+      {{LANGUAGE_SWITCH}}
     </nav>
   </header>
 
   <main id="main-content" class="directory-page">
     <section id="benchmarks" class="section benchmarks" aria-labelledby="benchmarks-title">
-      <div class="section-heading"><div><p class="eyebrow">03 / Ground the comparison</p><h2 id="benchmarks-title">Data &amp; benchmarks</h2></div><p>Connect research questions to datasets, interactive environments, and evaluation protocols.</p></div>
-      <p class="benchmark-intro">Results depend on the task, version, split, and metric. The <a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/BENCHMARKS.md">benchmark guide</a> records the details needed for meaningful comparisons.</p>
+      <div class="section-heading"><div><p class="eyebrow">{{t:03 / Ground the comparison}}</p><h2 id="benchmarks-title">{{t:Data & benchmarks}}</h2></div><p>{{t:Connect research questions to datasets, interactive environments, and evaluation protocols.}}</p></div>
+      <p class="benchmark-intro">{{t:Results depend on the task, version, split, and metric. The}} <a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/BENCHMARKS.md">{{t:benchmark guide}}</a> {{t:records the details needed for meaningful comparisons.}}</p>
       <div class="benchmark-list">{{BENCHMARK_ITEMS}}</div>
     </section>
   </main>
-  <footer><span>3D Scene Understanding &amp; Interaction</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">Repository</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">Figure attribution</a><a href="#main-content">Back to top ↑</a></div></footer>
+  <footer><span>{{t:3D Scene Understanding & Interaction}}</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">{{t:Repository}}</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">{{t:Figure attribution}}</a><a href="#main-content">{{t:Back to top ↑}}</a></div></footer>
 </body>
 </html>

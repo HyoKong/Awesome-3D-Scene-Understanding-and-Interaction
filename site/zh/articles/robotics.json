@@ -1,0 +1,164 @@
+{
+  "id": "robotics",
+  "title": "场景模型怎样变成具身行动？",
+  "kicker": "具身智能体与机器人交互",
+  "dek": "具身系统把不完整观测变成决策、运动和纠错反馈。建图、接地、技能选择、控制与恢复，都会在物理任务的成败中留下不同痕迹。",
+  "reading_minutes": 13,
+  "intro": [
+    "让机器人从厨房取出杯子，它必须处理一连串不确定性：杯子在哪里，哪里可通行，柜门是否关着，哪个把手可抓，以及碰到门却没推动时该怎么办。成功轨迹来自感知、记忆、规划、控制和反馈之间的循环；把这个循环叫作“智能体”并不会让接口消失。",
+    "VLA 综述通常从模型、数据、训练、评估和具身性整理进展。这里采用更操作性的视角：下一步行动前，系统必须知道或更新什么？地图保存证据，语言指定目标，技能提出运动，策略执行，新的观察或接触再修正状态。 [cite:survey-vla]"
+  ],
+  "sections": [
+    {
+      "heading": "比较智能体前，先画出闭环",
+      "paragraphs": [
+        "具身系统接收观测，维持某种状态，选择动作，再观察结果。状态可以是度量地图、点云、图像特征、任务图、潜变量或短期动作历史；动作可以是导航原语、末端位姿增量、抓取候选、语言选择的技能，或离散化的机器人命令。只用一个成功率比较这些不同接口，往往会掩盖关键差别。",
+        "五个接口能让比较变得具体：观测与标定、状态或记忆、目标接地、动作表示和恢复信号。拥有高精度三维地图的系统与只看腕部相机的系统，解决的并不是同一个问题；在广泛示范上训练的 VLA，与调用已验证技能的规划器也有不同的证据基础。名称本身无法说明缺了哪个接口。"
+      ],
+      "paper_ids": [
+        "survey-vla",
+        "vlmaps",
+        "voxposer",
+        "diffusion-policy",
+        "openvla"
+      ]
+    },
+    {
+      "heading": "为搜索与导航保存空间证据",
+      "paragraphs": [
+        "导航不只是识别当前画面里的物体。VLMaps 将视觉语言特征融合进空间地图，可用语言查询目标和障碍；VLFM 结合前沿探索与视觉语言目标识别；LM-Nav 结合命名地标、图文关联和导航模型处理长程指令。它们的共同点是：智能体能回到此前从另一视角获得的证据，而不是每转一次弯都重新猜测。 [cite:vlmaps] [cite:vlfm] [cite:lm-nav]",
+        "表示决定失败模式。语义地图可支持语言查询，却可能把相邻实例合并；度量地图可用于路径规划，却会在门打开后过时；图像记忆能认出地标，却未必给出障碍边界。评估应说明场景是否已知、目标是类别还是指代表达、探索预算如何计算，以及行动后地图能否更新。",
+        "这正是感知与重建的交汇处。导航地图不必成为完整数字孪生，却要保留下一次路线选择所需的几何、语义和不确定性。目标若在可动柜体里，导航会在交互边界处结束。"
+      ],
+      "paper_ids": [
+        "vlmaps",
+        "vlfm",
+        "lm-nav",
+        "conceptgraphs"
+      ]
+    },
+    {
+      "heading": "把语言落到可观察、可到达的状态上",
+      "paragraphs": [
+        "语言模型可以把指令拆成步骤，却无法仅凭自身证明物体存在、可到达或已经改变状态。SayCan 用可供性信息给语言提出的技能打分；LLM-Planner 将语言规划连接到低层具身控制器；VoxPoser 用语言程序和 3D value map 表达空间约束。真正影响执行的是感知与可行性检查：它们能在不可能的下一步发生前将其叫停。 [cite:saycan] [cite:llm-planner] [cite:voxposer]",
+        "3D-LLM 和 LEO 将语言推理接到 3D 场景特征，用于问答、规划、导航和操作。语言可以查询单张图之外的物体与关系，但若特征不能解决可见性、可达性或活动状态，落地仍是不完整的。系统可能认出冰箱，却无法判断把手是否空闲、门往哪开、抓取是否可行。 [cite:3d-llm] [cite:leo]",
+        "读到“规划”或“推理”主张时，应追问落地通道、动作词表、成功判定器和重规划触发条件。它们决定语言模块是在可执行候选中选择，还是只是为其他模块带来的成功配了文字。"
+      ],
+      "paper_ids": [
+        "saycan",
+        "llm-planner",
+        "voxposer",
+        "3d-llm",
+        "leo",
+        "sage",
+        "manipllm",
+        "a3vlm"
+      ]
+    },
+    {
+      "heading": "用局部几何、运动与接触描述操作",
+      "paragraphs": [
+        "操作从局部决定开始：在哪里接触、往哪个方向动、物体会怎样改变。Where2Act 预测推拉的像素级可操作性与动作提案；Act the Part 和 EnvAwareAfford 将注意力扩展到部件和环境；Where2Explore 关注什么动作最能揭示关节信息。这类输出比物体类别丰富，但仍是需要执行验证的假设。 [cite:where2act] [cite:act-the-part] [cite:env-aware-affordance] [cite:where2explore]",
+        "运动感知方法把假设写得更明确。FlowBot3D 从点云预测逐点运动场，FlowBot++ 和 FlowBotHD 扩展这种表示；GAMMA 联合抓取可供性与关节估计，RPMArt 从噪声点云预测关节参数与交互点，CenterArt 用 3D 场景结构辅助可动物体操作。共同过程是：推断局部可动结构，基于它规划，再在执行不一致时更新。 [cite:flowbot3d] [cite:flowbot-plusplus] [cite:flowbothd] [cite:gamma] [cite:rpmart] [cite:centerart]",
+        "静态预测在遮挡、对称和接触不确定下很脆弱。Sim2Real² 先通过交互建立物体物理模型，再规划目标关节状态。拉、抓和触觉既是动作，也是获得被动图像无法提供约束的感知。 [cite:sim2real2]"
+      ],
+      "paper_ids": [
+        "where2act",
+        "act-the-part",
+        "env-aware-affordance",
+        "where2explore",
+        "flowbot3d",
+        "flowbot-plusplus",
+        "flowbothd",
+        "gamma",
+        "rpmart",
+        "centerart",
+        "sim2real2"
+      ],
+      "table": {
+        "caption": "具身方法最容易在接口和恢复机制上区分。",
+        "columns": [
+          "系统角色",
+          "代表方法",
+          "决策可见状态",
+          "需要闭环的部分"
+        ],
+        "rows": [
+          [
+            "搜索与导航",
+            "VLMaps；VLFM；LM-Nav [cite:vlmaps] [cite:vlfm] [cite:lm-nav]",
+            "地图、语言特征、地标、前沿",
+            "定位、探索策略、地图更新"
+          ],
+          [
+            "语言落地规划",
+            "SayCan；LLM-Planner；VoxPoser [cite:saycan] [cite:llm-planner] [cite:voxposer]",
+            "技能分数、场景特征、价值图、约束",
+            "可行性检查、执行反馈、重规划"
+          ],
+          [
+            "可动物体操作",
+            "Where2Act；FlowBot3D；RPMArt [cite:where2act] [cite:flowbot3d] [cite:rpmart]",
+            "可供性区域、运动场、关节假设",
+            "接触、状态估计、碰撞与成功感知"
+          ],
+          [
+            "视觉运动策略学习",
+            "Diffusion Policy；Octo；OpenVLA [cite:diffusion-policy] [cite:octo] [cite:openvla]",
+            "图像、语言或目标图、动作历史",
+            "分布外检测、纠错、安全回退"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "让触觉与接触修正视觉自信",
+      "paragraphs": [
+        "接触丰富的任务最能暴露纯视觉选动作的局限。Vi-TacMan 将视觉抓取和粗略运动方向与触觉反馈结合，Tac-Man 等系统把触觉当作状态信息，而不是最后的成败标记。看似可抓的把手可能打滑、被锁扣卡住，或移动得比预期少；此时触觉能在高层计划来不及反应的时间尺度改变控制。 [cite:vitacman] [cite:tacman]",
+        "关键在于反馈从哪里进入：它可能选择新抓取、更新关节估计、终止运动，或请求新计划。增加传感器只有在策略或规划器会因该观测改变行为时，才构成闭环控制。"
+      ],
+      "paper_ids": [
+        "vitacman",
+        "tacman",
+        "gamma",
+        "sim2real2"
+      ]
+    },
+    {
+      "heading": "扩大策略时，公开数据边界",
+      "paragraphs": [
+        "通用策略尝试跨任务、场景甚至机器人复用演示与表示。Diffusion Policy 以滚动时域生成条件动作分布；Octo 是语言或目标图条件的 Transformer 扩散策略；RT-2、PaLM-E 将视觉语言模型接到机器人动作；OpenVLA 公开了由机器人演示训练的视觉语言动作模型；π0、π0.5 和 GR00T N1 则代表更广泛多模态策略的方向。 [cite:diffusion-policy] [cite:octo] [cite:rt-2] [cite:palm-e] [cite:openvla] [cite:pi-zero] [cite:pi-zero-point-five] [cite:groot-n1]",
+        "这些模型改变了先验知识存放的位置，却没有消除泛化问题。成功可能来自相似的任务、视角、物体几何或机器人本体。迁移主张应公开动作归一化、观测设置、数据来源、任务新颖性，以及训练中是否包含恢复动作。",
+        "世界模型也有类似区别：预测视频或潜变量可帮助规划、数据生成和想象，但机器人世界模型必须与动作空间相连，并用新观测验证。时间上好看的画面不能代替接触动力学、任务成功或安全恢复。"
+      ],
+      "paper_ids": [
+        "diffusion-policy",
+        "octo",
+        "rt-2",
+        "palm-e",
+        "openvla",
+        "pi-zero",
+        "pi-zero-point-five",
+        "groot-n1"
+      ]
+    },
+    {
+      "heading": "把可靠性当作闭环性质来测量",
+      "paragraphs": [
+        "评估应让闭环在哪里断开变得可见。操作基准应改变物体实例、关节初态、杂乱程度、遮挡、摩擦和相机位置；导航应测试不完整地图、语义歧义、探索预算和动态障碍；语言任务要把理解、落地、规划、执行和失败识别分开。ManiSkill、RLBench 与 BEHAVIOR-1K 对这些变量做了不同选择，因此分数不能直接互换。 [cite:maniskill] [cite:rlbench] [cite:behavior1k]",
+        "最有价值的结果常常是结构化的失败分析：是感知选错部件、规划假定了错误关系、控制漏掉接触，还是恢复策略没有反应？这使系统可改进，也让生成或重建的场景拥有具体角色：好的表示帮助下一次决定，能更新的表示在决定失败后仍然有用。",
+        "RoboCasa 将场景到行动的联系放在带家具、电器和任务状态的交互厨房里评估。随文的开门演示展示的是这一设置，而不是不同策略之间的性能比较。 [cite:robocasa]"
+      ],
+      "paper_ids": [
+        "maniskill",
+        "rlbench",
+        "behavior1k",
+        "scenefun3d",
+        "articulate3d",
+        "robocasa"
+      ]
+    }
+  ],
+  "takeaway": "具身行动不是感知之后的最后一步，而是一个闭环：地图保留证据，语言选择目标与约束，技能和策略产生局部运动，观测或接触修正状态。决定性问题在于，当世界不符合最初计划时，这些接口能否让系统恢复。",
+  "next_topic": "datasets"
+}

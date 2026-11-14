@@ -6,7 +6,7 @@
   "reading_minutes": 8,
   "intro": [
     "A benchmark score is an observation made under a particular protocol. Recognizing a cabinet in a scan, predicting its hinge, reconstructing its surface, and opening it with a robot are different experiments. The datasets may even share a physical environment while using different annotations, splits, or inputs. A survey should preserve those distinctions before discussing which method performs better.",
-    "This chapter organizes evaluation around the capability being measured. It connects scene datasets to perception and reconstruction, functional annotations to interaction understanding, and simulators to embodied behavior. It then examines what must be held fixed for a comparison to be informative."
+    "This chapter starts from the experiment rather than the score. It links scene captures to perception and reconstruction, functional annotations to motion understanding, and simulators to embodied behavior. Along the way, it spells out what needs to stay fixed before two reported numbers can be compared."
   ],
   "sections": [
     {
@@ -14,7 +14,7 @@
       "paragraphs": [
         "ScanNet provides annotated RGB-D reconstructions for indoor scene understanding. ScanNet++ combines high-fidelity geometry with DSLR and mobile RGB-D captures, supporting both understanding and novel-view synthesis. Their acquisition pipelines matter: learning from a reconstructed scene gives a model different information from processing an incomplete stream of camera observations. [cite:scannet-dataset] [cite:scannetpp]",
         "Annotation granularity also changes the problem. ScanNet200 extends semantic recognition into a larger, long-tailed label space. MultiScan adds object and part semantics with mobility annotations. ARKitScenes contributes mobile-device indoor captures. These resources let researchers study complementary questions, including class imbalance, movable parts, and observation quality; none is a universal substitute for the others. [cite:scannet200] [cite:multiscan] [cite:arkitscenes]",
-        "For a segmentation result, inspect the input geometry, available images, label set, preprocessing, and split. A feature backbone evaluated on a reconstructed point cloud cannot be compared directly with a complete online perception system solely by reading the final semantic score. The survey's paper library uses benchmark associations to help discover relevant work, while the official protocol determines whether two results are comparable."
+        "When reading a segmentation result, start with the evidence: input geometry, images, label set, preprocessing, and split. A backbone tested on a finished point cloud and a full online perception system may share a final semantic score while solving very different problems. The library points to associated benchmarks; the official protocol decides whether the comparison holds."
       ],
       "paper_ids": ["scannet-dataset", "scannetpp", "scannet200", "multiscan", "arkitscenes"]
     },
@@ -42,7 +42,7 @@
       "paragraphs": [
         "SAPIEN provides a physics-based environment centered on part interaction. ManiSkill and ManiSkill2 use simulation to study generalizable manipulation, with assets, observations, tasks, and demonstrations. RLBench provides a task suite for vision-guided manipulation and several learning settings. These resources support experiments in action, rather than only predictions on stored observations. [cite:sapien] [cite:maniskill] [cite:maniskill2] [cite:rlbench]",
         "Longer household tasks introduce additional structure. Habitat 2.0 combines environments and physics-enabled home-assistant tasks; BEHAVIOR-1K pairs everyday activities with OmniGibson, including rich object states and physical interactions. RoboCasa and RoboCasa365 focus on kitchen environments and robot behavior, with variation in tasks, scenes, and demonstrations. The environment defines which changes of state can actually be represented and tested. [cite:habitat2] [cite:behavior1k] [cite:robocasa] [cite:robocasa365]",
-        "A robot benchmark therefore needs more than a task name. Specify embodiment, sensor placement, observation access, action parameterization, controller, horizon, reset distribution, and success condition. Privileged simulator state can be useful during learning, but evaluation must say whether it is still available at execution. Otherwise a reported policy may bypass the perception problem that another method is required to solve."
+        "A robot benchmark needs more than a task name. The robot body, camera placement, observations, actions, controller, horizon, resets, and success rule all change the problem. Privileged simulator state can be valuable while training; the report must say whether it remains available at execution, or a policy may quietly sidestep the perception challenge under study."
       ],
       "paper_ids": ["sapien", "maniskill", "maniskill2", "rlbench", "habitat2", "behavior1k", "robocasa", "robocasa365"]
     },
@@ -77,6 +77,6 @@
       "paper_ids": ["procthor"]
     }
   ],
-  "takeaway": "Choose evaluation from the capability being claimed. The observations, annotations, split, embodiment, and success condition are part of the result; preserving them is what makes a comparison meaningful.",
+  "takeaway": "A result includes its evidence: observations, annotations, split, embodiment, and success rule. Keeping that context visible is what turns a score into a meaningful comparison.",
   "next_topic": "outlook"
 }

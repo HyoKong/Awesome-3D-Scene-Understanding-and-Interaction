@@ -6,14 +6,14 @@
   "reading_minutes": 6,
   "intro": [
     "Across the preceding chapters, the same problem reappears in different forms: a representation can be useful for one objective while leaving another underdetermined. Object labels omit contact geometry; rendered appearance does not identify mass or friction; a generated room need not be navigable; a sensible plan can fail during execution. These are interfaces at which research claims need to be tested.",
-    "The directions below are our synthesis of those connections. They are proposed research questions and evaluation ideas, rather than claims that any single method has solved the complete system."
+    "The directions below are questions that emerge when those pieces are placed together. They are proposals for experiments and systems, not claims that one existing method has already solved the whole loop."
   ],
   "sections": [
     {
       "heading": "Persistent scene state after interaction",
       "paragraphs": [
         "An open-vocabulary map can help an agent find the cabinet, but opening the door changes both visible geometry and accessibility. A persistent representation must preserve identity while revising pose, joint state, visibility, and relations. ConceptGraphs and VLMaps illustrate the value of queryable spatial memory; articulated tracking work such as CAPTRA highlights a different requirement, maintaining part state across observations. Combining these capabilities requires an explicit treatment of change. [cite:conceptgraphs] [cite:vlmaps] [cite:captra]",
-        "A useful test would revisit the same environment before and after controlled object and part motions. The evaluation should distinguish a newly observed object from a previously known object in a new state, measure stale-map errors, and test whether corrections improve later actions. Merely accumulating more frames can conceal the problem by preserving contradictory evidence.",
+        "A revealing test would revisit a room before and after controlled object motions. It should separate a genuinely new object from a familiar one in a new state, count stale-map errors, and check whether map corrections improve later actions. Simply retaining every frame can hide the problem by storing mutually inconsistent evidence.",
         "This also motivates selective memory. A mobile robot cannot retain every dense observation indefinitely at full resolution. A research question is which details to retain for future goals, which to compress, and when a compressed scene model should trigger another observation."
       ],
       "paper_ids": [
@@ -27,7 +27,7 @@
       "paragraphs": [
         "A closed cabinet can conceal its interior and leave multiple joint hypotheses compatible with the visible surface. Interaction can supply information unavailable from passive observation. Ditto uses observations across interaction to build an articulated digital twin; UMPNet and Where2Explore connect action selection with learning about an articulated object. These examples motivate treating an action as both a task step and an experiment. [cite:ditto] [cite:umpnet] [cite:where2explore]",
         "The challenge is to choose information-seeking actions that are useful under the robot's limits. A small exploratory motion may identify a joint direction, but it also consumes time and can fail if the grasp is poor. Evaluation should compare the benefit of the information with the interaction budget and report errors before and after exploration.",
-        "A promising design is to carry several plausible hypotheses into planning and update them from measured motion or contact. The research question is not simply whether uncertainty can be predicted, but whether acting on it improves success and recovery relative to committing to one estimate."
+        "One promising design keeps several plausible joint hypotheses alive during planning, then updates them from motion or contact. The important result is not merely a calibrated uncertainty score; it is whether a robot that uses that uncertainty succeeds and recovers more often than one that commits too early."
       ],
       "paper_ids": [
         "ditto",
@@ -53,7 +53,7 @@
       "paragraphs": [
         "A model that predicts plausible future observations can support anticipation, but planning requires those predictions to respond appropriately to alternative actions. Relevant distinctions include whether actions are explicit conditions, whether state persists over long rollouts, and whether a robot can repeatedly act and receive new observations. The embodied-generation and VLA surveys place these questions beside simulation, control, and transfer. [cite:survey-generation-embodied] [cite:survey-vla] The 3D and 4D World Modeling survey further distinguishes image/video, occupancy, and LiDAR representations, emphasizing that the predicted state and evaluation must be specified. [cite:survey-world-modeling]",
         "The cabinet example gives a simple diagnostic. If two candidate actions push in different directions, a predictive model should distinguish their effects on the joint and surrounding objects. A visually convincing sequence that ignores the action can still be useful for generating videos, but it does not supply the intervention model needed by that planner.",
-        "A strong evaluation would separate visual fidelity, geometric consistency, action sensitivity, and decision quality. A planner should also recognize when a learned rollout leaves the range supported by evidence and return to observation or a more constrained model."
+        "A convincing evaluation separates visual quality, geometric consistency, action sensitivity, and decision quality. It should also reward a planner for recognizing when a learned rollout has gone beyond its evidence and for returning to observation or a more constrained model."
       ],
       "paper_ids": [
         "survey-generation-embodied",
@@ -106,6 +106,6 @@
       }
     }
   ],
-  "takeaway": "The strongest unifying test is whether a scene representation helps an agent make a better decision, recognize an error, or learn something useful from interaction. Progress requires both strong components and evidence that their connections work.",
+  "takeaway": "The unifying test is simple to state: does a scene representation help an agent choose better, notice an error, or learn from interaction? Progress needs strong components—and evidence that the handoffs between them work.",
   "next_topic": "overview"
 }

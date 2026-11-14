@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 from urllib.parse import unquote, urlsplit
 
-from build_site import ARTICLE_ORDER, ROOT, expected_output_files, load_media, output_paths
+from build_site import ARTICLE_ORDER, PUBLIC_URL, ROOT, expected_output_files, load_media, output_paths
 
 
 class Page(HTMLParser):
@@ -16,10 +16,12 @@ class Page(HTMLParser):
         self.ids = set()
         self.links = []
         self.papers = {}
+        self.elements = []
         self.feed(source)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        self.elements.append((tag, attrs))
         if attrs.get("id"):
             assert attrs["id"] not in self.ids, f"Duplicate ID: {attrs['id']}"
             self.ids.add(attrs["id"])
@@ -31,6 +33,35 @@ class Page(HTMLParser):
             self.papers[attrs["data-id"]] = attrs
 
 
+def page_name(path: Path, output: Path) -> str:
+    return path.relative_to(output).as_posix()
+
+
+def citation_titles(source: str) -> list[str]:
+    return re.findall(r'<a class="citation" id="citation-\d+" href="#reference-\d+" title="([^"]+)"', source)
+
+
+def validate_citations(source: str, name: str) -> list[str]:
+    citation_numbers = [int(value) for value in re.findall(r'class="citation"[^>]*href="#reference-(\d+)"', source)]
+    first_seen = []
+    for number in citation_numbers:
+        if number not in first_seen:
+            first_seen.append(number)
+    assert first_seen == list(range(1, len(first_seen) + 1)), f"Citation first-use order is invalid in {name}"
+    for number in first_seen:
+        assert f'id="reference-{number}"' in source, f"Missing reference {number} in {name}"
+        assert re.search(rf'<a class="citation" id="citation-\d+" href="#reference-{number}" title="[^"]+"', source), f"Citation metadata is incomplete in {name}"
+    return citation_titles(source)
+
+
+def language_switches(page: Page) -> dict[str, str]:
+    links = {}
+    for tag, attrs in page.elements:
+        if tag == "a" and "data-language-switch" in attrs:
+            links[attrs.get("hreflang", "")] = attrs.get("href", "")
+    return links
+
+
 def main():
     output = ROOT / "_site"
     catalog = json.loads((ROOT / "data/catalog.json").read_text())
@@ -39,53 +70,70 @@ def main():
     expected = expected_output_files(media)
     assert output_paths(output) == expected, "Website output differs from its publication allowlist"
     assert not any(p.is_symlink() for p in output.rglob("*")), "Website output must not contain symlinks"
-    pages = {p.name: Page(p.read_text()) for p in output.glob("*.html")}
+    page_files = sorted(output.rglob("*.html"))
+    pages = {page_name(p, output): Page(p.read_text()) for p in page_files}
+    expected_pages = {path for path in expected if path.endswith(".html")}
+    assert set(pages) == expected_pages and len(pages) == 24, "Expected exactly 24 public HTML pages"
     for name, page in pages.items():
-        source = (output / name).read_text()
-        for forbidden in ("TEASER_DESIGN.md", "REPOSITORY_DESIGN.md", "/mnt/", "/home/", "vscode-resource", "in this chat"):
+        source_path = output / name
+        source = source_path.read_text()
+        expected_lang = "zh-CN" if name.startswith("zh/") else "en"
+        assert re.search(rf'<html\s+lang="{expected_lang}">', source), f"Wrong document language in {name}"
+        for forbidden in ("TEASER_DESIGN.md", "REPOSITORY_DESIGN.md", "ROADMAP.md", "/mnt/", "/home/", "vscode-resource", "in this chat"):
             assert forbidden not in source, f"Non-public reference in {name}: {forbidden}"
+        assert 'href="research/' not in source and 'src="research/' not in source, f"Internal research link in {name}"
         assert "{{" not in source, f"Unexpanded placeholder in {name}"
         assert "library.html?topic=overview" not in source and "library.html?topic=outlook" not in source, f"Invalid library topic link in {name}"
-        citation_numbers = [int(value) for value in re.findall(r'class="citation"[^>]*href="#reference-(\d+)"', source)]
-        first_seen = []
-        for number in citation_numbers:
-            if number not in first_seen:
-                first_seen.append(number)
-        assert first_seen == list(range(1, len(first_seen) + 1)), f"Citation first-use order is invalid in {name}"
-        for number in first_seen:
-            assert f'id="reference-{number}"' in source, f"Missing reference {number} in {name}"
-            assert re.search(rf'<a class="citation" id="citation-\d+" href="#reference-{number}" title="[^"]+"', source), f"Citation metadata is incomplete in {name}"
+        validate_citations(source, name)
+        relative = name.removeprefix("zh/")
+        switches = language_switches(page)
+        expected_switches = {"en": f"../{relative}" if name.startswith("zh/") else relative,
+                             "zh": relative if name.startswith("zh/") else f"zh/{relative}"}
+        assert switches == expected_switches, f"Broken language switch in {name}: {switches}"
+        assert f'hreflang="en" href="{PUBLIC_URL + relative}"' in source, f"Missing English alternate in {name}"
+        assert f'hreflang="zh-CN" href="{PUBLIC_URL}zh/{relative}"' in source, f"Missing Chinese alternate in {name}"
         for link in page.links:
             parsed = urlsplit(link)
             if parsed.scheme or parsed.netloc:
                 assert parsed.scheme in ("http", "https"), f"Unsupported URL in {name}: {link}"
                 continue
             assert not parsed.path.startswith("/"), f"Project-site path must be relative: {link}"
-            assert not parsed.path.startswith("research/"), f"Internal research reference in {name}: {link}"
-            target = (output / unquote(parsed.path)).resolve() if parsed.path else output / name
+            target = (source_path.parent / unquote(parsed.path)).resolve() if parsed.path else source_path.resolve()
             assert target.is_relative_to(output.resolve()), f"Link escapes website output: {link}"
             assert target.is_file(), f"Missing website target from {name}: {link}"
-            if parsed.fragment and target.name in pages:
-                assert unquote(parsed.fragment) in pages[target.name].ids, f"Missing anchor from {name}: {link}"
+            target_name = page_name(target, output)
+            if parsed.fragment and target_name in pages:
+                assert unquote(parsed.fragment) in pages[target_name].ids, f"Missing anchor from {name}: {link}"
+
+    for relative in sorted(path.removeprefix("zh/") for path in pages if not path.startswith("zh/")):
+        assert citation_titles((output / relative).read_text()) == citation_titles((output / "zh" / relative).read_text()), f"English/Chinese citation-title mismatch: {relative}"
 
     routes = json.loads((ROOT / "data/reading_routes.json").read_text())["routes"]
     benchmarks = json.loads((ROOT / "data/benchmarks.json").read_text())["benchmarks"]
-    library = pages["library.html"]
-    assert set(library.papers) == {p["id"] for p in catalog["papers"]}
-    for paper in catalog["papers"]:
-        attrs = library.papers[paper["id"]]
-        assert set(attrs["data-topics"].split()) == {paper["category"], *paper.get("additional_topics", {})}
-        assert attrs["data-code"] == paper["code_status"]
-        for key in ("url", "project_url", "code_url"):
-            if paper.get(key):
-                assert paper[key] in library.links, f"Missing official resource: {paper['id']} / {key}"
+    libraries = [pages["library.html"], pages["zh/library.html"]]
+    for library in libraries:
+        assert set(library.papers) == {p["id"] for p in catalog["papers"]}
+        for paper in catalog["papers"]:
+            attrs = library.papers[paper["id"]]
+            assert set(attrs["data-topics"].split()) == {paper["category"], *paper.get("additional_topics", {})}
+            assert attrs["data-code"] == paper["code_status"]
+            for key in ("url", "project_url", "code_url"):
+                if paper.get(key):
+                    assert paper[key] in library.links, f"Missing official resource: {paper['id']} / {key}"
+    assert set(libraries[0].papers) == set(libraries[1].papers), "English/Chinese paper-library parity failed"
     for route in routes:
         assert f"route-{route['id']}" in pages["reading-routes.html"].ids
+        assert f"route-{route['id']}" in pages["zh/reading-routes.html"].ids
     for benchmark in benchmarks:
         assert f"benchmark-{benchmark['id']}" in pages["benchmarks.html"].ids
+        assert f"benchmark-{benchmark['id']}" in pages["zh/benchmarks.html"].ids
     index = pages["index.html"]
-    assert {f"chapter-{number}" for number in range(1, len(ARTICLE_ORDER) + 1)} <= index.ids
-    assert "references" in index.ids and '#references' in (output / "index.html").read_text()
+    survey = pages["survey.html"]
+    assert {f"chapter-{number}" for number in range(1, len(ARTICLE_ORDER) + 1)} <= survey.ids
+    assert {f"chapter-{number}" for number in range(1, len(ARTICLE_ORDER) + 1)} <= pages["zh/survey.html"].ids
+    assert "references" in survey.ids and '#references' in (output / "survey.html").read_text()
+    assert "survey-chapter" not in (output / "index.html").read_text(), "Homepage must not contain full-survey chapters"
+    assert not {f"chapter-{number}" for number in range(1, len(ARTICLE_ORDER) + 1)} & index.ids, "Homepage must remain a short index"
     for topic in ARTICLE_ORDER:
         article_file = ROOT / "site" / "articles" / f"{topic}.json"
         assert article_file.is_file(), f"Missing survey chapter: {topic}"
@@ -93,23 +141,31 @@ def main():
         assert article["id"] + ".html" in pages
         for index, _ in enumerate(article["sections"], 1):
             assert f"section-{index}" in pages[article["id"] + ".html"].ids
-            assert f"chapter-{ARTICLE_ORDER.index(article['id']) + 1}-section-{index}" in pages["index.html"].ids
+            assert f"section-{index}" in pages["zh/" + article["id"] + ".html"].ids
+            assert f"chapter-{ARTICLE_ORDER.index(article['id']) + 1}-section-{index}" in survey.ids
         for section in article["sections"]:
             for paper_id in section.get("paper_ids", []):
                 paper = next(item for item in catalog["papers"] if item["id"] == paper_id)
                 assert paper["url"] in pages[article["id"] + ".html"].links
+                assert paper["url"] in pages["zh/" + article["id"] + ".html"].links
         assert "[cite:" not in (output / f"{article['id']}.html").read_text()
-    assert "[cite:" not in (output / "index.html").read_text()
+        assert "[cite:" not in (output / "zh" / f"{article['id']}.html").read_text()
+    assert "[cite:" not in (output / "index.html").read_text() and "[cite:" not in (output / "survey.html").read_text()
+    media_per_chapter = {topic: [] for topic in ARTICLE_ORDER}
     for item in media:
-        page = pages[item["chapter"] + ".html"]
-        assert f"media-{item['id']}" in page.ids
-        if item["type"] == "image":
-            assert item["src"] in page.links and (output / item["src"]).is_file()
-        elif item["type"] == "video":
-            assert item["src"] in page.links
-        else:
-            assert item["src"] in (output / f"{item['chapter']}.html").read_text()
-        assert item["source_url"] in page.links and item["license_url"] in page.links
+        media_per_chapter[item["chapter"]].append(item)
+    assert all(len(items) >= 2 for items in media_per_chapter.values()), "Every survey chapter needs at least two credited visuals"
+    for item in media:
+        for prefix in ("", "zh/"):
+            page = pages[prefix + item["chapter"] + ".html"]
+            source = (output / (prefix + item["chapter"] + ".html")).read_text()
+            rendered_src = item["src"] if not prefix or item["src"].startswith("https://") else "../" + item["src"]
+            assert f"media-{item['id']}" in page.ids
+            assert rendered_src in source, f"Missing media source: {item['id']} / {prefix or 'en'}"
+            assert item["source_url"] in page.links and item["license_url"] in page.links
+            if item["src"].startswith("assets/"):
+                target = output / item["src"]
+                assert target.is_file(), f"Missing copied local media: {item['src']}"
     print(f"Validated {len(pages)} website pages, all catalog records and resources, "
           f"all routes and benchmarks, and the exact {len(expected)}-file deployment boundary.")
 

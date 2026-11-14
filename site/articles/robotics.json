@@ -2,7 +2,7 @@
   "id": "robotics",
   "title": "How does a scene model become embodied action?",
   "kicker": "Embodied agents and robotic interaction",
-  "dek": "Embodied systems turn partial observations into decisions, motions, and corrective feedback. This guide separates mapping, grounding, skill selection, control, and recovery so that a fluent plan is never mistaken for physical success.",
+  "dek": "Embodied systems turn partial observations into decisions, motions, and corrective feedback. Mapping, grounding, skill selection, control, and recovery each leave a different trace when a physical task succeeds—or fails.",
   "reading_minutes": 15,
   "intro": [
     "A robot asked to retrieve a mug from a kitchen has to make several kinds of uncertainty visible: where the mug might be, which surfaces are traversable, whether a cabinet is closed, which handle can be grasped, and what to do when contact does not move the door as expected. A successful trajectory is the outcome of a loop between perception, memory, planning, control, and feedback. Calling the loop an agent does not remove those interfaces; it makes them more important to inspect.",
@@ -13,7 +13,7 @@
       "heading": "Define the loop before comparing agents",
       "paragraphs": [
         "An embodied system receives observations, maintains some state, selects an action, and observes the result. State may be a metric map, a point cloud, image embeddings, a task graph, a learned latent, or a short action history. Actions may be navigation primitives, end-effector deltas, grasp candidates, language-selected skills, or tokenized robot commands. Comparisons become misleading when these interfaces differ but a single task-success number is treated as equivalent evidence.",
-        "A useful comparison makes five interfaces explicit: observation and calibration; state or memory; goal grounding; action representation; and recovery signal. A system with a high-fidelity 3D map answers a different problem from one acting from a wrist camera. A VLA trained on broad robot demonstrations answers a different problem from a planner that invokes verified skills. Both can be useful; neither label reveals the missing interface."
+        "Five interfaces make comparisons concrete: observation and calibration; state or memory; goal grounding; action representation; and recovery signal. A system with a high-fidelity 3D map solves a different problem from one acting from a wrist camera. A VLA trained on broad demonstrations has different evidence from a planner that invokes verified skills. The label alone does not reveal which interface is absent."
       ],
       "paper_ids": [
         "survey-vla",
@@ -40,7 +40,7 @@
     {
       "heading": "Ground language in observed and reachable state",
       "paragraphs": [
-        "Language models can turn an instruction into a task decomposition, but they do not establish that an object exists, is reachable, or has changed state. SayCan scores language-proposed skills with affordance information. LLM-Planner couples language-model planning to a low-level embodied controller. VoxPoser uses language-model programs and 3D value maps to express spatial manipulation constraints. The relevant question is not whether a model produces a plausible plan; it is which perception and feasibility check rejects an impossible next step. [cite:saycan] [cite:llm-planner] [cite:voxposer]",
+        "Language models can turn an instruction into a task decomposition, but they cannot by themselves show that an object exists, is reachable, or has changed state. SayCan scores language-proposed skills with affordance information. LLM-Planner connects language-model planning to a low-level embodied controller. VoxPoser uses language-model programs and 3D value maps to express spatial manipulation constraints. What matters in execution is the perception and feasibility check that can stop an impossible next step. [cite:saycan] [cite:llm-planner] [cite:voxposer]",
         "3D-LLM and LEO attach language reasoning to 3D scene features across question answering, planning, navigation, and manipulation. They point to a useful interface: language can query objects and relations beyond one image. Grounding remains partial if those features cannot resolve visibility, reachability, or active state. A system may identify a refrigerator while failing to determine whether the handle is free, which direction the door opens, or whether a grasp is feasible. [cite:3d-llm] [cite:leo]",
         "Whenever a paper claims planning or reasoning, inspect the grounding channel, action vocabulary, success detector, and replanning trigger. Those details reveal whether the language component chooses among executable alternatives or is being credited for an outcome produced elsewhere in the stack."
       ],
@@ -159,6 +159,6 @@
       ]
     }
   ],
-  "takeaway": "Embodied action is a closed loop rather than a final stage after perception. Maps retain evidence, language chooses goals and constraints, skills and policies generate local motion, and observation or contact corrects the state. A system should be judged by the interfaces that make this loop recoverable, not by fluent plans or isolated success rates alone.",
+  "takeaway": "Embodied action is a closed loop, not a final stage after perception. Maps retain evidence, language selects goals and constraints, skills and policies generate local motion, and observation or contact corrects state. The decisive question is whether these interfaces let the system recover when the world disagrees with its first plan.",
   "next_topic": "datasets"
 }

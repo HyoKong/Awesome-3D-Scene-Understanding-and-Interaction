@@ -1,18 +1,47 @@
 {
   "items": [
     {
-      "id": "scenefun3d-functionality-teaser",
-      "chapter": "datasets",
-      "section_index": 2,
-      "paper_id": "scenefun3d",
+      "id": "articulate3d-usdnet-method",
+      "chapter": "overview",
+      "section_index": 1,
+      "paper_id": "articulate3d",
       "type": "image",
-      "src": "assets/paper-media/scenefun3d-teaser.png",
-      "title": "SceneFun3D functionality and affordance overview",
-      "caption": "A scene-scale view of the transition from visible functional elements to task-grounded affordances and motion annotations.",
-      "source_url": "https://scenefun3d.github.io/",
-      "credit": "Delitzas et al., SceneFun3D (CVPR 2024)",
+      "src": "https://insait-institute.github.io/articulate3d.github.io/static/images/method1_usd.png",
+      "title": "Articulate3D / USDNet scene-to-part prediction",
+      "caption": "Start at the scene point cloud and follow the branches to movable parts, interaction regions, and motion parameters. Each output answers a different question about how the scene can be used.",
+      "source_url": "https://insait-institute.github.io/articulate3d.github.io/",
+      "credit": "Halacheva et al., Articulate3D (ICCV 2025)",
       "license_label": "CC BY-SA 4.0 (project website)",
-      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "zh": {
+        "title": "Articulate3D / USDNet：从场景到部件的预测",
+        "caption": "从场景点云开始，沿不同分支查看可动部件、交互区域与运动参数。每项输出回答了场景交互中的一个不同问题。",
+        "credit": "Halacheva 等，Articulate3D（ICCV 2025）",
+        "license_label": "CC BY-SA 4.0（项目网站）"
+      },
+      "width": 1708,
+      "height": 393
+    },
+    {
+      "id": "articulate3d-articulation-video",
+      "chapter": "overview",
+      "section_index": 3,
+      "paper_id": "articulate3d",
+      "type": "video",
+      "src": "https://insait-institute.github.io/articulate3d.github.io/static/videos/articulations.mp4",
+      "title": "Articulate3D articulation annotations",
+      "caption": "Watch the part-level annotation move with the scene. The example helps separate a visible boundary from a representation that also states how a part can move.",
+      "source_url": "https://insait-institute.github.io/articulate3d.github.io/",
+      "credit": "Halacheva et al., Articulate3D (ICCV 2025); preview uses an official project figure",
+      "license_label": "CC BY-SA 4.0 (project website)",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "zh": {
+        "title": "Articulate3D 关节标注示例",
+        "caption": "观察部件级标注如何随场景运动。该示例帮助区分可见边界与同时说明部件运动方式的表示。",
+        "credit": "Halacheva 等，Articulate3D（ICCV 2025）；预览使用官方项目图",
+        "license_label": "CC BY-SA 4.0（项目网站）"
+      },
+      "poster": "https://insait-institute.github.io/articulate3d.github.io/static/images/teaser_iccv.drawio.png"
     },
     {
       "id": "conceptgraphs-video",
@@ -21,12 +50,40 @@
       "paper_id": "conceptgraphs",
       "type": "youtube",
       "src": "https://www.youtube-nocookie.com/embed/ie9VdL7wieY",
-      "title": "ConceptGraphs project video",
-      "caption": "An open-vocabulary 3D scene graph makes object-level language and spatial relations available to downstream planning.",
+      "title": "ConceptGraphs: objects, language, and spatial relations",
+      "caption": "The scene is built up as an object graph. Watch how language queries refer to objects and their relations, giving a planner a way to ask about the mapped environment.",
       "source_url": "https://concept-graphs.github.io/",
       "credit": "Gu et al., ConceptGraphs (ICRA 2024)",
       "license_label": "Official project video",
-      "license_url": "https://concept-graphs.github.io/"
+      "license_url": "https://concept-graphs.github.io/",
+      "zh": {
+        "title": "ConceptGraphs：物体、语言与空间关系",
+        "caption": "场景被逐步组织成物体图。观察语言查询如何指向物体及其关系，规划器便可据此查询已建立的环境地图。",
+        "credit": "Gu 等，ConceptGraphs（ICRA 2024）",
+        "license_label": "官方项目视频"
+      }
+    },
+    {
+      "id": "open3dis-method-figure",
+      "chapter": "perception",
+      "section_index": 3,
+      "paper_id": "open3dis",
+      "type": "image",
+      "src": "https://open3dis.github.io/assets/method.png",
+      "width": 1441,
+      "height": 608,
+      "title": "Open3DIS: combining 2D masks with 3D proposals",
+      "caption": "Read the diagram from left to right: masks from individual views are lifted through superpoints, merged into 3D proposals, then matched with text through pointwise features.",
+      "source_url": "https://open3dis.github.io/",
+      "credit": "Nguyen et al., Open3DIS (CVPR 2024)",
+      "license_label": "CC BY-SA 4.0 (project website)",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "zh": {
+        "title": "Open3DIS：结合二维掩码与三维候选区域",
+        "caption": "从左向右阅读：先将各视角的掩码借助超点提升到三维，再合并为候选区域，最后通过逐点特征与文本匹配。",
+        "credit": "Nguyen 等，Open3DIS（CVPR 2024）",
+        "license_label": "CC BY-SA 4.0（项目网站）"
+      }
     },
     {
       "id": "segment-snap-overview-video",
@@ -36,12 +93,59 @@
       "type": "video",
       "src": "https://hyokong.github.io/segment-snap-page/assets/segment-snap-web.mp4",
       "poster": "assets/paper-media/segment-snap-video-poster.jpg",
-      "title": "Segment–Snap method overview",
-      "caption": "Geometric part structure and handle semantics are coupled to turn an RGB point cloud into motion and interaction-region hypotheses.",
+      "title": "Segment–Snap: linking parts and handles",
+      "caption": "A handle provides a clue to a door’s hinge side; the surrounding part helps interpret the handle. The video shows how these two cues refine motion and interaction-region predictions from a scene point cloud.",
       "source_url": "https://hyokong.github.io/segment-snap-page/",
       "credit": "Kong and Yang, Segment–Snap (2026); local poster extracted from the official overview at approximately 18 s",
       "license_label": "Official project video",
-      "license_url": "https://hyokong.github.io/segment-snap-page/"
+      "license_url": "https://hyokong.github.io/segment-snap-page/",
+      "zh": {
+        "title": "Segment–Snap：连接部件与把手",
+        "caption": "把手位置为门的铰链侧提供线索，周围部件则帮助判断把手类别。视频展示了如何利用这两类线索，改进场景点云中的运动和交互区域预测。",
+        "credit": "Kong 与 Yang，Segment–Snap（2026）；预览图取自官方视频约第 18 秒",
+        "license_label": "官方项目视频"
+      }
+    },
+    {
+      "id": "gaussian-splatting-garden-video",
+      "chapter": "reconstruction",
+      "section_index": 2,
+      "paper_id": "gaussian-splatting",
+      "type": "video",
+      "src": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/content/videos/garden.mp4",
+      "title": "3D Gaussian Splatting novel-view rendering",
+      "caption": "This official scene fly-through illustrates what Gaussian splats optimize for: fast, view-dependent rendering from an explicit collection of anisotropic primitives.",
+      "source_url": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/",
+      "credit": "Kerbl et al., 3D Gaussian Splatting (SIGGRAPH 2023); preview uses an official project figure",
+      "license_label": "Official project video",
+      "license_url": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/",
+      "zh": {
+        "title": "3D Gaussian Splatting：新视角渲染",
+        "caption": "这段官方场景漫游展示了高斯 splat 的目标：以显式的各向异性基元实现快速、视角相关的渲染。",
+        "credit": "Kerbl 等，3D Gaussian Splatting（SIGGRAPH 2023）；预览使用官方项目图",
+        "license_label": "官方项目视频"
+      },
+      "poster": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/content/images/comparisons/ours_garden.png"
+    },
+    {
+      "id": "splatam-online-reconstruction-video",
+      "chapter": "reconstruction",
+      "section_index": 4,
+      "paper_id": "splatam",
+      "type": "video",
+      "src": "https://spla-tam.github.io/data/scannetpp/scannetpp_s2_recon.mp4",
+      "title": "SplaTAM online RGB-D reconstruction",
+      "caption": "Watch the map accumulate while the camera moves. The video connects online pose estimation, Gaussian map expansion, and the reconstruction that becomes available during a scan.",
+      "source_url": "https://spla-tam.github.io/",
+      "credit": "Keetha et al., SplaTAM (CVPR 2024)",
+      "license_label": "Official project video",
+      "license_url": "https://spla-tam.github.io/",
+      "zh": {
+        "title": "SplaTAM：在线 RGB-D 重建",
+        "caption": "观察相机移动时地图如何累积。视频将在线位姿估计、高斯地图扩展与扫描过程中逐渐可用的重建联系起来。",
+        "credit": "Keetha 等，SplaTAM（CVPR 2024）",
+        "license_label": "官方项目视频"
+      }
     },
     {
       "id": "urdformer-pipeline-video",
@@ -51,12 +155,40 @@
       "type": "video",
       "src": "https://urdformer.github.io/media/videos/urdformer.mp4",
       "poster": "assets/paper-media/urdformer-poster-90.jpg",
-      "title": "URDFormer project video",
-      "caption": "A reconstruction pipeline can target an executable scene description when the intended downstream artifact is a simulator-ready articulated model.",
+      "title": "URDFormer: from an image to an articulated scene",
+      "caption": "Follow the prediction from a single image to a structured scene description. The useful output here is the set of objects, parts, and joints that can be assembled in a simulator.",
       "source_url": "https://urdformer.github.io/",
       "credit": "Chen et al., URDFormer (RSS 2024); local poster derived from the official project video at approximately 90 s",
       "license_label": "Official project video",
-      "license_url": "https://urdformer.github.io/"
+      "license_url": "https://urdformer.github.io/",
+      "zh": {
+        "title": "URDFormer：从图像到关节场景",
+        "caption": "观察单张图像如何被转化为结构化场景描述。这里关注的输出是可以在模拟器中组装起来的物体、部件与关节。",
+        "credit": "Chen 等，URDFormer（RSS 2024）；预览图取自官方视频约第 90 秒",
+        "license_label": "官方项目视频"
+      }
+    },
+    {
+      "id": "scenedreamer-unbounded-world",
+      "chapter": "generation",
+      "section_index": 4,
+      "paper_id": "scenedreamer",
+      "type": "image",
+      "src": "https://scene-dreamer.github.io/img/teaser.jpg",
+      "width": 2500,
+      "height": 1172,
+      "title": "SceneDreamer: an unbounded generated landscape",
+      "caption": "SceneDreamer extends a landscape beyond a single view. The figure shows the terrain and appearance that must remain consistent as the camera moves through the generated world.",
+      "source_url": "https://scene-dreamer.github.io/",
+      "credit": "Chen et al., SceneDreamer (TPAMI 2023), official project figure",
+      "license_label": "Official project figure; rights not stated",
+      "license_url": "https://scene-dreamer.github.io/",
+      "zh": {
+        "title": "SceneDreamer：可无限扩展的生成式景观",
+        "caption": "SceneDreamer 将景观延展到单个视角之外。图中展示的地形与外观，需要在相机穿行于生成世界时保持一致。",
+        "credit": "Chen 等，SceneDreamer（TPAMI 2023），官方项目图",
+        "license_label": "官方项目图；未声明权利许可"
+      }
     },
     {
       "id": "holodeck-pipeline-video",
@@ -66,12 +198,83 @@
       "type": "video",
       "src": "https://yueyang.ai/holodeck/static/videos/pipeline_upscale.mp4",
       "poster": "assets/paper-media/holodeck-poster-23.jpg",
-      "title": "Holodeck generation pipeline",
-      "caption": "Language-guided scene generation is useful to embodied AI when it also preserves layout, assets, and the constraints needed to instantiate an environment.",
+      "title": "Holodeck: building a room from a description",
+      "caption": "The pipeline turns a text request into a room layout, selects assets, and places them under spatial constraints. These intermediate decisions explain how the generated room becomes an environment an agent can enter.",
       "source_url": "https://yueyang.ai/holodeck/",
       "credit": "Yang et al., Holodeck (CVPR 2024); local poster derived from the official project video at approximately 23 s",
       "license_label": "Official project video",
-      "license_url": "https://yueyang.ai/holodeck/"
+      "license_url": "https://yueyang.ai/holodeck/",
+      "zh": {
+        "title": "Holodeck：根据描述构建房间",
+        "caption": "该流程将文本要求转化为房间布局，选择资产，并在空间约束下摆放物体。这些中间步骤让生成的房间成为智能体可以进入的环境。",
+        "credit": "Yang 等，Holodeck（CVPR 2024）；预览图取自官方视频约第 23 秒",
+        "license_label": "官方项目视频"
+      }
+    },
+    {
+      "id": "infinigen-indoors-procedural-room",
+      "chapter": "generation",
+      "section_index": 5,
+      "paper_id": "infinigen-indoors",
+      "type": "image",
+      "src": "https://infinigen.org/img/random_sample_indoors.jpeg",
+      "width": 1280,
+      "height": 720,
+      "title": "Infinigen Indoors procedural interior",
+      "caption": "The room is assembled from procedural objects and layout rules. Its geometry and scene structure are available along with the rendered image, which makes it useful for generating training annotations.",
+      "source_url": "https://infinigen.org/",
+      "credit": "Raistrick et al., Infinigen Indoors (CVPR 2024), official project image",
+      "license_label": "Official project image; rights not stated",
+      "license_url": "https://infinigen.org/",
+      "zh": {
+        "title": "Infinigen Indoors 的程序化室内场景",
+        "caption": "这个房间由程序化物体和布局规则构建而成。除了渲染图像，还能获得几何和场景结构，因此也可用于生成训练标注。",
+        "credit": "Raistrick 等，Infinigen Indoors（CVPR 2024），官方项目图",
+        "license_label": "官方项目图；未声明权利许可"
+      }
+    },
+    {
+      "id": "voxposer-value-map-pipeline",
+      "chapter": "robotics",
+      "section_index": 3,
+      "paper_id": "voxposer",
+      "type": "image",
+      "src": "https://voxposer.github.io/media/figures/method.jpg",
+      "width": 1828,
+      "height": 528,
+      "title": "VoxPoser: language programs to 3D value maps",
+      "caption": "The pipeline separates language-derived affordances and constraints from the motion planner: 3D value maps turn a textual instruction into spatial objectives the robot can re-evaluate during execution.",
+      "source_url": "https://voxposer.github.io/",
+      "credit": "Huang et al., VoxPoser (CoRL 2023), official project figure",
+      "license_label": "Official project figure; rights not stated",
+      "license_url": "https://voxposer.github.io/",
+      "zh": {
+        "title": "VoxPoser：从语言程序到三维价值图",
+        "caption": "该流程将语言推导出的可供性与约束同运动规划器分离：三维价值图把文本指令转化为空间目标，并可在执行过程中由机器人重新评估。",
+        "credit": "Huang 等，VoxPoser（CoRL 2023），官方项目图",
+        "license_label": "官方项目图；未声明权利许可"
+      }
+    },
+    {
+      "id": "openvla-recovery-rollout",
+      "chapter": "robotics",
+      "section_index": 6,
+      "paper_id": "openvla",
+      "type": "video",
+      "src": "https://openvla.github.io/static/videos/qualitative_results/reattempt/openvla--put_eggplant_into_pot--clutter--reattempt.mp4",
+      "title": "OpenVLA recovery rollout in clutter",
+      "caption": "Watch what happens after an unsuccessful grasp. The robot repositions and tries again to place the eggplant in the pot, with other objects still on the table.",
+      "source_url": "https://openvla.github.io/",
+      "credit": "Kim et al., OpenVLA (2024), official project video; preview uses an official project figure",
+      "license_label": "Official project video; rights not stated",
+      "license_url": "https://openvla.github.io/",
+      "zh": {
+        "title": "OpenVLA：杂乱场景中的恢复执行",
+        "caption": "观察抓取失败之后的动作：机器人调整位置，再次尝试将茄子放入锅中，桌面上的其他物体仍然存在。",
+        "credit": "Kim 等，OpenVLA（2024），官方项目视频；预览使用官方项目图",
+        "license_label": "官方项目视频；未声明权利许可"
+      },
+      "poster": "https://openvla.github.io/static/images/openvla_teaser.jpg"
     },
     {
       "id": "robocasa-door-video",
@@ -81,12 +284,106 @@
       "type": "video",
       "src": "https://robocasa.ai/assets/videos/basic_skills/door.mp4",
       "poster": "assets/paper-media/robocasa-door-poster-3.jpg",
-      "title": "RoboCasa door-opening behavior",
-      "caption": "A simulated robot task makes the connection between an interactable scene and closed-loop behavior visible.",
+      "title": "RoboCasa: opening a door",
+      "caption": "The robot must reach the handle, maintain contact, and follow the door’s motion. This short example shows what a scene representation eventually has to support during execution.",
       "source_url": "https://robocasa.ai/",
       "credit": "Nasiriany et al., RoboCasa; local poster derived from the official door-opening video at approximately 3 s",
       "license_label": "Official project video",
-      "license_url": "https://robocasa.ai/"
+      "license_url": "https://robocasa.ai/",
+      "zh": {
+        "title": "RoboCasa：打开柜门",
+        "caption": "机器人需要够到把手、保持接触，并顺着柜门的运动轨迹操作。这个简短示例展示了场景表示最终需要支持的执行过程。",
+        "credit": "Nasiriany 等，RoboCasa；预览图取自官方视频约第 3 秒",
+        "license_label": "官方项目视频"
+      }
+    },
+    {
+      "id": "scannetpp-capture-teaser",
+      "chapter": "datasets",
+      "section_index": 1,
+      "paper_id": "scannetpp",
+      "type": "image",
+      "src": "https://scannetpp.mlsg.cit.tum.de/scannetpp/static/images/teaser.jpg",
+      "title": "ScanNet++ multi-sensor scene capture",
+      "caption": "Laser scans, DSLR images, and mobile RGB-D sequences capture the same rooms at different levels of detail. The chosen input matters when comparing reconstruction or segmentation methods.",
+      "source_url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
+      "credit": "Yeshwanth et al., ScanNet++ (ICCV 2023)",
+      "license_label": "ScanNet++ Terms of Use (project website)",
+      "license_url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
+      "zh": {
+        "title": "ScanNet++ 多传感器场景采集",
+        "caption": "激光扫描、DSLR 图像和移动 RGB-D 序列以不同精细程度记录同一个房间。比较重建或分割方法时，需要注意它们使用了哪种输入。",
+        "credit": "Yeshwanth 等，ScanNet++（ICCV 2023）",
+        "license_label": "ScanNet++ 使用条款（项目网站）"
+      },
+      "width": 1848,
+      "height": 647
+    },
+    {
+      "id": "scenefun3d-functionality-teaser",
+      "chapter": "datasets",
+      "section_index": 2,
+      "paper_id": "scenefun3d",
+      "type": "image",
+      "src": "assets/paper-media/scenefun3d-teaser.png",
+      "title": "SceneFun3D: from a task to a functional region",
+      "caption": "A request such as opening a drawer needs a smaller, more specific target than the whole cabinet. SceneFun3D annotates these functional regions alongside language descriptions and motion information.",
+      "source_url": "https://scenefun3d.github.io/",
+      "credit": "Delitzas et al., SceneFun3D (CVPR 2024)",
+      "license_label": "CC BY-SA 4.0 (project website)",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "zh": {
+        "title": "SceneFun3D：从任务到功能区域",
+        "caption": "要打开抽屉，目标区域需要比整个柜子更小、更具体。SceneFun3D 为这些功能区域提供语言描述和运动标注。",
+        "credit": "Delitzas 等，SceneFun3D（CVPR 2024）",
+        "license_label": "CC BY-SA 4.0（项目网站）"
+      },
+      "width": 1601,
+      "height": 625
+    },
+    {
+      "id": "umpnet-exploration-map",
+      "chapter": "outlook",
+      "section_index": 2,
+      "paper_id": "umpnet",
+      "type": "image",
+      "src": "https://ump-net.cs.columbia.edu/images/sim-exploration.png",
+      "title": "UMPNet open-ended exploration",
+      "caption": "Arrows encode candidate directions and the predicted change of state. Read it as an example of action serving two roles at once: moving an object and revealing which motion hypothesis is useful.",
+      "source_url": "https://ump-net.cs.columbia.edu/",
+      "credit": "Xu, He, and Song, UMPNet (RA-L / ICRA 2022)",
+      "license_label": "Official project figure",
+      "license_url": "https://ump-net.cs.columbia.edu/",
+      "zh": {
+        "title": "UMPNet 的开放式探索",
+        "caption": "箭头编码候选方向和预测状态变化。可将它看作动作同时承担两种角色的例子：推动物体，也揭示哪种运动假设更有用。",
+        "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
+        "license_label": "官方项目图"
+      },
+      "width": 2618,
+      "height": 1326
+    },
+    {
+      "id": "umpnet-structure-inference",
+      "chapter": "outlook",
+      "section_index": 2,
+      "paper_id": "umpnet",
+      "type": "image",
+      "src": "https://ump-net.cs.columbia.edu/images/structure-inference.png",
+      "title": "UMPNet articulation structure inferred from action",
+      "caption": "The inferred axes summarize what the exploratory actions reveal about the object’s joints. Interaction supplies information that is difficult to recover from a single static view.",
+      "source_url": "https://ump-net.cs.columbia.edu/",
+      "credit": "Xu, He, and Song, UMPNet (RA-L / ICRA 2022)",
+      "license_label": "Official project figure",
+      "license_url": "https://ump-net.cs.columbia.edu/",
+      "zh": {
+        "title": "UMPNet：由动作推断关节结构",
+        "caption": "推断出的关节轴概括了探索动作揭示的关节结构。交互补充了单张静态图像难以提供的信息。",
+        "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
+        "license_label": "官方项目图"
+      },
+      "width": 1840,
+      "height": 870
     }
   ]
 }

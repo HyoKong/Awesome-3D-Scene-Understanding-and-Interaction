@@ -1,0 +1,190 @@
+{
+  "id": "reconstruction",
+  "title": "场景重建何时才成为数字孪生？",
+  "kicker": "场景重建与数字孪生",
+  "dek": "重建从观测中恢复几何、外观、相机或变化着的结构；数字孪生进一步提供检查、仿真和行动所需的显式结构。",
+  "reading_minutes": 8,
+  "intro": [
+    "一间厨房从新视角看上去很逼真，并不意味着它提供了可碰撞的表面；几何很准确，也不代表抽屉的运动已被表示。重建不是单一终点，而是关于相机、表面、辐射、点图、时间和物理结构的一组选择。",
+    "这些选择之所以重要，是因为人们对重建结果的用途不同：摄影需要新视角，机器人可能需要重定位、稳定地图、自由空间，或可仿真的关节。相似的演示画面可以承诺完全不同的能力。",
+    "本章沿着一条实用路线展开：先建立共同坐标系，再恢复可见外观与形状；相机运动时维持地图的一致性；最后在交互需要时表示部件与状态。每一步都增加能力，也增加需要验证的假设。"
+  ],
+  "sections": [
+    {
+      "heading": "恢复共同的几何坐标系",
+      "paragraphs": [
+        "多视角重建先要关联观测。COLMAP 从图像集合估计相机位姿和稀疏结构，并提供多视角立体工具 [cite:colmap-sfm]。RGB-D 流水线可直接使用深度：BundleFusion 联合估计全局优化后的位姿，并在线重积分表面 [cite:bundlefusion]。",
+        "两条路线的证据不同：纯图像需要重叠和对应，RGB-D 虽有测得深度，仍需相机跟踪和全局一致性。稀疏坐标系对对齐极有价值，却离完整表面或可操作对象还很远。"
+      ],
+      "paper_ids": [
+        "colmap-sfm",
+        "bundlefusion"
+      ]
+    },
+    {
+      "heading": "以不同方式表示外观与几何",
+      "paragraphs": [
+        "NeRF 优化连续的密度与视角相关辐射场，用于新视角合成 [cite:nerf]。Instant-NGP 用多分辨率哈希编码改变速度取舍，Mip-NeRF 360 面向无界、抗混叠的场景渲染 [cite:instant-ngp] [cite:mipnerf360]。3D Gaussian Splatting 则优化显式的各向异性高斯基元，并用 splatting 实现实时辐射场渲染 [cite:gaussian-splatting]。",
+        "Neuralangelo 从 RGB 图像追求高保真表面，体现了另一种优先级 [cite:neuralangelo]。渲染质量、表面保真度、度量精度和场景专属优化并非同义；系统可以很好解释照片，却不显式给出碰撞表面、对象身份或物理参数。"
+      ],
+      "paper_ids": [
+        "nerf",
+        "gaussian-splatting",
+        "neuralangelo"
+      ]
+    },
+    {
+      "heading": "以直接预测换取优化时间",
+      "paragraphs": [
+        "前馈方法尝试不为每个场景从头拟合，就从一个或多个视角推断结构。DUSt3R 从未标定图像集合预测稠密点图，并通过全局对齐支持相机恢复 [cite:dust3r]；VGGT 用 transformer 预测相机、点图、深度图和轨迹 [cite:vggt]。",
+        "关键在于一次前向推理后留下了什么。稠密点图有利于对应和几何，但长期地图往往仍需融合、不确定性处理或另一种表示。MASt3R 把稠密局部匹配、度量点图和全局对齐联系起来 [cite:mast3r]。学习先验可补全弱纹理区域，但合理的表面仍是推断，而不是测量。"
+      ],
+      "paper_ids": [
+        "dust3r",
+        "mast3r",
+        "vggt"
+      ]
+    },
+    {
+      "heading": "在相机运动中建图",
+      "paragraphs": [
+        "机器人不会拿到整理好的图像集合，而是接收观测流，同时估计位姿和更新地图。iMAP 联合学习场景专属隐式地图与在线 RGB-D 位姿 [cite:imap]；NICE-SLAM 使用层次网格隐式表示，SplaTAM 将在线 RGB-D 跟踪建图与高斯场景表示结合 [cite:nice-slam] [cite:splatam]。",
+        "在线建图把全局一致性变成系统问题。回环、漂移、计算预算和动态物体决定地图能否长期可用。GO-SLAM 将位姿估计、回环和连续表面更新结合 [cite:go-slam]；部署时，地图应当区分未知空间、被修正的几何和动态对象。"
+      ],
+      "paper_ids": [
+        "imap",
+        "nice-slam",
+        "splatam",
+        "go-slam"
+      ]
+    },
+    {
+      "heading": "将时间与交互纳入模型",
+      "paragraphs": [
+        "当人打开橱柜或物体移动时，静态场景假设失效。D-NeRF 为非刚性动态渲染建模时间形变 [cite:dnerf]；MonST3R 估计各时刻几何，4D Gaussian Splatting 将规范高斯表示与学习到的时间形变结合 [cite:monst3r] [cite:four-d-gaussian-splatting]。时间变化的外观模型很有价值，却未必给出运动的因果描述。",
+        "可交互孪生还需要部件、关节、状态，有时还需要可执行资产。PARIS 从两个状态下的多视角观测恢复部件形状、外观和运动；DigitalTwinArt 使用不同状态下的两次 RGB-D 扫描 [cite:paris] [cite:digital-twin-art]。一扇门即使渲染得很好，也可能没有轴、范围、把手位置或碰撞行为。"
+      ],
+      "paper_ids": [
+        "dnerf",
+        "monst3r",
+        "four-d-gaussian-splatting",
+        "paris",
+        "digital-twin-art",
+        "ditto",
+        "urdformer",
+        "react3d",
+        "real2code"
+      ]
+    },
+    {
+      "heading": "区分观测几何与补全几何",
+      "paragraphs": [
+        "每个重建系统都把证据与归纳偏置结合起来。经典多视角几何由重复图像观测支撑，却会在无纹理或遮挡区域失去覆盖；学习系统可以预测可能的深度或补全表面，但补全本身是假设。对于机器人，穿过未观测缺口规划，与绕开已观测自由空间规划，并不是同一件事。",
+        "理想系统应保留来源信息：哪些表面来自深度测量，哪些来自多视角一致性，哪些来自学习先验，哪些经过全局位姿修正而改变。这让下游规划器能够判断何时预测表面对可视化足够，何时应再看一眼。",
+        "语义、实例和功能部件可以引导重建关注相关结构；重建又让这些预测跨视角保持在共同坐标中。二者互补：语义图能找出橱柜，却无法给出未观测背面；稠密重建能恢复表面，却不会自动告诉策略哪个表面是把手。"
+      ],
+      "paper_ids": [
+        "colmap-sfm",
+        "dust3r",
+        "vggt",
+        "scannetpp",
+        "conceptgraphs",
+        "scenefun3d"
+      ]
+    },
+    {
+      "heading": "将可交互孪生视为明确的下游承诺",
+      "paragraphs": [
+        "关节重建把交互需求具体化。Ditto 利用交互构建关节物体数字孪生；URDFormer 从真实图像构建关节仿真环境；REACT3D 恢复可交互物理场景的关节；Real2Code 则探索通过可执行代码重建 [cite:ditto] [cite:urdformer] [cite:react3d] [cite:real2code]。它们共同追求的不是单一渲染格式，而是能检查或改变对象、关节和状态的表示。",
+        "难例很清楚地显示出这与视图合成的不同：隐藏铰链、耦合部件、未知摩擦，以及受附近杂物限制的家具运动。孪生可能结构上合理却物理上错误，因此应说明哪些来自观测、哪些是推断、哪些需要新视角或受控交互验证。"
+      ],
+      "paper_ids": [
+        "ditto",
+        "urdformer",
+        "react3d",
+        "real2code",
+        "drawer",
+        "magicarticulate"
+      ]
+    },
+    {
+      "heading": "比较重建承诺，而不仅是图像",
+      "paragraphs": [
+        "表格区分了演示中常被混为一谈的目标。它不是性能排名：具体应用可能合理地需要快速视图合成、全局稳定地图，或可编辑的关节状态。"
+      ],
+      "table": {
+        "caption": "不同重建表示显式给出的内容。",
+        "columns": [
+          "目标",
+          "主要优势",
+          "单独不能证明",
+          "代表工作"
+        ],
+        "rows": [
+          [
+            "稀疏或稠密几何坐标系",
+            "相机对齐和观测结构",
+            "完整、可编辑的表面",
+            "COLMAP [cite:colmap-sfm]；BundleFusion [cite:bundlefusion]"
+          ],
+          [
+            "神经辐射场",
+            "新视角外观",
+            "碰撞几何、语义、关节",
+            "NeRF [cite:nerf]；Mip-NeRF 360 [cite:mipnerf360]"
+          ],
+          [
+            "高斯场景",
+            "快速、显式的辐射基元",
+            "物理对象模型",
+            "3D Gaussian Splatting [cite:gaussian-splatting]；SplaTAM [cite:splatam]"
+          ],
+          [
+            "前馈点图",
+            "快速对应和几何假设",
+            "保证的全局一致性",
+            "DUSt3R [cite:dust3r]；VGGT [cite:vggt]"
+          ],
+          [
+            "关节孪生",
+            "部件、状态和运动参数",
+            "未经标定的精确接触动力学",
+            "PARIS [cite:paris]；Ditto [cite:ditto]"
+          ]
+        ]
+      },
+      "callout": {
+        "title": "渲染是证据，不是完整承诺",
+        "text": "有说服力的新视角说明在所评估视角分布下的图像一致性；它本身并不证明度量几何、完整语义、连通性、碰撞行为或行动成功。"
+      },
+      "paper_ids": [
+        "colmap-sfm",
+        "bundlefusion",
+        "nerf",
+        "mipnerf360",
+        "gaussian-splatting",
+        "splatam",
+        "dust3r",
+        "vggt",
+        "paris",
+        "ditto"
+      ]
+    },
+    {
+      "heading": "将场景结构带入生成与行动",
+      "paragraphs": [
+        "当表示显式给出后续系统所需的信息时，重建最有价值。生成可以使用布局、几何、场景图和资产约束提出多样环境；具身智能体可使用持续实例、可通行自由空间、功能部件和不确定性，决定行动还是再次观测。同一场景可以用辐射模型可视化，用显式结构规划。",
+        "关于四维空间智能的近期综述也区分低层属性、场景组件、动态场景、交互和物理约束。这种层级有助于避免把视觉重建直接称作完整世界模型 [cite:survey-4d-spatial]。下一章将讨论如何生成能保留这些结构与交互约束的世界。"
+      ],
+      "paper_ids": [
+        "articulate3d",
+        "scenefun3d",
+        "holodeck",
+        "procthor",
+        "survey-4d-spatial"
+      ]
+    }
+  ],
+  "takeaway": "应向重建方法索要真正需要的产物：用于对齐的相机和点图、用于几何的表面、用于渲染的辐射、用于运行的在线地图，或用于交互的部件与关节。数字孪生是一项明确的下游承诺，而不是“漂亮渲染”的同义词。",
+  "next_topic": "generation"
+}

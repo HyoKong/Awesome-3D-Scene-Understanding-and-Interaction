@@ -1,0 +1,151 @@
+{
+  "id": "datasets",
+  "title": "每个基准究竟证明了什么？",
+  "kicker": "数据集、仿真器与评测",
+  "dek": "把研究主张与能够支撑它的观测、标注、交互设定和指标联系起来。",
+  "reading_minutes": 8,
+  "intro": [
+    "基准分数是在特定协议下做出的观测。在扫描中识别柜子、预测铰链、重建表面、再由机器人把柜门打开，是四个不同实验；即使共享同一物理环境，也可能使用不同标注、划分和输入。",
+    "本章从实验而非分数出发，连接场景采集、功能标注和可执行仿真，并说明比较结果时哪些条件必须保持一致。"
+  ],
+  "sections": [
+    {
+      "heading": "场景数据集决定可获得的证据",
+      "paragraphs": [
+        "ScanNet 提供带标注的室内 RGB-D 重建；ScanNet++ 将高精度几何、DSLR 和移动 RGB-D 采集结合起来，同时支持理解和新视角合成。采集流程本身很重要：在完成的重建上学习，与处理不断到来的相机观测，给模型的信息并不相同。[cite:scannet-dataset] [cite:scannetpp]",
+        "标注粒度也会改变问题。ScanNet200 扩展到长尾语义空间；MultiScan 增加物体、部件和可动性；ARKitScenes 提供移动设备采集。它们分别适合研究类别不均衡、可动部件和观测质量，不能相互替代。[cite:scannet200] [cite:multiscan] [cite:arkitscenes]",
+        "阅读分割结果时应先检查输入几何、图像、标签集、预处理和划分。对完成点云测试的特征骨干与在线感知系统可能有相同分数，却并没有解决同一问题。论文库指出关联基准，是否可比仍由官方协议决定。"
+      ],
+      "paper_ids": [
+        "scannet-dataset",
+        "scannetpp",
+        "scannet200",
+        "multiscan",
+        "arkitscenes"
+      ]
+    },
+    {
+      "heading": "功能与运动需要更细的预测目标",
+      "paragraphs": [
+        "SceneFun3D 标注功能交互元素、可供性、语言任务和交互运动，把物体识别推进到“哪个把手能完成指定动作”。Articulate3D 描述部件、连接、关节和可执行场景结构；GAPartNet 从跨类别角度定义可操作部件。[cite:scenefun3d] [cite:articulate3d] [cite:gapartnet]",
+        "这些标注暴露不同误差来源：模型可能找到把手却连到错误柜门，也可能分对门却估错旋转轴。检测、分组、运动类型、轴、原点和状态都应分别报告。",
+        "Articulate3D challenge 从场景点云同时评测可动部件分割与运动预测，且其场景划分独立于底层 ScanNet++ 划分。这说明结果的来源不能只写数据集名称；基础采集与具体挑战协议都属于结果的一部分。[cite:articulate3d]"
+      ],
+      "paper_ids": [
+        "scenefun3d",
+        "articulate3d",
+        "gapartnet"
+      ]
+    },
+    {
+      "heading": "把外观、几何与物理行为分开",
+      "paragraphs": [
+        "新视角合成在保留视角上评测图像，PSNR、SSIM 和 LPIPS 衡量不同类型的一致性，却不直接检验表面能否用于碰撞检查。反过来，几何有用的模型也可能外观不完美。ScanNet++ 的采集设计使两类问题能在同一设置中研究。[cite:scannetpp]",
+        "几何评测需要坐标、尺度、可见性掩码和容差；是否计入未观测区域、采用何种对齐方式、是否排除细薄结构，都会改变表面距离或完整度分数。动态场景还需要对应关系与时间信息：某一时刻的良好表面并不能证明整段序列的运动正确。",
+        "对交互式孪生，还要检查部件的有效运动范围、碰撞几何和物理响应。具身生成综述把视觉/几何质量、物理可用性和下游性能分开，这也是本文采用的组织原则，并不假定每个基准都测量这三者。[cite:survey-generation-embodied]"
+      ],
+      "paper_ids": [
+        "scannetpp",
+        "survey-generation-embodied"
+      ],
+      "callout": {
+        "title": "一个评测缺口",
+        "text": "模型可以把关闭的柜子渲染得很准确，却给出错误门厚或错误铰链。留出视角图像分数无法证明机器人能在仿真中把门打开。"
+      }
+    },
+    {
+      "heading": "仿真器把场景结构变成可执行任务",
+      "paragraphs": [
+        "SAPIEN 围绕部件交互提供物理环境；ManiSkill、ManiSkill2 研究可泛化操作；RLBench 提供视觉引导操作任务。它们测试的是行动，而不仅是静态观测上的预测。[cite:sapien] [cite:maniskill] [cite:maniskill2] [cite:rlbench]",
+        "Habitat 2.0、BEHAVIOR-1K、RoboCasa 和 RoboCasa365 将任务扩展到家庭环境、丰富对象状态和厨房操作。环境决定哪些状态变化真正能被表示和检验。[cite:habitat2] [cite:behavior1k] [cite:robocasa] [cite:robocasa365]",
+        "机器人基准需要说明本体、传感器、观测访问、动作参数化、控制器、时域、重置分布和成功条件。训练时使用特权状态可以有价值，但必须说明执行时它是否仍可用。"
+      ],
+      "paper_ids": [
+        "sapien",
+        "maniskill",
+        "maniskill2",
+        "rlbench",
+        "habitat2",
+        "behavior1k",
+        "robocasa",
+        "robocasa365"
+      ]
+    },
+    {
+      "heading": "智能体还需评测记忆、语言与行动",
+      "paragraphs": [
+        "R2R 评测语言路线导航；GOAT-Bench 在连续经历中结合类别、语言和图像目标；ALFRED 与 TEACh 将指令连接到家庭动作序列和对话。这些设置分别检验落地、规划和执行。[cite:r2r] [cite:goat-bench] [cite:alfred] [cite:teach]",
+        "OpenEQA 区分从已收集观测回答与主动移动收集证据。问答表现可以证明有用的场景理解，却不应被表述为操作能力；导航成功也不自动证明功能部件识别准确。[cite:openeqa] [cite:embodiedqa]",
+        "下表用于选择实验；最后一列指出证据边界，而非批评基准。聚焦任务的价值正在于它能隔离完整机器人系统中难以诊断的能力。"
+      ],
+      "paper_ids": [
+        "r2r",
+        "goat-bench",
+        "alfred",
+        "teach",
+        "openeqa",
+        "embodiedqa"
+      ],
+      "table": {
+        "caption": "代表性评测设置及其能够支撑的主张。比较分数前请核对官方版本与协议。",
+        "columns": [
+          "设置",
+          "代表资源",
+          "考察能力",
+          "仍需补充的证据"
+        ],
+        "rows": [
+          [
+            "场景识别",
+            "ScanNet / ScanNet++ [cite:scannet-dataset] [cite:scannetpp]",
+            "给定输入和划分下的语义与实例预测",
+            "功能状态和闭环行动"
+          ],
+          [
+            "功能交互理解",
+            "SceneFun3D / Articulate3D [cite:scenefun3d] [cite:articulate3d]",
+            "所选任务中的交互区域、落地或关节",
+            "机器人执行与恢复"
+          ],
+          [
+            "操作",
+            "ManiSkill2 / RLBench [cite:maniskill2] [cite:rlbench]",
+            "指定机器人和控制器下的任务成功",
+            "超出训练资产、场景和本体的迁移"
+          ],
+          [
+            "家庭行为",
+            "BEHAVIOR-1K / RoboCasa365 [cite:behavior1k] [cite:robocasa365]",
+            "交互环境中更长或更多变的任务执行",
+            "匹配传感和资源下的真实迁移"
+          ],
+          [
+            "终身导航",
+            "GOAT-Bench [cite:goat-bench]",
+            "跨模态目标与持续场景经验下的到达",
+            "物体操作和接触推理"
+          ],
+          [
+            "具身问答",
+            "OpenEQA [cite:openeqa]",
+            "从记忆或主动观测中回答",
+            "知识是否支持物理行动"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "泛化必须说清楚什么被留出",
+      "paragraphs": [
+        "未见相机视角、物体实例、类别、房间布局、指令、任务组合和机器人本体代表不同分布偏移。综述应明确实验实际测试的是哪一种。ProcTHOR 扩大场景变化范围，但只留出随机种子并不等于检验了新的结构组合。[cite:procthor]",
+        "学习式比较还应保留训练数据来源与规模、预训练模型、外部检索、计算预算和允许的测试适应。对于随机系统，除均值外还应报告回合数与波动性；某一种重置分布下的明显分差，未必能在另一种初始状态分布下保持。",
+        "最有信息量的结果会同时报告失败来自哪些物体、布局、指令或状态转换，以及什么额外观测或监督能解决它。下一章将据此提出研究问题，讨论场景模型的改进如何传递到具身决策。"
+      ],
+      "paper_ids": [
+        "procthor"
+      ]
+    }
+  ],
+  "takeaway": "一项结果包含它的证据：观测、标注、划分、本体和成功规则。让这些上下文保持可见，分数才成为有意义的比较。",
+  "next_topic": "outlook"
+}

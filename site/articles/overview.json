@@ -6,7 +6,7 @@
   "reading_minutes": 6,
   "intro": [
     "Imagine asking a robot to put a mug inside a kitchen cabinet. It must recognize the cabinet and mug, locate the door and handle, estimate the space available for motion, choose a grasp, and observe whether the door actually opens. A beautiful rendering of the kitchen answers only part of this problem. So does a semantic map that labels every cabinet correctly but says nothing about which door moves.",
-    "This example motivates the survey's central question: what must a machine represent about a 3D environment to understand it, reproduce it, create alternatives, and interact with it? We connect research that is often read separately: scene segmentation and language grounding, geometric reconstruction and digital twins, scene and asset generation, and embodied planning and control."
+    "That small kitchen task is the thread running through this survey. It brings together work that is usually read in separate piles: segmentation and language grounding, reconstruction and digital twins, scene generation, and robot planning. The useful question is practical: what does a model need to retain so that the next decision is better informed?"
   ],
   "sections": [
     {
@@ -14,7 +14,7 @@
       "paragraphs": [
         "The scene is our organizing scale. Rooms contain objects, objects contain parts, and actions change their states and relationships. Object-level articulation is therefore an important component of scene understanding, alongside geometry, semantic structure, spatial memory, and environment generation. SceneFun3D and Articulate3D make the interaction level concrete through functional elements, movable parts, and motion annotations. [cite:scenefun3d] [cite:articulate3d]",
         "The discussion emphasizes indoor scenes and embodied interaction, where perception, reconstruction, generation, and manipulation meet directly. Navigation, language-conditioned agents, and generalist robot policies extend that core. Outdoor worlds and autonomous-driving methods provide useful comparisons when they share a representation or evaluation problem; this is not an exhaustive review of every driving, graphics, or robot-control subfield.",
-        "Coverage is organized by research question rather than by a single conference, architecture, or leaderboard. Foundational methods establish the vocabulary; representative recent work illustrates how the assumptions have changed. A paper can contribute to multiple chapters. Its placement describes the role being discussed, not an exclusive classification or a quality ranking."
+        "We organize papers by the question they help answer, not by venue or leaderboard position. Several papers appear more than once because the same method can matter for mapping, generation, and interaction. Placement tells the reader why the paper is being discussed here; it is not a ranking."
       ],
       "paper_ids": ["scenefun3d", "articulate3d"]
     },
@@ -22,7 +22,7 @@
       "heading": "Four tasks, connected by what they produce",
       "paragraphs": [
         "Perception assigns meaning and structure to observations: categories, instances, relations, functional parts, and state. Reconstruction estimates a particular observed environment, including geometry, appearance, camera pose, or dynamics. Generation creates or completes plausible environments under constraints. Interaction selects and executes actions while updating its understanding from feedback. These definitions describe objectives; a single system can pursue several at once.",
-        "The boundary between reconstruction and generation depends on evidence. Recovering a visible wall from several views is an estimation problem. Completing an unseen room behind that wall requires prior knowledge. A method may do both, but the completed region should not inherit the same evidential status as observed geometry. Likewise, predicting a future image does not on its own establish accurate contact dynamics.",
+        "The boundary between reconstruction and generation is easiest to see at an occlusion. Recovering a wall from repeated views uses measurements; filling in the room behind it leans on a learned prior. Many systems do both, but those two parts of the result should not be read with the same confidence. The same discipline matters for dynamics: a plausible future image is not yet evidence of accurate contact behavior.",
         "Recent surveys offer complementary views. The 3D Scene Generation survey organizes synthesis by how content is produced, while the embodied-generation survey organizes it around the role of generated content in robot learning. The VLA survey separates model components, control policies, and task planners. We use these perspectives to connect methods through their inputs, outputs, and downstream requirements. [cite:survey-scene-generation] [cite:survey-generation-embodied] [cite:survey-vla]"
       ],
       "paper_ids": ["survey-scene-generation", "survey-generation-embodied", "survey-vla"],
@@ -42,7 +42,7 @@
       "paragraphs": [
         "Points, voxels, meshes, implicit fields, and Gaussians organize spatial information differently. A mesh exposes a surface; an occupancy grid makes a spatial discretization explicit; a radiance representation prioritizes rendering. NeRF and 3D Gaussian Splatting demonstrate two influential ways to model appearance from images, but neither representation alone supplies object identities or robot action semantics. [cite:nerf] [cite:gaussian-splatting]",
         "Semantic maps and scene graphs add another layer. Open-vocabulary features make regions queryable, while object nodes and relations expose a structure for reasoning. ConceptGraphs illustrates the connection between language-queryable 3D structure and downstream planning. Such a representation is useful because it compresses observations into entities and relations; that compression can also discard small geometry that a grasp or collision check needs. [cite:openscene] [cite:conceptgraphs]",
-        "There is no requirement that a robot use one representation for every computation. A scene graph may identify a target, a local point cloud may support manipulation, and a geometric map may guide navigation. The important questions are how these representations stay aligned, how uncertainty crosses their interfaces, and which observations cause an update."
+        "Robots rarely benefit from forcing everything into one format. A scene graph can find the target, a local point cloud can support the grasp, and a geometric map can keep the robot oriented. The hard part is keeping those views aligned, carrying uncertainty between them, and deciding which new observation should revise the map."
       ],
       "paper_ids": ["nerf", "gaussian-splatting", "openscene", "conceptgraphs"],
       "callout": {"title": "A running example", "text": "For the cabinet task, an instance mask identifies the door, a local geometric model supports a grasp, a joint hypothesis predicts motion, and execution feedback tests that hypothesis. The chapters revisit different pieces of this same chain."}
@@ -57,6 +57,6 @@
       "paper_ids": []
     }
   ],
-  "takeaway": "The common thread is the information passed between observation, representation, synthesis, and action. A useful survey must explain what each method provides, what it assumes, and what remains to be established downstream.",
+  "takeaway": "The central issue is what survives the handoff from observation to representation, generation, and action. Each chapter asks what a method makes available to the next decision—and what still has to be learned or measured.",
   "next_topic": "perception"
 }

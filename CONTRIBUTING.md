@@ -63,7 +63,11 @@ Existing surveys and awesome lists can reveal candidates. Verify those candidate
 
 The website uses the same catalog, reading routes, and benchmark records as the README. The survey chapters live in `site/articles/` and generate both the continuous survey and individual chapter pages. Cite canonical paper IDs inline with `[cite:paper-id]`. Sections can include a comparison table (`caption`, `columns`, `rows`) and a short callout (`title`, `text`). Keep claims grounded in primary papers, distinguish proposed research directions from reported results, and compare methods under stated assumptions.
 
+The homepage introduces the reading routes; `survey.html` contains the full survey. English and Chinese share the same templates. Chinese chapters live in `site/zh/articles/`, interface labels in `site/locales/zh.json`, and translated catalog, route, and benchmark descriptions in `site/zh/`. Keep canonical IDs, paper titles, resource links, section order, and citation order consistent between languages. When adding a record, include its Chinese description under the same ID; suggestions through issues can be in either language.
+
 Figures and videos are declared individually in `site/media.json`, with their target chapter and section, original paper, caption, source, credit, and license information. Keep copied assets under `assets/paper-media/`, add each file to the explicit `.gitignore` allowlist, and document attribution in `assets/ATTRIBUTION.md`. Stream official videos from their source; YouTube videos load only after a reader chooses to play. The builder copies only media explicitly named in the manifest.
+
+Each media entry includes a `zh` object translating its title, caption, credit, and license label. Explain what readers should notice in the visual, and distinguish a project's overview figure from a frame of its video when using it as a preview.
 
 To preview the site:
 

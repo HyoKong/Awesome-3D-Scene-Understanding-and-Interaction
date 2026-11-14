@@ -59,3 +59,20 @@
 !assets/paper-media/holodeck-poster-23.jpg
 !assets/paper-media/robocasa-door-poster-3.jpg
 !assets/paper-media/segment-snap-video-poster.jpg
+
+# Bilingual public website sources.
+!site/survey.template.html
+!site/locales/
+!site/locales/zh.json
+!site/zh/
+!site/zh/catalog.json
+!site/zh/reading_routes.json
+!site/zh/benchmarks.json
+!site/zh/articles/
+!site/zh/articles/overview.json
+!site/zh/articles/perception.json
+!site/zh/articles/reconstruction.json
+!site/zh/articles/generation.json
+!site/zh/articles/robotics.json
+!site/zh/articles/datasets.json
+!site/zh/articles/outlook.json

@@ -1,0 +1,142 @@
+{
+  "id": "perception",
+  "title": "机器人行动前，三维场景表征需要知道什么？",
+  "kicker": "场景与功能感知",
+  "dek": "场景感知将观测转化为对象、关系和可用部件；本章追踪从几何标签到可被语言查询、与行动有关的场景结构。",
+  "reading_minutes": 6,
+  "intro": [
+    "厨房扫描即使足够稠密、颜色丰富，也未必能告诉机器人下一步怎么做。系统既要区分台面和橱柜，也要从器具中分出冰箱，还要识别细长把手，并判断拉动它会带来怎样的运动。这些推断都建立在同一份几何之上，却是不同的任务。",
+    "相关工作正围绕这些层次展开：有的方法学习扎根于局部三维邻域的特征，有的方法将点聚合成对象，再为对象赋予开放词汇语言；功能和关节感知则进一步问，哪个表面可以被使用，使用后状态会怎样改变。",
+    "没有一种表征在所有层次都占优。语言特征可以在房间里找出“抽屉”，但操作系统还需要抽屉正面、可能的把手以及运动余量。本章依次讨论几何标签、对象身份、语言定位和面向行动的结构。"
+  ],
+  "sections": [
+    {
+      "heading": "先明确预测单位",
+      "paragraphs": [
+        "语义图为观测赋予墙、橱柜、椅子等类别；实例图把两个同类橱柜分开；全景预测同时保留这两种决定。在杂乱房间中，这一差别很直接：若左右两个柜子被合成同一区域，规划器就无法选择其中一个。",
+        "点云骨干网络决定哪些邻域参与预测。PointNet 读取整个点集，PointNet++ 引入局部邻域的层级 [cite:pointnet] [cite:pointnet-plus-plus]。PTv3 和 Volt 则以不同方式组织稀疏、房间尺度的证据，再由任务头生成标签或掩码 [cite:ptv3] [cite:volume-transformer]。",
+        "在房间尺度上，这还是计算取舍：细粒度点处理保留把手和边界，却代价更高；超点、稀疏和八叉树抽象便于看得更广，也可能合并相邻表面 [cite:superpoint-graph] [cite:superpoint-transformer] [cite:octformer]。"
+      ],
+      "paper_ids": [
+        "pointnet",
+        "pointnet-plus-plus",
+        "ptv3",
+        "volume-transformer"
+      ]
+    },
+    {
+      "heading": "从类别走向对象",
+      "paragraphs": [
+        "实例分割还要解决分组问题。自底向上方法聚合相邻点，PointGroup、HAIS 和 SoftGroup 是这一类的代表 [cite:pointgroup] [cite:hais] [cite:softgroup]。查询式方法可直接预测掩码；Mask3D 与 OneFormer3D 的对比尤其清楚，后者在同一 transformer 中统一语义、实例和全景预测 [cite:mask3d] [cite:oneformer3d]。",
+        "干净的掩码并不等于物理对象模型。它可能只描述可见部分，可能合并相邻物体，也可能没有说明其几何来源。在真实厨房里，这会直接妨碍规划器选择要打开的那扇门。"
+      ],
+      "paper_ids": [
+        "pointgroup",
+        "mask3d",
+        "oneformer3d"
+      ]
+    },
+    {
+      "heading": "让场景能被语言查询",
+      "paragraphs": [
+        "固定类别表难以处理陌生物体或描述性概念。开放词汇方法把视觉—语言特征关联到三维区域；OpenScene 将这类特征迁移到三维，OpenMask3D 与 Open3DIS 则围绕实例掩码或候选区域工作 [cite:openscene] [cite:openmask3d] [cite:open3dis]。ConceptFusion 还将查询界面扩展到文本以外的模态 [cite:conceptfusion]。",
+        "语言不能取代几何。“烤箱左边的橱柜”既指定实例也指定空间关系，而不只是相容的文本嵌入。ConceptGraphs 从 RGB-D 观测构建开放词汇场景图，供后续查询和规划使用 [cite:conceptgraphs]。这也是为何固定类别得分不足以说明开放世界中的定位能力。"
+      ],
+      "paper_ids": [
+        "openscene",
+        "openmask3d",
+        "open3dis",
+        "conceptgraphs"
+      ]
+    },
+    {
+      "heading": "识别会改变任务的部件",
+      "paragraphs": [
+        "交互需要比对象类别更细的目标。打开冰箱意味着识别门或把手、关节类型、轴或运动方向，以及机器人的运动余量。GAPartNet 描述跨类别的可行动部件；OPD 与 OPDMulti 从单张图像估计可开部件和运动参数 [cite:gapartnet] [cite:opd] [cite:opdmulti]。更早的关节物体姿态与跟踪工作则将状态估计问题直接提出 [cite:ancsh] [cite:captra]。",
+        "在场景尺度，这更难：部件很小，连在杂乱家具上，也嵌在整间房中。SceneFun3D 将功能元件掩码、可供性、任务描述和交互运动联系起来；Articulate3D 记录部件、连接关系、关节和可执行场景结构 [cite:scenefun3d] [cite:articulate3d]。"
+      ],
+      "paper_ids": [
+        "gapartnet",
+        "opd",
+        "opdmulti",
+        "scenefun3d",
+        "articulate3d"
+      ]
+    },
+    {
+      "heading": "用时间与几何证据辨识状态",
+      "paragraphs": [
+        "即使最终得到一张融合点云，房间扫描往往来自一段序列。斜视角可能才显露把手，物体移动可能暴露可动部件，重复观测能区分噪声和稳定边缘。CAPTRA 从点云跟踪类别级关节姿态，把时间状态而非一次识别作为核心输出 [cite:captra]。",
+        "几何—语义耦合是理解交互的另一条路径。Segment–Snap 在三维场景中显式连接几何和语义 [cite:segment-snap]。如果机器人只收到“抽屉”标签，却没有正面局部几何，便难以选择抓取位姿或判断开启是否受阻。",
+        "更多视角也无法解决一切：静态扫描中的缝隙未必是关节，观察到的运动也未必揭示物理约束。系统应保留不确定性，并为新的视角或谨慎接触留下接口。"
+      ],
+      "paper_ids": [
+        "captra",
+        "segment-snap",
+        "shape2motion",
+        "articulate3d"
+      ]
+    },
+    {
+      "heading": "为下一步决策选择输出",
+      "paragraphs": [
+        "分割结果说明模型是否识别了标注目标，却不能说明机器人能否抓取、打开或在接触后恢复。检索可能只需语言特征；建图需要可持续的身份；操作则需要局部表面、候选运动和常常不可或缺的置信度。",
+        "阅读结果时，应同时看传感设置和用途：点云、RGB-D、图像还是视频；可见区域还是补全结构；语义标签还是行动假设。长期运行的智能体还必须在门打开、物体移动以及后续视角纠错后保持身份和关系。"
+      ],
+      "table": {
+        "caption": "常见场景感知输出保留的信息。",
+        "columns": [
+          "输出",
+          "保留的信息",
+          "仍然不确定",
+          "代表工作"
+        ],
+        "rows": [
+          [
+            "语义场",
+            "观测几何上的类别证据",
+            "对象身份和功能部件",
+            "PointNet++ [cite:pointnet-plus-plus]；PTv3 [cite:ptv3]"
+          ],
+          [
+            "实例或全景掩码",
+            "可见对象假设的分离",
+            "隐藏几何和运动状态",
+            "Mask3D [cite:mask3d]；OneFormer3D [cite:oneformer3d]"
+          ],
+          [
+            "开放词汇地图",
+            "与语言对齐的区域或实例",
+            "可靠的关系和行动定位",
+            "OpenScene [cite:openscene]；Open3DIS [cite:open3dis]"
+          ],
+          [
+            "功能结构",
+            "可行动部件与候选运动",
+            "真实动力学下的接触成功",
+            "GAPartNet [cite:gapartnet]；Articulate3D [cite:articulate3d]"
+          ]
+        ]
+      },
+      "callout": {
+        "title": "评估边界",
+        "text": "一个基准验证其标注的预测目标；它本身并不验证可执行数字孪生或操作策略。"
+      },
+      "paper_ids": [
+        "scanrefer",
+        "segment-snap",
+        "captra",
+        "pointnet-plus-plus",
+        "ptv3",
+        "mask3d",
+        "oneformer3d",
+        "openscene",
+        "open3dis",
+        "gapartnet",
+        "articulate3d"
+      ]
+    }
+  ],
+  "takeaway": "有用的三维场景表征是分层的：几何支撑区域，区域支撑实例，语言让实例可查询，功能结构让选定区域可以行动。应由紧随其后的决策来决定所需层次。",
+  "next_topic": "reconstruction"
+}

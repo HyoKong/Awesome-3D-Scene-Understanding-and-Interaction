@@ -5,6 +5,17 @@
   const root = document.documentElement;
 
   function init() {
+    // Preserve links shared before the long survey moved off the home page.
+    if (document.querySelector(".home-routes") && /^#(?:chapter-|media-|reference-|citation-)/.test(location.hash)) {
+      const destination = new URL("survey.html", location.href);
+      destination.hash = location.hash;
+      location.replace(destination.href);
+      return;
+    }
+    syncLanguageLinks();
+    window.addEventListener("hashchange", syncLanguageLinks);
+    window.addEventListener("popstate", syncLanguageLinks);
+    initReadingRoutes();
     initSurveyNavigation();
     initDeferredVideo();
     const form = document.querySelector("#paper-filters");
@@ -68,6 +79,7 @@
       const serialized = params.toString();
       const next = `${window.location.pathname}${serialized ? `?${serialized}` : ""}${window.location.hash}`;
       window.history.replaceState(null, "", next);
+      syncLanguageLinks();
     }
 
     function matchingPapers() {
@@ -100,10 +112,12 @@
 
       empty.hidden = matches.length !== 0;
       loadMore.hidden = showCount >= matches.length;
-      loadMore.textContent = `Show ${Math.min(PAGE_SIZE, matches.length - showCount)} more papers`;
-      resultsCount.textContent = matches.length === papers.length
-        ? `${papers.length} papers`
-        : `${matches.length} of ${papers.length} papers`;
+      const remaining = Math.min(PAGE_SIZE, matches.length - showCount);
+      const chinese = root.lang.startsWith("zh");
+      loadMore.textContent = chinese ? `再显示 ${remaining} 篇论文` : `Show ${remaining} more papers`;
+      resultsCount.textContent = chinese
+        ? (matches.length === papers.length ? `${papers.length} 篇论文` : `找到 ${matches.length} 篇，共 ${papers.length} 篇`)
+        : (matches.length === papers.length ? `${papers.length} papers` : `${matches.length} of ${papers.length} papers`);
       syncControls();
       if (updateUrl) syncUrl();
       return matches;
@@ -201,6 +215,44 @@
     state = stateFromUrl();
     render({ updateUrl: false });
     revealHash({ scroll: false });
+  }
+
+  function syncLanguageLinks() {
+    for (const link of document.querySelectorAll("a[data-language-switch]")) {
+      const target = new URL(link.getAttribute("href"), location.href);
+      target.search = location.search;
+      target.hash = location.hash;
+      link.href = target.href;
+    }
+  }
+
+  function initReadingRoutes() {
+    const buttons = [...document.querySelectorAll("button[data-route-topic]")];
+    const routes = [...document.querySelectorAll(".home-route[data-route-topics]")];
+    const results = document.querySelector("#route-results");
+    if (!buttons.length || !routes.length || !results) return;
+    const areas = new Set(buttons.map((button) => button.dataset.routeTopic));
+    function select(topic, updateUrl = false) {
+      if (!areas.has(topic)) topic = "perception";
+      let count = 0;
+      for (const route of routes) {
+        route.hidden = !route.dataset.routeTopics.split(" ").includes(topic);
+        if (!route.hidden) count += 1;
+      }
+      for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.routeTopic === topic));
+      results.textContent = root.lang.startsWith("zh") ? `${count} 条推荐阅读路线` : `${count} suggested reading routes`;
+      if (updateUrl) {
+        const url = new URL(location.href);
+        if (topic === "perception") url.searchParams.delete("area");
+        else url.searchParams.set("area", topic);
+        history.replaceState(null, "", url);
+        syncLanguageLinks();
+      }
+    }
+    for (const button of buttons) button.addEventListener("click", () => select(button.dataset.routeTopic, true));
+    const restore = () => select(new URLSearchParams(location.search).get("area"));
+    window.addEventListener("popstate", restore);
+    restore();
   }
 
   function initDeferredVideo() {

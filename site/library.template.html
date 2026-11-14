@@ -1,44 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{HTML_LANG}}">
 <head>
   <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore papers, reading routes, datasets, and benchmarks for 3D scene perception, reconstruction, generation, robotic manipulation, and embodied agents.">
+  <meta name="description" content="{{t:Explore papers, reading routes, datasets, and benchmarks for 3D scene perception, reconstruction, generation, robotic manipulation, and embodied agents.}}">
   <meta name="theme-color" content="#f7f8f5">
-  <title>Paper library | 3D Scene Understanding &amp; Interaction</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <title>{{t:Paper library | 3D Scene Understanding & Interaction}}</title>
+  <link rel="stylesheet" href="{{ASSET_PREFIX}}styles.css">
+  <script src="{{ASSET_PREFIX}}app.js" defer></script>
+  <link rel="alternate" hreflang="en" href="{{EN_URL}}">
+  <link rel="alternate" hreflang="zh-CN" href="{{ZH_URL}}">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content">{{t:Skip to content}}</a>
   <header class="site-header">
-    <a class="brand" href="index.html" aria-label="3D Scene Understanding and Interaction home">
+    <a class="brand" href="index.html" aria-label="{{t:3D Scene Understanding and Interaction home}}">
       <svg viewBox="0 0 32 36" width="29" height="33" aria-hidden="true"><path d="M16 2 30 10v16L16 34 2 26V10Z M2 10l14 8 14-8 M16 18v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      <span>3D SCENE<br><span class="brand-secondary">UNDERSTANDING &amp; INTERACTION</span></span>
+      <span>{{t:3D SCENE}}<br><span class="brand-secondary">{{t:UNDERSTANDING & INTERACTION}}</span></span>
     </a>
-    <nav aria-label="Main navigation">
-      <a href="index.html#survey">Survey</a><a href="reading-routes.html">Reading routes</a><a href="library.html">Paper library</a><a href="benchmarks.html">Benchmarks</a>
+    <nav aria-label="{{t:Main navigation}}">
+      <a href="survey.html#survey">{{t:Survey}}</a><a href="reading-routes.html">{{t:Reading routes}}</a><a href="library.html">{{t:Paper library}}</a><a href="benchmarks.html">{{t:Benchmarks}}</a>
       <a class="repo-link" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">GitHub <span aria-hidden="true">↗</span></a>
+      {{LANGUAGE_SWITCH}}
     </nav>
   </header>
 
   <main id="main-content" class="directory-page">
     <section id="papers" class="library section" aria-labelledby="papers-title">
-      <div class="section-heading"><div><p class="eyebrow">01 / Explore</p><h2 id="papers-title">Browse the literature</h2></div><p>Find a method, follow a task, or explore a research area.</p></div>
-      <noscript><p class="notice">All papers and reading routes are shown below. Enable JavaScript to search and filter the library.</p></noscript>
-      <form id="paper-filters" class="filters" role="search" aria-label="Search the paper library">
-        <label class="search-label" for="paper-search">Search papers</label>
-        <div class="search-field"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.6"/></svg><input id="paper-search" type="search" placeholder="Search a paper, method, task, or benchmark…" autocomplete="off"></div>
-        <div id="topic-filters" class="topic-filters" role="group" aria-label="Filter by research area"><button type="button" data-topic="" aria-pressed="true">All topics</button>{{TOPIC_BUTTONS}}</div>
-        <div class="filter-options"><label for="paper-year">Year <select id="paper-year"><option value="">All years</option>{{YEAR_OPTIONS}}</select></label><label for="paper-order">Sort <select id="paper-order"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="title">Title A–Z</option></select></label><label class="checkbox-label" for="has-code"><input id="has-code" type="checkbox"> Released code or toolkit</label><button type="button" id="reset-filters" class="reset-button">Reset filters</button></div>
+      <div class="section-heading"><div><p class="eyebrow">{{t:01 / Explore}}</p><h2 id="papers-title">{{t:Browse the literature}}</h2></div><p>{{t:Find a method, follow a task, or explore a research area.}}</p></div>
+      <noscript><p class="notice">{{t:All papers and reading routes are shown below. Enable JavaScript to search and filter the library.}}</p></noscript>
+      <form id="paper-filters" class="filters" role="search" aria-label="{{t:Search the paper library}}">
+        <label class="search-label" for="paper-search">{{t:Search papers}}</label>
+        <div class="search-field"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.6"/></svg><input id="paper-search" type="search" placeholder="{{t:Search a paper, method, task, or benchmark…}}" autocomplete="off"></div>
+        <div id="topic-filters" class="topic-filters" role="group" aria-label="{{t:Filter by research area}}"><button type="button" data-topic="" aria-pressed="true">{{t:All topics}}</button>{{TOPIC_BUTTONS}}</div>
+        <div class="filter-options"><label for="paper-year">{{t:Year}} <select id="paper-year"><option value="">{{t:All years}}</option>{{YEAR_OPTIONS}}</select></label><label for="paper-order">{{t:Sort}} <select id="paper-order"><option value="newest">{{t:Newest first}}</option><option value="oldest">{{t:Oldest first}}</option><option value="title">{{t:Title A–Z}}</option></select></label><label class="checkbox-label" for="has-code"><input id="has-code" type="checkbox"> {{t:Released code or toolkit}}</label><button type="button" id="reset-filters" class="reset-button">{{t:Reset filters}}</button></div>
       </form>
-      <div class="results-heading"><p id="results-count" role="status" aria-live="polite">{{TOTAL_PAPERS}} papers</p><span>Primary papers · Official resources</span></div>
+      <div class="results-heading"><p id="results-count" role="status" aria-live="polite">{{TOTAL_PAPERS}} {{t:papers}}</p><span>{{t:Primary papers · Official resources}}</span></div>
       <ul id="paper-list" class="paper-list">{{PAPER_ITEMS}}</ul>
-      <p id="empty-state" class="empty-state" hidden>No papers match these filters. Try a broader search or reset the filters.</p>
-      <div class="load-more-wrap"><button id="load-more" type="button" class="button button-secondary" hidden>Show more papers <span aria-hidden="true">↓</span></button></div>
+      <p id="empty-state" class="empty-state" hidden>{{t:No papers match these filters. Try a broader search or reset the filters.}}</p>
+      <div class="load-more-wrap"><button id="load-more" type="button" class="button button-secondary" hidden>{{t:Show more papers}} <span aria-hidden="true">↓</span></button></div>
     </section>
 
   </main>
-  <footer><span>3D Scene Understanding &amp; Interaction</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">Repository</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">Figure attribution</a><a href="#main-content">Back to top ↑</a></div></footer>
+  <footer><span>{{t:3D Scene Understanding & Interaction}}</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">{{t:Repository}}</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">{{t:Figure attribution}}</a><a href="#main-content">{{t:Back to top ↑}}</a></div></footer>
 </body>
 </html>

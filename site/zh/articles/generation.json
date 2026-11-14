@@ -1,0 +1,154 @@
+{
+  "id": "generation",
+  "title": "什么样的生成场景能真正服务机器人？",
+  "kicker": "场景生成与资产创作",
+  "dek": "生成结果可以是布局、可漫游的视觉世界、仿真器，或可编辑的资产集合。它们给机器人留下的信息完全不同。",
+  "reading_minutes": 12,
+  "intro": [
+    "同一句“生成一个紧凑厨房”，可能得到家具摆放方案、一段漫游视频、带纹理的网格，或者能打开抽屉的仿真房间。这些不是同一任务的高低等级：布局保留位置和间距，渲染保留外观，仿真还要保留状态与接触。机器人首先需要知道自己拿到的是哪一种。",
+    "近年的综述通常按程序化、神经 3D、图像驱动和视频驱动方法划分生成；面向具身智能的工作还强调数据构造、仿真和迁移。这里换一个更直接的问题：生成以后，人或机器人到底能检查、修改和执行什么？"
+  ],
+  "sections": [
+    {
+      "heading": "先说清楚要生成哪一种场景",
+      "paragraphs": [
+        "布局生成器给出物体类别、位姿、尺寸和关系；视图合成系统给出随相机变化的观测；程序化仿真器还可能包含几何、材质、语义、碰撞和动作条件下的状态；资产创作产生可复用物体，而可动资产还必须有部件和关节。视频模型预测下一时刻可能看到什么，但它并不等同于可编辑的度量场景。 [cite:survey-scene-generation] [cite:survey-generation-embodied]",
+        "有了这些名称，比较才不会失焦。一张漂亮图像能帮助人观察房间，而简洁的结构布局可能更适合路径规划。看定性结果之前，应先问：系统输出了什么表示？后来能改什么？又是怎样被检验的？"
+      ],
+      "paper_ids": [
+        "survey-scene-generation",
+        "survey-generation-embodied",
+        "atiss",
+        "text2nerf",
+        "infinigen-indoors",
+        "articulate-anything"
+      ]
+    },
+    {
+      "heading": "把房间看作物体与关系的组合",
+      "paragraphs": [
+        "ATISS 把室内场景表示为物体集合，并自回归采样属性；SceneFormer 将物体、位置和朝向作为序列；Graph-to-3D 直接使用关系图；DiffuScene 则对类别、形状和摆放构成的场景表示做去噪。这些表示允许人继续移动桌子、删除椅子、约束通道，或用户型图控制生成。 [cite:atiss] [cite:sceneformer] [cite:graph-to-3d] [cite:diffuscene]",
+        "语言改变了输入方式，却不会自动补齐场景表示。LayoutGPT 将自然语言要求转成布局，InstructScene 按指令生成室内环境。“给洗碗机留出开门空间”同时涉及几何、运动和净空；若系统没有门的状态和碰撞模型，画面看起来满足要求还不够。 [cite:layoutgpt] [cite:instructscene]",
+        "组合生成必须兼顾整体安排与局部变化。房间级模型能够维持宏观布局统计，却容易重复熟悉的房间；基于资产的系统能提供细致物体，却仍要协调尺度、支撑关系、碰撞和风格。真正有用的约束，是采样后用户或下游规划器仍能检查和修改的约束。"
+      ],
+      "paper_ids": [
+        "atiss",
+        "sceneformer",
+        "graph-to-3d",
+        "diffuscene",
+        "layoutgpt",
+        "instructscene"
+      ],
+      "table": {
+        "caption": "比较生成方法时，应先比较它留下的表示，而不是只比较视觉真实感。",
+        "columns": [
+          "生成结果",
+          "代表方法",
+          "可编辑内容",
+          "仍需检验的问题"
+        ],
+        "rows": [
+          [
+            "物体布局",
+            "ATISS；SceneFormer；DiffuScene [cite:atiss] [cite:sceneformer] [cite:diffuscene]",
+            "类别、位姿、关系、户型约束",
+            "几何细节、可见性、碰撞、状态变化"
+          ],
+          [
+            "渲染的 3D 场景",
+            "Text2Room；Text2NeRF；LucidDreamer [cite:text2room] [cite:text2nerf] [cite:luciddreamer]",
+            "提示词、参考图、相机轨迹、局部内容",
+            "度量几何、实例身份、物理有效性"
+          ],
+          [
+            "程序化或仿真环境",
+            "ProcTHOR；Infinigen Indoors；RoboGen [cite:procthor] [cite:infinigen-indoors] [cite:robogen]",
+            "资产、布局、任务、随机化参数",
+            "真实传感、接触和任务分布上的迁移"
+          ],
+          [
+            "可动资产",
+            "ArtFormer；PAct；Articulate-Anything [cite:artformer] [cite:pact] [cite:articulate-anything]",
+            "部件、关节、几何、运动范围",
+            "运动学正确性、接触行为、场景上下文"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "用图像先验造世界时，别把外观当成结构",
+      "paragraphs": [
+        "图像先验方法借助强大的 2D 生成模型，再把跨视角的一致性逐步加回去。Text2Room 反复执行图像生成、深度提升和补全，得到房间尺度的纹理网格；Text2NeRF 用扩散引导神经辐射场；LucidDreamer 和 RealmDreamer 采用高斯表示构建文本或图像条件场景。它们让提示词或单张图也能变成可探索的视觉空间。 [cite:text2room] [cite:text2nerf] [cite:luciddreamer] [cite:realmdreamer]",
+        "不过，跨视角一致、表面完整和实例身份是三件不同的事。辐射场或高斯可以支持新视角渲染，同时仍可能猜错遮挡部分、丢失细薄结构，或无法分别命名两个相似实例。网格也未必闭合或可直接用于碰撞；点云也不自动构成场景图。这些区别会在生成场景进入仿真、编辑或机器人控制时变得关键。",
+        "条件输入的不同也改变了系统的主张。文字给出语义目标，却常常没有度量布局；参考图带来风格和部分几何，却遮住了不可见区域。用户点击、轨迹或显式布局约束让控制更直接，却也削弱了纯文本生成看似简单的前提。公平的比较应说明控制预算：除了一句话，系统还接收了什么信息？哪些要求是可以检验的，而不只是展示出来的？"
+      ],
+      "paper_ids": [
+        "text2room",
+        "text2nerf",
+        "luciddreamer",
+        "realmdreamer"
+      ]
+    },
+    {
+      "heading": "扩展出来的是世界，还是一串连续画面？",
+      "paragraphs": [
+        "WonderWorld 从图像扩展出连通的 3D 场景，并允许在指定位置补充内容；SceneDreamer 面向来自图像集合的大尺度无界场景。它们把探索范围本身变成问题，而不是默认一间房就是边界。 [cite:wonderworld] [cite:scenedreamer]",
+        "相机运动会暴露一个世界表示究竟记住了什么。物体是否维持相同的身份与几何？走廊是否具有度量连续性？用户能否回到一个区域再编辑？未探索的空间是按需生成，还是一开始就有表示？世界扩展视频很有说服力，但导航或操作系统还需要可通行性、语义、障碍边界，以及在矛盾证据出现后修正场景的机制。",
+        "视频在这里尤其容易被过度解读。渲染帧的时间连贯性能够服务预测或想象，却不能证明模型已经生成了可编辑、受物理约束的状态。要服务具身任务，视频模型还必须与状态估计器和动作模型相连，或通过环境中可检验结果的决策来评估。"
+      ],
+      "paper_ids": [
+        "wonderworld",
+        "scenedreamer"
+      ]
+    },
+    {
+      "heading": "让任务与物理进入训练世界",
+      "paragraphs": [
+        "程序化环境的价值不同于文本生成。ProcTHOR 为具身训练采样可交互住宅；Infinigen 生成多样的自然世界，Infinigen Indoors 将程序化构造扩展到室内并支持导出到实时仿真；Holodeck 用语言规划和资产库搭建具身环境；RoboGen 将任务、场景和监督共同生成。 [cite:procthor] [cite:infinigen] [cite:infinigen-indoors] [cite:holodeck] [cite:robogen]",
+        "这些系统让研究者可以随机化场景因素、定义成功条件，并创造比人工编写基准更多的训练变化。随机化本身并不等于覆盖：策略可能依赖重复的规则、资产习惯或模拟器动力学，而这些规律在真实厨房里会消失。因此，证据应同时涵盖生成环境内表现、未见配置上的表现，以及——当论文声称真实机器人能力时——传感、几何和接触条件变化下的迁移。",
+        "Scenario Dreamer 为驾驶仿真生成向量化初始场景和闭环交通行为，并用扩散补全向外扩展环境。它展示了生成式仿真如何给规划系统制造长程和对抗性情形，也提醒我们：表示形式和下游任务决定一项仿真结果能说明什么。 [cite:scenario-dreamer]"
+      ],
+      "paper_ids": [
+        "procthor",
+        "infinigen",
+        "infinigen-indoors",
+        "holodeck",
+        "robogen",
+        "scenario-dreamer"
+      ]
+    },
+    {
+      "heading": "把可动生成当作可执行资产创作",
+      "paragraphs": [
+        "可动对象不是在刚性网格上画一条像缝的线。它需要部件分解、层级、关节类型、轴和范围，常常还需要仿真器表示。CAGE、NAP 与 SINGAPO 研究生成式部件结构和运动；ArtFormer 在文本条件下以树状结构组织几何代码与运动学关系。 [cite:cage] [cite:nap] [cite:singapo] [cite:artformer]",
+        "PAct 从单图预测部件几何和运动参数；Articulate AnyMesh 与 Articulate-Anything 尝试从多模态输入构造可用于仿真的结构化资产。评估至少应分层进行：部件是否可辨，关节轴和范围是否合理，运动时会不会穿透，控制器能否完成目标交互。 [cite:pact] [cite:articulate-anymesh] [cite:articulate-anything]",
+        "即使资产正确，仍需放入具体场景，检查净空和可供性。功能感知可以提出哪里该动，重建可以估计房间里的真实对象，机器人执行则能检验并更新假设。"
+      ],
+      "paper_ids": [
+        "cage",
+        "nap",
+        "singapo",
+        "artformer",
+        "pact",
+        "articulate-anymesh",
+        "articulate-anything"
+      ]
+    },
+    {
+      "heading": "把可控性与有效性分开评价",
+      "paragraphs": [
+        "评估应紧扣场景承担的工作。布局指标检验关系与碰撞；新视角指标检验外观而非几何；仿真检查检验解析、碰撞、运动学执行和重置；具身试验则检验基于该场景的规划或训练能否经受未见配置，以及在适用时经受真实观测。任何一种测量都不能替代其余几种。",
+        "更难的设计问题，是如何结合全局组合、可信外观、可编辑语义和接触相关动力学，而不让每个应用都承担所有变量的建模成本。混合系统提供了一条务实路径：布局约束视觉生成，重建观测纠正生成先验，程序化场景压力测试感知，执行动作暴露错误的场景假设。这正是生成与具身行动相遇的地方。"
+      ],
+      "paper_ids": [
+        "diffuscene",
+        "realmdreamer",
+        "infinigen-indoors",
+        "robogen",
+        "articulate-anything"
+      ]
+    }
+  ],
+  "takeaway": "对具身智能而言，生成出的表示和提示词同样重要：布局帮助组合，渲染世界帮助视觉探索，仿真器支持受控行动，可动资产提供可执行状态。逼真的图像证明的是外观，而非几何、可控性或物理。",
+  "next_topic": "robotics"
+}
