@@ -6,7 +6,7 @@
 
 Papers are grouped by editorial section and ordered newest first within each section. Classification expresses relevance, not a rank.
 
-[Semantic maps, memory and navigation](#section-1) · [3D reasoning and embodied generalists](#section-2) · [Language-grounded planning and agents](#section-3) · [Generalist policies and vision-language-action models](#section-4) · [Language-guided manipulation and agents](#section-5) · [Affordances and active exploration](#section-6) · [Motion-aware control and manipulation](#section-7) · [Contact and tactile feedback](#section-8)
+[Semantic maps, memory and navigation](#section-1) · [3D reasoning and embodied generalists](#section-2) · [Language-grounded planning and agents](#section-3) · [Generalist policies and vision-language-action models](#section-4) · [Language-guided manipulation and agents](#section-5) · [Affordances and active exploration](#section-6) · [Motion-aware control and manipulation](#section-7) · [Contact and tactile feedback](#section-8) · [Surveys and perspectives](#section-9)
 
 <a id="section-1"></a>
 
@@ -100,3 +100,12 @@ Papers are grouped by editorial section and ordered newest first within each sec
 | --- | --- | --- |
 | [Vi-TacMan: Articulated Object Manipulation via Vision and Touch](https://vi-tacman.github.io/)<br>ICRA 2026 · core | Uses vision to propose a grasp and coarse direction, then uses tactile contact feedback for precise articulated manipulation without an explicit kinematic model. | [Project](https://vi-tacman.github.io/) · [Code](https://github.com/leiyaocui/Vi-TacMan) · [Details](../PAPERS.md#vitacman) |
 | [Tac-Man: Tactile-Informed Prior-Free Manipulation of Articulated Objects](https://arxiv.org/abs/2403.01694)<br>IEEE Transactions on Robotics 2025 · core | Uses tactile feedback for prior-free manipulation of articulated objects, including objects with complex joints and perturbations. | [Project](https://tacman-aom.github.io/tac-man/) · [Code](https://github.com/YuyangLee/Tac-Man-Simulation) · [Details](../PAPERS.md#tacman) |
+
+<a id="section-9"></a>
+
+## Surveys and perspectives
+
+| Paper | Focus | Official resources |
+| --- | --- | --- |
+| [3D Generation for Embodied AI and Robotic Simulation: A Survey](https://arxiv.org/abs/2604.26509)<br>arXiv 2026 · enabling | Reviews generated assets, interactive environments, and sim-to-real pipelines, distinguishing appearance, physical validity, and embodied-task evaluation. | [Project](https://3dgen4robot.github.io/) · Code: — · [Details](../PAPERS.md#survey-generation-embodied) |
+| [A Survey on Vision-Language-Action Models for Embodied AI](https://arxiv.org/abs/2405.14093)<br>TNNLS 2026 · enabling | Organizes vision-language-action research into model components, low-level control policies, and high-level task planning, alongside datasets and evaluation. | [Project](https://github.com/yueen-ma/Awesome-VLA) · Code: — · [Details](../PAPERS.md#survey-vla) |

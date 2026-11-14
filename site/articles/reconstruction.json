@@ -1,0 +1,190 @@
+{
+  "id": "reconstruction",
+  "title": "When does a scene reconstruction become a digital twin?",
+  "kicker": "Scene reconstruction and digital twins",
+  "dek": "Reconstruction recovers geometry, appearance, cameras, or changing structure from observations. A digital twin adds the structure needed to inspect, simulate, or act on a scene.",
+  "reading_minutes": 13,
+  "intro": [
+    "A captured kitchen can be rendered convincingly without exposing a usable surface, and it can contain accurate geometry without representing a drawer's motion. Reconstruction is therefore not one output. It is a family of choices about cameras, surfaces, radiance, point maps, time, and physical structure.",
+    "This guide separates those choices so that a reader can ask what each system assumes and returns. The important tradeoff is often not a single quality number; it is whether an output can support a later operation such as measurement, rendering, relocalization, or interactive simulation.",
+    "The organizing principle is a ladder of commitments: recover a common frame, model visible geometry and appearance, maintain a map through time, then make parts and physical state explicit. Moving upward adds capabilities, but it also adds assumptions that must be tested rather than inferred from a compelling render."
+  ],
+  "sections": [
+    {
+      "heading": "Recover a common geometric frame",
+      "paragraphs": [
+        "Multi-view reconstruction begins by relating observations. COLMAP estimates camera poses and sparse structure from image collections, then supplies multi-view stereo tools [cite:colmap-sfm]. RGB-D pipelines can use depth directly: BundleFusion jointly estimates globally optimized poses and reintegrates surfaces online [cite:bundlefusion].",
+        "These routes make different assumptions. Image-only capture needs visual overlap and correspondence; RGB-D capture has measured depth but still needs tracking and global consistency. Before comparing reconstructions, identify whether poses are estimated or supplied, whether depth exists, and whether the scene is static. A sparse coordinate frame can be valuable for alignment while still being far from a complete surface or usable object model."
+      ],
+      "paper_ids": [
+        "colmap-sfm",
+        "bundlefusion"
+      ]
+    },
+    {
+      "heading": "Represent appearance and geometry differently",
+      "paragraphs": [
+        "NeRF optimizes a continuous field of density and view-dependent radiance for novel-view synthesis [cite:nerf]. Instant-NGP changes the speed tradeoff through multiresolution hash encoding, while Mip-NeRF 360 targets unbounded, anti-aliased scene rendering [cite:instant-ngp] [cite:mipnerf360]. 3D Gaussian Splatting instead optimizes explicit anisotropic Gaussian primitives and uses splatting for real-time radiance-field rendering [cite:gaussian-splatting]. Both may produce compelling novel views, but neither formulation automatically promises a watertight mesh or a simulation interface.",
+        "Neuralangelo targets high-fidelity surfaces from RGB images, illustrating a different priority [cite:neuralangelo]. A reader should separate render quality, surface fidelity, metric accuracy, and the amount of scene-specific optimization. These are complementary objectives rather than interchangeable definitions of reconstruction. A system can explain views well while retaining no explicit collision surface, part identity, or physical parameter."
+      ],
+      "paper_ids": [
+        "nerf",
+        "gaussian-splatting",
+        "neuralangelo"
+      ]
+    },
+    {
+      "heading": "Trade optimization time for direct prediction",
+      "paragraphs": [
+        "Feed-forward approaches aim to infer useful structure from one or many views without fitting a scene from scratch. DUSt3R predicts dense point maps from uncalibrated image collections and supports camera recovery through global alignment [cite:dust3r]. VGGT predicts cameras, point maps, depth maps, and tracks with a transformer [cite:vggt].",
+        "The practical question is what remains after prediction. Dense point maps can be valuable for correspondence and geometry, but a long-lived map may need fusion, uncertainty handling, or a different representation. MASt3R adds dense local matching and metric point maps to its reconstruction framework, making the relation between matching and global alignment explicit [cite:mast3r]. Learned priors can fill weakly textured regions, but a plausible predicted surface is not the same thing as a measured one."
+      ],
+      "paper_ids": [
+        "dust3r",
+        "mast3r",
+        "vggt"
+      ]
+    },
+    {
+      "heading": "Map while the camera moves",
+      "paragraphs": [
+        "A robot does not receive a finished image collection. It receives an observation stream and must estimate pose while updating its map. iMAP jointly learns a scene-specific implicit map and RGB-D poses online [cite:imap]. NICE-SLAM uses a hierarchical grid-based implicit representation, while SplaTAM couples online RGB-D tracking and mapping to a Gaussian scene representation [cite:nice-slam] [cite:splatam].",
+        "Online mapping makes global consistency a systems problem. Loop closures, drift, compute limits, and changes in the environment determine whether a map remains useful. GO-SLAM combines pose estimation, loop closing, and continuous surface updates, which highlights why per-frame depth is not enough for a durable scene model [cite:go-slam]. For deployment, it matters whether a map marks unseen space, revised geometry, and dynamic objects rather than silently folding them into a static scene."
+      ],
+      "paper_ids": [
+        "imap",
+        "nice-slam",
+        "splatam",
+        "go-slam"
+      ]
+    },
+    {
+      "heading": "Account for time and interaction",
+      "paragraphs": [
+        "Static-scene assumptions fail when a person opens a cupboard or when an object moves. D-NeRF models temporal deformation for non-rigid dynamic rendering [cite:dnerf]. MonST3R estimates per-timestep geometry from dynamic scenes, and 4D Gaussian Splatting combines a canonical Gaussian representation with learned temporal deformation [cite:monst3r] [cite:four-d-gaussian-splatting]. A time-varying appearance model is valuable, but it does not necessarily supply a causal description of motion.",
+        "An interactive twin asks for still more: parts, joints, states, and sometimes an executable asset. PARIS recovers part-level shape, appearance, and motion from multi-view observations in two states; DigitalTwinArt uses two RGB-D scans in different states [cite:paris] [cite:digital-twin-art]. These outputs connect reconstruction to functional perception and manipulation, but they should not be confused with a generic photorealistic scene model. A well-rendered door may still lack an estimated axis, allowable range, handle location, or collision behavior."
+      ],
+      "paper_ids": [
+        "dnerf",
+        "monst3r",
+        "four-d-gaussian-splatting",
+        "paris",
+        "digital-twin-art",
+        "ditto",
+        "urdformer",
+        "react3d",
+        "real2code"
+      ]
+    },
+    {
+      "heading": "Separate observed geometry from completed geometry",
+      "paragraphs": [
+        "Every reconstruction combines evidence with an inductive bias. Classical multi-view geometry gets support from repeated image observations, but loses coverage in textureless or occluded areas. Learned systems can infer likely depth or complete surfaces beyond a measurement, yet their completion is a hypothesis. The distinction is important for a robot: planning through an unobserved gap and planning around an observed free-space volume are not equivalent decisions.",
+        "A useful system should retain provenance where possible. Which surface came from a depth measurement, which from multi-view agreement, which from a learned prior, and which changed after global pose correction? Such distinctions help a downstream planner decide when a predicted surface is adequate for visualization and when to request another view. They also make errors diagnosable rather than presenting a single seamless mesh or radiance field as ground truth.",
+        "This is a natural point of connection to perception. Semantic labels, instances, and functional parts can guide reconstruction toward relevant structure, while reconstruction gives those predictions a persistent frame across views. Neither direction makes the other redundant: a semantic map can identify a cabinet, but it cannot supply its unobserved back surface; a dense reconstruction can recover surfaces without telling a policy which one is a handle."
+      ],
+      "paper_ids": [
+        "colmap-sfm",
+        "dust3r",
+        "vggt",
+        "scannetpp",
+        "conceptgraphs",
+        "scenefun3d"
+      ]
+    },
+    {
+      "heading": "Treat an interactive twin as an explicit downstream commitment",
+      "paragraphs": [
+        "Articulated reconstruction makes the interaction contract concrete. Ditto uses interaction to build digital twins of articulated objects; URDFormer constructs articulated simulation environments from real-world images; REACT3D recovers articulations for interactive physical scenes; and Real2Code explores reconstruction through executable code [cite:ditto] [cite:urdformer] [cite:react3d] [cite:real2code]. Their shared target is not a single rendering format, but a representation in which objects, joints, and state can be inspected or changed.",
+        "The difficult cases show why this remains distinct from view synthesis: occluded hinges, coupled parts, unknown friction, and furniture whose motion is constrained by nearby clutter. A twin can be structurally plausible but physically unreliable. It should expose what is observed, what is inferred, and what needs validation through additional views or controlled interaction."
+      ],
+      "paper_ids": [
+        "ditto",
+        "urdformer",
+        "react3d",
+        "real2code",
+        "drawer",
+        "magicarticulate"
+      ]
+    },
+    {
+      "heading": "Compare reconstruction commitments, not just images",
+      "paragraphs": [
+        "The table separates goals that are often conflated in demonstrations. It is not a performance ranking: an application may reasonably need fast view synthesis, a globally stable map, or an editable articulated state."
+      ],
+      "table": {
+        "caption": "What a reconstruction representation makes explicit.",
+        "columns": [
+          "Goal",
+          "Primary strength",
+          "Not established by itself",
+          "Representative work"
+        ],
+        "rows": [
+          [
+            "Sparse or dense geometric frame",
+            "Camera alignment and observed structure",
+            "Complete, editable surfaces",
+            "COLMAP [cite:colmap-sfm]; BundleFusion [cite:bundlefusion]"
+          ],
+          [
+            "Neural radiance field",
+            "Novel-view appearance",
+            "Collision geometry, semantics, joints",
+            "NeRF [cite:nerf]; Mip-NeRF 360 [cite:mipnerf360]"
+          ],
+          [
+            "Gaussian scene",
+            "Fast explicit radiance primitives",
+            "A physical object model",
+            "3D Gaussian Splatting [cite:gaussian-splatting]; SplaTAM [cite:splatam]"
+          ],
+          [
+            "Feed-forward point map",
+            "Rapid correspondence and geometry hypotheses",
+            "Guaranteed global consistency",
+            "DUSt3R [cite:dust3r]; VGGT [cite:vggt]"
+          ],
+          [
+            "Articulated twin",
+            "Parts, states, and motion parameters",
+            "Accurate contact dynamics without calibration",
+            "PARIS [cite:paris]; Ditto [cite:ditto]"
+          ]
+        ]
+      },
+      "callout": {
+        "title": "Rendering is evidence, not the whole contract",
+        "text": "A compelling novel view demonstrates image consistency under the evaluated view distribution. It does not alone demonstrate metric geometry, complete semantics, connectivity, collision behavior, or action success."
+      },
+      "paper_ids": [
+        "colmap-sfm",
+        "bundlefusion",
+        "nerf",
+        "mipnerf360",
+        "gaussian-splatting",
+        "splatam",
+        "dust3r",
+        "vggt",
+        "paris",
+        "ditto"
+      ]
+    },
+    {
+      "heading": "Carry scene structure into generation and action",
+      "paragraphs": [
+        "A reconstruction is most useful when its representation exposes what the later system needs. Generation can use layouts, geometry, scene graphs, and asset constraints to propose varied environments. An embodied agent can use persistent instances, navigable free space, functional parts, and uncertainty to decide whether it can act or must observe again. The same scene may require a radiance model for visualization and explicit structure for planning.",
+        "Recent survey work on 4D spatial intelligence similarly separates low-level attributes, scene components, dynamic scenes, interactions, and physical constraints. That hierarchy is a useful guard against calling a visual reconstruction a complete world model [cite:survey-4d-spatial]. The next chapter turns to the complementary question: how can generation create worlds that preserve these structural and interaction-relevant constraints?"
+      ],
+      "paper_ids": [
+        "articulate3d",
+        "scenefun3d",
+        "holodeck",
+        "procthor",
+        "survey-4d-spatial"
+      ]
+    }
+  ],
+  "takeaway": "Ask reconstruction methods for the artifact you need: cameras and point maps for alignment, surfaces for geometry, radiance for rendering, online maps for operation, or parts and joints for interaction. A digital twin is an explicit downstream commitment, not a synonym for a beautiful rendering.",
+  "next_topic": "generation"
+}

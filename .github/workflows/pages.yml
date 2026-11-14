@@ -1,0 +1,54 @@
+name: Publish survey website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'data/**'
+      - 'assets/survey-teaser.*'
+      - 'assets/survey-roadmap.svg'
+      - 'assets/teaser-source/robocasa-kitchen-robot.png'
+      - 'assets/paper-media/**'
+      - 'scripts/build_site.py'
+      - 'scripts/validate_site.py'
+      - 'scripts/build_catalog.py'
+      - 'scripts/validate_catalog.py'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the public survey
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Build and validate the website
+        run: |
+          python3 scripts/validate_catalog.py
+          python3 scripts/build_site.py
+          python3 scripts/validate_site.py
+          node --check site/app.js
+      - name: Upload only the generated website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

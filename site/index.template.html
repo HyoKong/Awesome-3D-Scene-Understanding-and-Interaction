@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An open survey of 3D scene perception, reconstruction, generation, and embodied interaction.">
+  <meta name="theme-color" content="#142c45">
+  <title>3D Scene Understanding &amp; Interaction — An Open Survey</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="survey-home">
+  <a class="skip-link" href="#main-content">Skip to survey</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="3D Scene Understanding and Interaction home">
+      <svg viewBox="0 0 32 36" width="29" height="33" aria-hidden="true"><path d="M16 2 30 10v16L16 34 2 26V10Z M2 10l14 8 14-8 M16 18v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span>3D SCENE<br><span class="brand-secondary">UNDERSTANDING &amp; INTERACTION</span></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#survey">Survey</a><a href="reading-routes.html">Reading routes</a><a href="library.html">Paper library</a><a href="benchmarks.html">Benchmarks</a>
+      <a class="repo-link" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <header class="survey-hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">An open, illustrated survey</p>
+          <h1>3D Scene<br>Understanding<br><span>&amp; Interaction</span></h1>
+          <p class="hero-dek">From seeing a scene to acting within it.</p>
+          <p class="hero-description">Connecting scene perception, reconstruction, generation, and embodied agents through the representations they share.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#survey">Read the survey <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="library.html">Explore papers <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <figure class="hero-scene">
+          <a href="#chapter-5" aria-label="Explore embodied agents and robotic interaction"><img src="assets/teaser-source/robocasa-kitchen-robot.png" alt="A mobile robot in a simulated kitchen with cupboards, drawers, and appliances." width="1920" height="1080" fetchpriority="high"></a>
+          <figcaption><span>A scene to understand. A world to act in.</span><a href="https://robocasa.ai/" target="_blank" rel="noopener noreferrer">Simulation: RoboCasa ↗</a></figcaption>
+        </figure>
+      </div>
+      <nav class="hero-topics" aria-label="Four research directions">
+        <a href="#chapter-2"><span>01 / Perception</span>What is in the scene? <b aria-hidden="true">↗</b></a>
+        <a href="#chapter-3"><span>02 / Reconstruction</span>How is it represented? <b aria-hidden="true">↗</b></a>
+        <a href="#chapter-4"><span>03 / Generation</span>What worlds can we create? <b aria-hidden="true">↗</b></a>
+        <a href="#chapter-5"><span>04 / Interaction</span>How can an agent act? <b aria-hidden="true">↗</b></a>
+      </nav>
+    </header>
+
+    <section id="survey" class="survey-layout" aria-label="The survey">
+      <aside class="survey-toc" aria-label="Survey chapters">
+        <p class="eyebrow">On this page</p>
+        <nav>{{SURVEY_TOC}}<a href="#references"><span>08</span>References</a></nav>
+        <div class="survey-tools"><a href="reading-routes.html">Reading routes ↗</a><a href="library.html">Paper library ↗</a><a href="benchmarks.html">Benchmarks ↗</a></div>
+      </aside>
+      <article class="survey-article">
+        <section class="survey-opening" aria-labelledby="introduction-title">
+          <p class="eyebrow">Introduction</p>
+          <h2 id="introduction-title">Seeing is only the beginning.</h2>
+          <p>A useful scene model needs more than recognizable objects. It must connect geometry with meaning, keep track of what can change, and support the decisions an agent makes next.</p>
+          <p>This survey follows that connection: from observations to persistent scene representations, from generated environments to interaction. The chapters compare methods, show their outputs, and examine what their benchmarks actually establish.</p>
+      <figure class="survey-figure">
+        <a href="assets/survey-teaser.png" target="_blank" rel="noopener" aria-label="Open the survey overview at full resolution"><img src="assets/survey-teaser.svg" alt="A RoboCasa kitchen and robot connect scene perception, functional understanding, reconstruction and generation, and manipulation and agents." width="1920" height="850" loading="lazy"></a>
+        <figcaption><span>Four perspectives on the same environment.</span><a href="assets/survey-roadmap.svg" target="_blank" rel="noopener">View the research roadmap ↗</a></figcaption>
+      </figure>
+        </section>
+        {{SURVEY_CHAPTERS}}{{REFERENCES}}
+      </article>
+    </section>
+    <section class="contribute" aria-labelledby="contribute-title"><p class="eyebrow">A living survey</p><h2 id="contribute-title">Help improve the map.</h2><p>Suggest a paper, correct a resource, or help strengthen a connection between methods and benchmarks.</p><a class="button button-primary" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/CONTRIBUTING.md">Contribute on GitHub ↗</a></section>
+  </main>
+  <footer><span>3D Scene Understanding &amp; Interaction</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">Repository</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">Figure attribution</a><a href="#main-content">Back to top ↑</a></div></footer>
+</body>
+</html>

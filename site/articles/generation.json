@@ -1,0 +1,154 @@
+{
+  "id": "generation",
+  "title": "What does it mean to generate a scene a robot can use?",
+  "kicker": "Scene generation and asset authoring",
+  "dek": "A scene can be generated as a layout, a rendered world, a simulator, or an editable collection of assets. This guide asks what each representation makes possible—and what it leaves unproven.",
+  "reading_minutes": 14,
+  "intro": [
+    "A text prompt for a compact kitchen can produce a furniture arrangement, a sequence of convincing images, a textured mesh, or a simulator scene whose drawers and cabinets change state. Those are not successive quality levels of one task. They are different output contracts, with different latent variables, error modes, and downstream users. A robot cannot plan a collision-free grasp from a beautiful view alone, while a sparse layout cannot answer whether a handle is visible or whether the door will clear a counter.",
+    "Recent 3D scene-generation surveys separate procedural, neural-3D, image-based, and video-based approaches rather than comparing all outputs with one realism score. Recent embodied-generation surveys add the roles of data generation, simulation, and sim-to-real transfer. This guide follows those lessons but organizes the discussion by the next decision a representation supports: composition, visual exploration, simulation, or interaction."
+  ],
+  "sections": [
+    {
+      "heading": "Start with the output contract, not the prompt",
+      "paragraphs": [
+        "The useful first taxonomy is determined by what a later system can consume. A layout generator produces object identities, poses, extents, and relations. A view-synthesis system produces observations that remain coherent when the camera moves. A procedural or simulator generator produces geometry, materials, semantics, collision structure, and possibly action-conditioned state. Asset authoring produces reusable objects; an articulated asset adds parts and joints. A video world model predicts observations over time, but predicted frames are not automatically a metric or controllable scene representation. [cite:survey-scene-generation] [cite:survey-generation-embodied]",
+        "This framing avoids a category error. Better images can make a world easier for a human to inspect, yet they do not establish object permanence, physical parameters, or a usable action interface. Conversely, a structural layout can be highly useful for planning while looking visually impoverished. A survey should report representation, conditioning signal, editable variables, and evaluation target before it reports a qualitative image."
+      ],
+      "paper_ids": [
+        "survey-scene-generation",
+        "survey-generation-embodied",
+        "atiss",
+        "text2nerf",
+        "infinigen-indoors",
+        "articulate-anything"
+      ]
+    },
+    {
+      "heading": "Compose rooms as distributions over objects and relations",
+      "paragraphs": [
+        "Compositional methods decide what belongs in a room and where it should go. ATISS models indoor scenes as sets and autoregressively samples object attributes; SceneFormer treats objects, locations, and orientations as a sequence. Graph-to-3D makes a relational input explicit. DiffuScene denoises a scene representation containing semantic classes, object geometry, and placements. These approaches expose variables that can be edited: move the table, remove a chair, enforce a path, or condition on a floor plan. [cite:atiss] [cite:sceneformer] [cite:graph-to-3d] [cite:diffuscene]",
+        "Language changes the interface but not the need for a representation. LayoutGPT translates natural-language requirements into layouts, while InstructScene conditions indoor synthesis on instructions. The important question is whether a text constraint becomes a checked relation or only a suggestion to a generative model. A phrase such as ‘leave room to open the dishwasher’ encodes geometry, articulation, and clearance. If the representation has no door state or collision model, satisfying the sentence visually is weaker than satisfying it operationally. [cite:layoutgpt] [cite:instructscene]",
+        "Composition exposes a tension between global coherence and local diversity. A room-level model can enforce broad arrangement statistics but may repeat familiar layouts; an asset-based system can supply detailed objects but must resolve scale, support, collisions, and style between them. The relevant question is which constraints remain observable and revisable after a sample is produced."
+      ],
+      "paper_ids": [
+        "atiss",
+        "sceneformer",
+        "graph-to-3d",
+        "diffuscene",
+        "layoutgpt",
+        "instructscene"
+      ],
+      "table": {
+        "caption": "A comparison should follow the generated representation, not one visual-realism axis.",
+        "columns": [
+          "Generated product",
+          "Representative approaches",
+          "What can be edited",
+          "What remains to be validated"
+        ],
+        "rows": [
+          [
+            "Object layout",
+            "ATISS; SceneFormer; DiffuScene [cite:atiss] [cite:sceneformer] [cite:diffuscene]",
+            "Classes, poses, relations, floor-plan constraints",
+            "Geometry detail, visibility, collisions, state changes"
+          ],
+          [
+            "Rendered 3D scene",
+            "Text2Room; Text2NeRF; LucidDreamer [cite:text2room] [cite:text2nerf] [cite:luciddreamer]",
+            "Prompt, reference image, camera path, local content",
+            "Metric geometry, instance identity, physical validity"
+          ],
+          [
+            "Procedural or simulator environment",
+            "ProcTHOR; Infinigen Indoors; RoboGen [cite:procthor] [cite:infinigen-indoors] [cite:robogen]",
+            "Assets, layouts, tasks, randomization parameters",
+            "Transfer to real sensing, contacts, and task distributions"
+          ],
+          [
+            "Articulated asset",
+            "ArtFormer; PAct; Articulate-Anything [cite:artformer] [cite:pact] [cite:articulate-anything]",
+            "Parts, joints, geometry, motion limits",
+            "Kinematic correctness, contact behavior, scene context"
+          ]
+        ]
+      }
+    },
+    {
+      "heading": "Turn a prompt into a visual world without confusing appearance with structure",
+      "paragraphs": [
+        "Image-prior-based systems exploit 2D generative models, then lift or enforce consistency across views. Text2Room iterates image generation, depth lifting, and inpainting to produce a room-scale textured mesh. Text2NeRF couples a neural radiance field with diffusion guidance. LucidDreamer and RealmDreamer use Gaussian-splatting-based pipelines for text- or image-conditioned scenes. Their practical appeal is clear: a prompt or single image can become an explorable visual space without multiview capture. [cite:text2room] [cite:text2nerf] [cite:luciddreamer] [cite:realmdreamer]",
+        "But view consistency, surface completeness, and object identity should be assessed separately. A radiance field or set of Gaussians can support novel-view rendering even when occluded parts are guessed, thin structures are unstable, or two similar instances cannot be named independently. A mesh is not automatically watertight or collision-ready. A point cloud is not automatically a scene graph. These distinctions matter when a generated scene moves from a visual demonstration into simulation, editing, or robot control.",
+        "The conditioning channel changes the claim. Text specifies desired semantics but may underspecify metric layout. A reference image carries style and some geometry but hides occluded areas. User clicks, trajectories, or explicit layout constraints make control more direct but reduce the apparent simplicity of text-only generation. A fair comparison names this control budget: what information did the system receive beyond a sentence, and which requirement can it verify rather than merely display?"
+      ],
+      "paper_ids": [
+        "text2room",
+        "text2nerf",
+        "luciddreamer",
+        "realmdreamer"
+      ]
+    },
+    {
+      "heading": "Ask whether expansion creates a world or a chain of views",
+      "paragraphs": [
+        "Room generation becomes world generation when a system must preserve decisions beyond one local view. WonderWorld expands an image into connected 3D scenes and allows added content at specified locations. SceneDreamer targets large-scale unbounded 3D scene generation from image collections. These systems make exploration and scale part of the task, rather than treating a room boundary as fixed. [cite:wonderworld] [cite:scenedreamer]",
+        "A useful survey question is what remains persistent as the camera travels. Does an object keep the same identity and geometry? Does a corridor maintain metric continuity? Can a user return to a region and edit it? Is unexplored space generated lazily, or represented from the beginning? World expansion often makes attractive qualitative videos, but a navigation or manipulation consumer needs more: navigability, semantics, obstacle boundaries, and a mechanism to revise the world after contradictory evidence.",
+        "Video is easy to overinterpret here. Temporal coherence in rendered frames can support prediction or imagination, but it is not evidence that the model has produced an editable, physically constrained state. For embodied use, a video model must interface with a state estimator and action model, or be evaluated on decisions whose outcome is checked in the environment."
+      ],
+      "paper_ids": [
+        "wonderworld",
+        "scenedreamer"
+      ]
+    },
+    {
+      "heading": "Generate training worlds with task and physics in the loop",
+      "paragraphs": [
+        "Procedural environments have a different promise from text-to-3D. ProcTHOR samples interactive houses for embodied-AI training and evaluation. Infinigen creates diverse photorealistic natural worlds, while Infinigen Indoors extends procedural construction to interiors and exports to real-time simulation. Holodeck uses language-model planning and a 3D asset collection to build embodied environments. RoboGen couples generated tasks, scenes, and supervision for robot learning. [cite:procthor] [cite:infinigen] [cite:infinigen-indoors] [cite:holodeck] [cite:robogen]",
+        "These systems make it possible to randomize scene factors, define success conditions, and generate more training variation than a hand-authored benchmark. Yet randomization is not coverage. A policy can exploit recurring procedural regularities, asset conventions, or simulator dynamics that disappear in a real kitchen. The correct evaluation spans generated-world performance, held-out configuration performance, and, when the claim is real robotic capability, transfer under changed sensing, geometry, and contact conditions.",
+        "Scenario Dreamer generates vectorized initial traffic scenes and closed-loop traffic behavior for driving simulation; diffusion inpainting can extend the environment beyond an initial scene. Its long and adversarial driving evaluations show one way generated simulators can stress a planning agent, while remaining a driving-specific setting. This provides a useful comparison with household simulation: the generated representation and the downstream task determine what a simulation result can establish. [cite:scenario-dreamer]"
+      ],
+      "paper_ids": [
+        "procthor",
+        "infinigen",
+        "infinigen-indoors",
+        "holodeck",
+        "robogen",
+        "scenario-dreamer"
+      ]
+    },
+    {
+      "heading": "Treat articulated generation as asset authoring with executable state",
+      "paragraphs": [
+        "An articulated object is not a rigid mesh with a plausible seam. It needs part decomposition, hierarchy, joint types, axes, limits, and often a simulator representation. CAGE, NAP, and SINGAPO study generative part structure and motion. ArtFormer represents high-level geometry codes and kinematic relations as a tree under text conditions. [cite:cage] [cite:nap] [cite:singapo] [cite:artformer]",
+        "Image- and language-conditioned systems sharpen the question of controllability. PAct predicts part geometry and articulation parameters from one image. Articulate AnyMesh and Articulate-Anything aim to create structured, simulator-ready assets from multimodal inputs, combining retrieval with generated programs or structure. The output should be evaluated at multiple levels: are parts identifiable, are joint axes and limits plausible, does the object move without implausible penetration, and can a downstream controller complete the intended interaction? [cite:pact] [cite:articulate-anymesh] [cite:articulate-anything]",
+        "A correct articulated asset still needs placement, clearance, and contextual affordances. Functional perception can propose which region should move; reconstruction can estimate the actual object in a room; a robot can test and update the hypothesis. Generation is valuable when it preserves enough structure for later stages to disagree with, edit, and improve the world."
+      ],
+      "paper_ids": [
+        "cage",
+        "nap",
+        "singapo",
+        "artformer",
+        "pact",
+        "articulate-anymesh",
+        "articulate-anything"
+      ]
+    },
+    {
+      "heading": "Evaluate controllability and validity separately",
+      "paragraphs": [
+        "A generated scene should be judged by its intended task. Layout metrics can test object relations and collisions. Novel-view metrics can test appearance, but they should not stand in for geometry. Simulator checks can test parseability, collisions, kinematic execution, and reset behavior. Embodied evaluations should test whether an agent trained or planned in the scene succeeds under held-out configurations and, where relevant, real observations. These are complementary tests, not replacements for one another.",
+        "The open problem is a shared representation that supports global composition, high-quality appearance, editable semantics, and contact-aware dynamics without making every use case pay for every variable. Hybrid pipelines will remain important: explicit layouts can constrain visual generation; reconstructed observations can repair a generated prior; procedural scenes can generate tests for perception; and executed actions can reveal which scene assumptions were wrong. This is the bridge to embodied action."
+      ],
+      "paper_ids": [
+        "diffuscene",
+        "realmdreamer",
+        "infinigen-indoors",
+        "robogen",
+        "articulate-anything"
+      ]
+    }
+  ],
+  "takeaway": "Generation is useful for embodied intelligence when its output contract matches the next decision. Layouts support composition; rendered worlds support visual exploration; simulators support controlled action; articulated assets supply executable state. A plausible image is evidence of appearance, not a certificate of geometry, controllability, or physics.",
+  "next_topic": "robotics"
+}

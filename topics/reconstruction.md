@@ -6,7 +6,7 @@
 
 Papers are grouped by editorial section and ordered newest first within each section. Classification expresses relevance, not a rank.
 
-[Classical multi-view and RGB-D reconstruction](#section-1) · [Neural scene representations and surfaces](#section-2) · [Feed-forward scene reconstruction](#section-3) · [Incremental reconstruction, SLAM and mapping](#section-4) · [Dynamic scene reconstruction](#section-5) · [Multi-state and interaction-based reconstruction](#section-6) · [Visual digital twins and executable structure](#section-7) · [Articulation recovery from static assets](#section-8)
+[Classical multi-view and RGB-D reconstruction](#section-1) · [Neural scene representations and surfaces](#section-2) · [Feed-forward scene reconstruction](#section-3) · [Incremental reconstruction, SLAM and mapping](#section-4) · [Dynamic scene reconstruction](#section-5) · [Multi-state and interaction-based reconstruction](#section-6) · [Visual digital twins and executable structure](#section-7) · [Articulation recovery from static assets](#section-8) · [Surveys and perspectives](#section-9)
 
 <a id="section-1"></a>
 
@@ -96,3 +96,12 @@ Papers are grouped by editorial section and ordered newest first within each sec
 | [REACT3D: Recovering Articulations for Interactive Physical 3D Scenes](https://doi.org/10.1109/LRA.2026.3674028)<br>IEEE Robotics and Automation Letters 2026 · core | Converts static indoor scenes into simulation-ready interactive replicas through detection, articulation inference, completion, and assembly. | [Project](https://react3d.github.io/) · [Code](https://github.com/troyehuang/REACT3D) · [Details](../PAPERS.md#react3d) |
 | [S2O: Static to Openable Enhancement for Articulated 3D Objects](https://openaccess.thecvf.com/content/WACV2026/html/Iliash_S2O_Static_to_Openable_Enhancement_for_Articulated_3D_Objects_WACV_2026_paper.html)<br>WACV 2026 · core | Defines static-to-openable enhancement: part detection, motion prediction, and interior completion from static 3D assets. | [Project](https://3dlg-hcvc.github.io/s2o/) · [Code](https://github.com/3dlg-hcvc/s2o) · [Details](../PAPERS.md#s2o) |
 | [MagicArticulate: Make Your 3D Models Articulation-Ready](https://openaccess.thecvf.com/content/CVPR2025/html/Song_MagicArticulate_Make_Your_3D_Models_Articulation-Ready_CVPR_2025_paper.html)<br>CVPR 2025 · core | Adds structure and motion to static 3D models and releases Articulation-XL2.0 data. | [Project](https://chaoyuesong.github.io/MagicArticulate/) · [Code](https://github.com/Seed3D/MagicArticulate) · [Details](../PAPERS.md#magicarticulate) |
+
+<a id="section-9"></a>
+
+## Surveys and perspectives
+
+| Paper | Focus | Official resources |
+| --- | --- | --- |
+| [3D Generation for Embodied AI and Robotic Simulation: A Survey](https://arxiv.org/abs/2604.26509)<br>arXiv 2026 · enabling | Reviews generated assets, interactive environments, and sim-to-real pipelines, distinguishing appearance, physical validity, and embodied-task evaluation. | [Project](https://3dgen4robot.github.io/) · Code: — · [Details](../PAPERS.md#survey-generation-embodied) |
+| [Reconstructing 4D Spatial Intelligence: A Survey](https://arxiv.org/abs/2507.21045)<br>arXiv 2025 · enabling | Reviews reconstruction across spatial attributes, scene components, dynamic scenes, interaction, and physical constraints. | [Project](https://github.com/yukangcao/Awesome-4D-Spatial-Intelligence) · Code: — · [Details](../PAPERS.md#survey-4d-spatial) |

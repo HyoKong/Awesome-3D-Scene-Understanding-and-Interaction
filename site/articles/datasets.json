@@ -1,0 +1,82 @@
+{
+  "id": "datasets",
+  "title": "What does each benchmark actually establish?",
+  "kicker": "Datasets, simulators, and evaluation",
+  "dek": "Connect a research claim to the observations, annotations, interaction setting, and metrics that can support it.",
+  "reading_minutes": 8,
+  "intro": [
+    "A benchmark score is an observation made under a particular protocol. Recognizing a cabinet in a scan, predicting its hinge, reconstructing its surface, and opening it with a robot are different experiments. The datasets may even share a physical environment while using different annotations, splits, or inputs. A survey should preserve those distinctions before discussing which method performs better.",
+    "This chapter organizes evaluation around the capability being measured. It connects scene datasets to perception and reconstruction, functional annotations to interaction understanding, and simulators to embodied behavior. It then examines what must be held fixed for a comparison to be informative."
+  ],
+  "sections": [
+    {
+      "heading": "Scene datasets define the available evidence",
+      "paragraphs": [
+        "ScanNet provides annotated RGB-D reconstructions for indoor scene understanding. ScanNet++ combines high-fidelity geometry with DSLR and mobile RGB-D captures, supporting both understanding and novel-view synthesis. Their acquisition pipelines matter: learning from a reconstructed scene gives a model different information from processing an incomplete stream of camera observations. [cite:scannet-dataset] [cite:scannetpp]",
+        "Annotation granularity also changes the problem. ScanNet200 extends semantic recognition into a larger, long-tailed label space. MultiScan adds object and part semantics with mobility annotations. ARKitScenes contributes mobile-device indoor captures. These resources let researchers study complementary questions, including class imbalance, movable parts, and observation quality; none is a universal substitute for the others. [cite:scannet200] [cite:multiscan] [cite:arkitscenes]",
+        "For a segmentation result, inspect the input geometry, available images, label set, preprocessing, and split. A feature backbone evaluated on a reconstructed point cloud cannot be compared directly with a complete online perception system solely by reading the final semantic score. The survey's paper library uses benchmark associations to help discover relevant work, while the official protocol determines whether two results are comparable."
+      ],
+      "paper_ids": ["scannet-dataset", "scannetpp", "scannet200", "multiscan", "arkitscenes"]
+    },
+    {
+      "heading": "Functionality and motion require finer targets",
+      "paragraphs": [
+        "SceneFun3D annotates functional interactive elements, affordance labels, natural-language tasks, and interaction motions. This connects object recognition to questions such as which handle serves a requested action. Articulate3D describes parts, their connectivity, articulation, and executable scene structure. GAPartNet complements scene data by defining actionable parts that transfer across object categories. [cite:scenefun3d] [cite:articulate3d] [cite:gapartnet]",
+        "These annotations expose different error sources. A model can find a handle yet associate it with the wrong door, or segment the door correctly while predicting an incorrect rotation axis. Evaluation should identify whether a failure arises in detection, grouping, motion type, axis, origin, or state. A joint metric can summarize performance, but the separate components help explain what prevents useful interaction.",
+        "The Articulate3D challenge takes a scene point cloud and evaluates movable-part segmentation together with motion prediction. Its scene split is defined separately from the underlying ScanNet++ split. This is a concrete example of why a dataset name alone is insufficient provenance for a result: both the base capture and the specific challenge protocol matter. Functional grounding, motion estimation, and robot execution should each be reported under their own task definition. [cite:articulate3d]"
+      ],
+      "paper_ids": ["scenefun3d", "articulate3d", "gapartnet"]
+    },
+    {
+      "heading": "Separate appearance, geometry, and physical behavior",
+      "paragraphs": [
+        "Novel-view synthesis evaluates predicted images at held-out viewpoints. Image metrics such as PSNR, SSIM, and LPIPS examine different aspects of agreement, but they do not directly test whether a surface can support collision checking. Conversely, a geometrically useful model can have imperfect appearance. ScanNet++ is valuable here because its capture design supports studying scene geometry and rendering within a shared setting. [cite:scannetpp]",
+        "Geometric evaluation needs a coordinate convention, scale, visibility mask, and tolerance. Surface distances or completeness scores can change when unobserved regions are included, when a reconstruction is aligned differently, or when thin structures are excluded. Dynamic scenes add correspondence and timing: a good surface at one instant does not establish correct motion across the sequence.",
+        "For interactive twins, further tests are needed: whether parts move through valid ranges, whether collision geometry behaves appropriately, and whether physical parameters reproduce the relevant response. The embodied-generation survey distinguishes visual/geometric quality, physical usability, and downstream performance. That distinction is a useful organizing principle for our evaluation, without assuming that every benchmark measures all three. [cite:survey-generation-embodied]"
+      ],
+      "paper_ids": ["scannetpp", "survey-generation-embodied"],
+      "callout": {"title": "An evaluation gap", "text": "A model may render a closed cabinet accurately while giving the door incorrect thickness or a wrong hinge. A held-out image score cannot establish whether a robot can open that cabinet in simulation."}
+    },
+    {
+      "heading": "Simulators turn scene structure into an executable task",
+      "paragraphs": [
+        "SAPIEN provides a physics-based environment centered on part interaction. ManiSkill and ManiSkill2 use simulation to study generalizable manipulation, with assets, observations, tasks, and demonstrations. RLBench provides a task suite for vision-guided manipulation and several learning settings. These resources support experiments in action, rather than only predictions on stored observations. [cite:sapien] [cite:maniskill] [cite:maniskill2] [cite:rlbench]",
+        "Longer household tasks introduce additional structure. Habitat 2.0 combines environments and physics-enabled home-assistant tasks; BEHAVIOR-1K pairs everyday activities with OmniGibson, including rich object states and physical interactions. RoboCasa and RoboCasa365 focus on kitchen environments and robot behavior, with variation in tasks, scenes, and demonstrations. The environment defines which changes of state can actually be represented and tested. [cite:habitat2] [cite:behavior1k] [cite:robocasa] [cite:robocasa365]",
+        "A robot benchmark therefore needs more than a task name. Specify embodiment, sensor placement, observation access, action parameterization, controller, horizon, reset distribution, and success condition. Privileged simulator state can be useful during learning, but evaluation must say whether it is still available at execution. Otherwise a reported policy may bypass the perception problem that another method is required to solve."
+      ],
+      "paper_ids": ["sapien", "maniskill", "maniskill2", "rlbench", "habitat2", "behavior1k", "robocasa", "robocasa365"]
+    },
+    {
+      "heading": "Agents need evaluation of memory, language, and action",
+      "paragraphs": [
+        "Different embodied benchmarks expose different interfaces. R2R studies navigation from natural-language route instructions. GOAT-Bench combines category, language, and image goals in sequences that make scene memory relevant. ALFRED connects instructions to household action sequences, while TEACh introduces dialogue-guided household tasks. These are distinct settings for testing grounding, planning, and execution. [cite:r2r] [cite:goat-bench] [cite:alfred] [cite:teach]",
+        "Question answering tests another capability. OpenEQA supports episodic-memory and active-exploration settings: a system may answer from observations already collected, or gather evidence by moving through the environment. Answer quality can establish useful scene understanding, but it should not be reported as manipulation competence. Likewise, navigation success alone does not demonstrate accurate functional-part recognition. [cite:openeqa] [cite:embodiedqa]",
+        "The comparison below is a guide to choosing an experiment. Its final column names a limitation of the evidence, not a criticism of the benchmark. Focused tasks are useful precisely because they isolate a capability that would otherwise be difficult to diagnose inside a complete robot system."
+      ],
+      "paper_ids": ["r2r", "goat-bench", "alfred", "teach", "openeqa", "embodiedqa"],
+      "table": {
+        "caption": "Representative evaluation settings and the claims they can support. Check each resource's official version and protocol before comparing scores.",
+        "columns": ["Setting", "Representative resources", "Capability examined", "Further evidence needed"],
+        "rows": [
+          ["Scene recognition", "ScanNet / ScanNet++ [cite:scannet-dataset] [cite:scannetpp]", "Semantic and instance predictions under a defined input and split", "Functional state and closed-loop action"],
+          ["Functional interaction understanding", "SceneFun3D / Articulate3D [cite:scenefun3d] [cite:articulate3d]", "Interactive regions, grounding, or articulation under the selected track", "Robot execution and recovery"],
+          ["Manipulation", "ManiSkill2 / RLBench [cite:maniskill2] [cite:rlbench]", "Task success with a specified robot and controller", "Transfer beyond training assets, scenes, and embodiment"],
+          ["Household behavior", "BEHAVIOR-1K / RoboCasa365 [cite:behavior1k] [cite:robocasa365]", "Longer or varied task execution in interactive environments", "Real-world transfer under matched sensing and resources"],
+          ["Lifelong navigation", "GOAT-Bench [cite:goat-bench]", "Goal reaching across modalities with continuing scene experience", "Object manipulation and contact reasoning"],
+          ["Embodied question answering", "OpenEQA [cite:openeqa]", "Answering from memory or active observation", "Whether the knowledge supports physical action"]
+        ]
+      }
+    },
+    {
+      "heading": "Generalization must name what was withheld",
+      "paragraphs": [
+        "An unseen camera view, object instance, object category, room layout, instruction, task composition, and robot embodiment are different distribution shifts. A survey should report which one an experiment actually tests. Procedural environments such as ProcTHOR broaden available scene variation, but a held-out generation seed does not by itself guarantee that new structural combinations are tested. [cite:procthor]",
+        "For learning-based comparisons, preserve the amount and source of training data, pretrained models, external retrieval, compute budget, and adaptation allowed at evaluation. For stochastic systems, episode count and variability matter alongside the mean. A large score difference under one reset distribution may not survive a different distribution of initial states.",
+        "The most informative result combines a capability metric with failure analysis: which objects, layouts, instructions, or transitions cause errors, and what additional observation or supervision would resolve them? The next chapter uses these gaps to formulate research questions that connect improvements in scene models to improvements in embodied decisions."
+      ],
+      "paper_ids": ["procthor"]
+    }
+  ],
+  "takeaway": "Choose evaluation from the capability being claimed. The observations, annotations, split, embodiment, and success condition are part of the result; preserving them is what makes a comparison meaningful.",
+  "next_topic": "outlook"
+}

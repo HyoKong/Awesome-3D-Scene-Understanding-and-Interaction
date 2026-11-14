@@ -655,6 +655,20 @@ Resource note: Repository links project page and describes released code/data.
 
 Checked: 2026-11-13.
 
+<a id="survey-4d-spatial"></a>
+
+### 4D Spatial Intelligence Survey (2025)
+
+**[Reconstructing 4D Spatial Intelligence: A Survey](https://arxiv.org/abs/2507.21045)** — arXiv 2025 · **Enabling** · Surveys and perspectives.
+
+Reviews reconstruction across spatial attributes, scene components, dynamic scenes, interaction, and physical constraints.
+
+[Project](https://github.com/yukangcao/Awesome-4D-Spatial-Intelligence) · Code: —
+
+Resource note: Survey reference; a resource collection is not labeled as implementation code.
+
+Checked: 2026-11-14.
+
 <a id="drawer"></a>
 
 ### DRAWER (2025)
@@ -1040,6 +1054,34 @@ Checked: 2026-11-14.
 
 ## Scene generation and asset authoring
 
+<a id="survey-generation-embodied"></a>
+
+### 3D Generation for Embodied AI Survey (2026)
+
+**[3D Generation for Embodied AI and Robotic Simulation: A Survey](https://arxiv.org/abs/2604.26509)** — arXiv 2026 · **Enabling** · Surveys and perspectives.
+
+Reviews generated assets, interactive environments, and sim-to-real pipelines, distinguishing appearance, physical validity, and embodied-task evaluation.
+
+[Project](https://3dgen4robot.github.io/) · Code: —
+
+Resource note: Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.
+
+Checked: 2026-11-14.
+
+<a id="survey-scene-generation"></a>
+
+### 3D Scene Generation Survey (2026)
+
+**[3D Scene Generation: A Survey](https://arxiv.org/abs/2505.05474)** — IJCV 2026 · **Enabling** · Surveys and perspectives.
+
+Organizes scene synthesis by procedural, neural 3D, image-based, and video-based methods, with evaluation and applications.
+
+[Project](https://github.com/hzxie/Awesome-3D-Scene-Generation) · Code: —
+
+Resource note: Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.
+
+Checked: 2026-11-14.
+
 <a id="articraft"></a>
 
 ### Articraft (2026)
@@ -1093,6 +1135,20 @@ A feed-forward part-centric method generates part geometry and articulation para
 Benchmark connections: PartNet-Mobility, ACD. This is a relevance link, not a leaderboard claim.
 
 Checked: 2026-11-13.
+
+<a id="survey-world-modeling"></a>
+
+### 3D and 4D World Modeling Survey (2025)
+
+**[3D and 4D World Modeling: A Survey](https://arxiv.org/abs/2509.07996)** — arXiv 2025 · **Enabling** · Surveys and perspectives.
+
+Organizes world modeling around video, occupancy, and LiDAR representations, with definitions, evaluation settings, and applications.
+
+[Project](https://worldbench.github.io/survey) · Code: —
+
+Resource note: Survey reference; a resource collection is not labeled as implementation code.
+
+Checked: 2026-11-14.
 
 <a id="artformer"></a>
 
@@ -1422,6 +1478,20 @@ Uses vision to propose a grasp and coarse direction, then uses tactile contact f
 Resource note: Project page and public repository use the same paper title.
 
 Checked: 2026-11-13.
+
+<a id="survey-vla"></a>
+
+### VLA Survey (2026)
+
+**[A Survey on Vision-Language-Action Models for Embodied AI](https://arxiv.org/abs/2405.14093)** — TNNLS 2026 · **Enabling** · Surveys and perspectives.
+
+Organizes vision-language-action research into model components, low-level control policies, and high-level task planning, alongside datasets and evaluation.
+
+[Project](https://github.com/yueen-ma/Awesome-VLA) · Code: —
+
+Resource note: Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.
+
+Checked: 2026-11-14.
 
 <a id="articubot"></a>
 

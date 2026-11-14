@@ -6,7 +6,7 @@
 
 Papers are grouped by editorial section and ordered newest first within each section. Classification expresses relevance, not a rank.
 
-[Indoor layouts and scene graphs](#section-1) · [Text and image-conditioned scene synthesis](#section-2) · [Procedural scene and world generation](#section-3) · [Simulation environments and embodied training](#section-4) · [Generative part structure and motion](#section-5) · [Language and vision-guided asset authoring](#section-6)
+[Indoor layouts and scene graphs](#section-1) · [Text and image-conditioned scene synthesis](#section-2) · [Procedural scene and world generation](#section-3) · [Simulation environments and embodied training](#section-4) · [Generative part structure and motion](#section-5) · [Language and vision-guided asset authoring](#section-6) · [Surveys and perspectives](#section-7)
 
 <a id="section-1"></a>
 
@@ -78,3 +78,13 @@ Papers are grouped by editorial section and ordered newest first within each sec
 | [Articraft: An Agentic System for Scalable Articulated 3D Asset Generation](https://arxiv.org/abs/2605.15187)<br>arXiv preprint 2026 · core | Uses LLM-written domain-specific code to define parts, geometry, joints, and validation for articulated assets. | [Project](https://articraft3d.github.io/) · [Code](https://github.com/articraftresearch/Articraft) · [Details](../PAPERS.md#articraft) |
 | [Articulate AnyMesh: Open-Vocabulary 3D Articulated Objects Modeling](https://arxiv.org/abs/2502.02590)<br>CoRL 2025 · core | Converts a rigid 3D mesh into an articulated counterpart using VLMs and visual prompts for parts and joints. | [Project](https://articulate-anymesh.github.io/) · Code: announced · [Details](../PAPERS.md#articulate-anymesh) |
 | [Articulate-Anything: Automatic Modeling of Articulated Objects via a Vision-Language Foundation Model](https://proceedings.iclr.cc/paper_files/paper/2025/hash/2c8047bf3ed8ef6905351608d641f02f-Abstract-Conference.html)<br>ICLR 2025 · core | Uses text, images, or video plus retrieval and VLM-generated programs to create simulator-ready articulated URDF assets. | [Project](https://articulate-anything.github.io/) · [Code](https://github.com/vlongle/articulate-anything) · [Details](../PAPERS.md#articulate-anything) |
+
+<a id="section-7"></a>
+
+## Surveys and perspectives
+
+| Paper | Focus | Official resources |
+| --- | --- | --- |
+| [3D Generation for Embodied AI and Robotic Simulation: A Survey](https://arxiv.org/abs/2604.26509)<br>arXiv 2026 · enabling | Reviews generated assets, interactive environments, and sim-to-real pipelines, distinguishing appearance, physical validity, and embodied-task evaluation. | [Project](https://3dgen4robot.github.io/) · Code: — · [Details](../PAPERS.md#survey-generation-embodied) |
+| [3D Scene Generation: A Survey](https://arxiv.org/abs/2505.05474)<br>IJCV 2026 · enabling | Organizes scene synthesis by procedural, neural 3D, image-based, and video-based methods, with evaluation and applications. | [Project](https://github.com/hzxie/Awesome-3D-Scene-Generation) · Code: — · [Details](../PAPERS.md#survey-scene-generation) |
+| [3D and 4D World Modeling: A Survey](https://arxiv.org/abs/2509.07996)<br>arXiv 2025 · enabling | Organizes world modeling around video, occupancy, and LiDAR representations, with definitions, evaluation settings, and applications. | [Project](https://worldbench.github.io/survey) · Code: — · [Details](../PAPERS.md#survey-world-modeling) |

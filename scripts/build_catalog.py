@@ -134,6 +134,7 @@ def build_readme(catalog, reading_routes, paper_map):
     lines += build_contents(reading_routes)
     lines += [
         "A collection of papers and resources on 3D scene understanding, reconstruction, generation, and embodied interaction. Topics span scene geometry and appearance, spatial reasoning, generated environments, navigation, manipulation, and articulated objects.", "",
+        "Read the [survey and searchable paper library](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/) on the companion website.", "",
     ]
     lines += build_reading_routes(reading_routes, paper_map)
     lines += [

@@ -4969,6 +4969,140 @@
         "https://github.com/peteanderson80/Matterport3DSimulator"
       ],
       "last_verified": "2026-11-14"
+    },
+    {
+      "id": "survey-scene-generation",
+      "short": "3D Scene Generation Survey",
+      "title": "3D Scene Generation: A Survey",
+      "year": 2026,
+      "venue": "IJCV",
+      "url": "https://arxiv.org/abs/2505.05474",
+      "evidence": "Organizes scene synthesis by procedural, neural 3D, image-based, and video-based methods, with evaluation and applications.",
+      "roles": [
+        "survey"
+      ],
+      "category": "generation",
+      "subtopic": "Surveys and perspectives",
+      "section": "Surveys and perspectives",
+      "scope": "enabling",
+      "project_url": "https://github.com/hzxie/Awesome-3D-Scene-Generation",
+      "code_url": null,
+      "project_status": "verified",
+      "code_status": "not-located",
+      "link_notes": "Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.",
+      "link_sources": [
+        "https://arxiv.org/abs/2505.05474",
+        "https://github.com/hzxie/Awesome-3D-Scene-Generation"
+      ],
+      "last_verified": "2026-11-14"
+    },
+    {
+      "id": "survey-generation-embodied",
+      "short": "3D Generation for Embodied AI Survey",
+      "title": "3D Generation for Embodied AI and Robotic Simulation: A Survey",
+      "year": 2026,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2604.26509",
+      "evidence": "Reviews generated assets, interactive environments, and sim-to-real pipelines, distinguishing appearance, physical validity, and embodied-task evaluation.",
+      "roles": [
+        "survey"
+      ],
+      "category": "generation",
+      "subtopic": "Surveys and perspectives",
+      "section": "Surveys and perspectives",
+      "scope": "enabling",
+      "project_url": "https://3dgen4robot.github.io/",
+      "code_url": null,
+      "project_status": "verified",
+      "code_status": "not-located",
+      "link_notes": "Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.",
+      "link_sources": [
+        "https://arxiv.org/abs/2604.26509",
+        "https://3dgen4robot.github.io/"
+      ],
+      "last_verified": "2026-11-14",
+      "additional_topics": {
+        "reconstruction": "Surveys and perspectives",
+        "robotics": "Surveys and perspectives"
+      }
+    },
+    {
+      "id": "survey-vla",
+      "short": "VLA Survey",
+      "title": "A Survey on Vision-Language-Action Models for Embodied AI",
+      "year": 2026,
+      "venue": "TNNLS",
+      "url": "https://arxiv.org/abs/2405.14093",
+      "evidence": "Organizes vision-language-action research into model components, low-level control policies, and high-level task planning, alongside datasets and evaluation.",
+      "roles": [
+        "survey"
+      ],
+      "category": "robotics",
+      "subtopic": "Surveys and perspectives",
+      "section": "Surveys and perspectives",
+      "scope": "enabling",
+      "project_url": "https://github.com/yueen-ma/Awesome-VLA",
+      "code_url": null,
+      "project_status": "verified",
+      "code_status": "not-located",
+      "link_notes": "Survey and associated reading resources; no method implementation is implied. Publication metadata and latest arXiv revision checked against the primary page.",
+      "link_sources": [
+        "https://arxiv.org/abs/2405.14093",
+        "https://github.com/yueen-ma/Awesome-VLA"
+      ],
+      "last_verified": "2026-11-14"
+    },
+    {
+      "id": "survey-world-modeling",
+      "short": "3D and 4D World Modeling Survey",
+      "title": "3D and 4D World Modeling: A Survey",
+      "year": 2025,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2509.07996",
+      "evidence": "Organizes world modeling around video, occupancy, and LiDAR representations, with definitions, evaluation settings, and applications.",
+      "roles": [
+        "survey"
+      ],
+      "category": "generation",
+      "section": "Surveys and perspectives",
+      "subtopic": "Surveys and perspectives",
+      "scope": "enabling",
+      "project_url": "https://worldbench.github.io/survey",
+      "code_url": null,
+      "project_status": "verified",
+      "code_status": "not-located",
+      "link_notes": "Survey reference; a resource collection is not labeled as implementation code.",
+      "link_sources": [
+        "https://arxiv.org/abs/2509.07996",
+        "https://worldbench.github.io/survey"
+      ],
+      "last_verified": "2026-11-14"
+    },
+    {
+      "id": "survey-4d-spatial",
+      "short": "4D Spatial Intelligence Survey",
+      "title": "Reconstructing 4D Spatial Intelligence: A Survey",
+      "year": 2025,
+      "venue": "arXiv",
+      "url": "https://arxiv.org/abs/2507.21045",
+      "evidence": "Reviews reconstruction across spatial attributes, scene components, dynamic scenes, interaction, and physical constraints.",
+      "roles": [
+        "survey"
+      ],
+      "category": "reconstruction",
+      "section": "Surveys and perspectives",
+      "subtopic": "Surveys and perspectives",
+      "scope": "enabling",
+      "project_url": "https://github.com/yukangcao/Awesome-4D-Spatial-Intelligence",
+      "code_url": null,
+      "project_status": "verified",
+      "code_status": "not-located",
+      "link_notes": "Survey reference; a resource collection is not labeled as implementation code.",
+      "link_sources": [
+        "https://arxiv.org/abs/2507.21045",
+        "https://github.com/yukangcao/Awesome-4D-Spatial-Intelligence"
+      ],
+      "last_verified": "2026-11-14"
     }
   ],
   "section_order": {

@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "id": "scenefun3d-functionality-teaser",
+      "chapter": "datasets",
+      "section_index": 2,
+      "paper_id": "scenefun3d",
+      "type": "image",
+      "src": "assets/paper-media/scenefun3d-teaser.png",
+      "title": "SceneFun3D functionality and affordance overview",
+      "caption": "A scene-scale view of the transition from visible functional elements to task-grounded affordances and motion annotations.",
+      "source_url": "https://scenefun3d.github.io/",
+      "credit": "Delitzas et al., SceneFun3D (CVPR 2024)",
+      "license_label": "CC BY-SA 4.0 (project website)",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    {
+      "id": "conceptgraphs-video",
+      "chapter": "perception",
+      "section_index": 3,
+      "paper_id": "conceptgraphs",
+      "type": "youtube",
+      "src": "https://www.youtube-nocookie.com/embed/ie9VdL7wieY",
+      "title": "ConceptGraphs project video",
+      "caption": "An open-vocabulary 3D scene graph makes object-level language and spatial relations available to downstream planning.",
+      "source_url": "https://concept-graphs.github.io/",
+      "credit": "Gu et al., ConceptGraphs (ICRA 2024)",
+      "license_label": "Official project video",
+      "license_url": "https://concept-graphs.github.io/"
+    },
+    {
+      "id": "segment-snap-overview-video",
+      "chapter": "perception",
+      "section_index": 5,
+      "paper_id": "segment-snap",
+      "type": "video",
+      "src": "https://hyokong.github.io/segment-snap-page/assets/segment-snap-web.mp4",
+      "poster": "assets/paper-media/segment-snap-video-poster.jpg",
+      "title": "Segment–Snap method overview",
+      "caption": "Geometric part structure and handle semantics are coupled to turn an RGB point cloud into motion and interaction-region hypotheses.",
+      "source_url": "https://hyokong.github.io/segment-snap-page/",
+      "credit": "Kong and Yang, Segment–Snap (2026); local poster extracted from the official overview at approximately 18 s",
+      "license_label": "Official project video",
+      "license_url": "https://hyokong.github.io/segment-snap-page/"
+    },
+    {
+      "id": "urdformer-pipeline-video",
+      "chapter": "reconstruction",
+      "section_index": 7,
+      "paper_id": "urdformer",
+      "type": "video",
+      "src": "https://urdformer.github.io/media/videos/urdformer.mp4",
+      "poster": "assets/paper-media/urdformer-poster-90.jpg",
+      "title": "URDFormer project video",
+      "caption": "A reconstruction pipeline can target an executable scene description when the intended downstream artifact is a simulator-ready articulated model.",
+      "source_url": "https://urdformer.github.io/",
+      "credit": "Chen et al., URDFormer (RSS 2024); local poster derived from the official project video at approximately 90 s",
+      "license_label": "Official project video",
+      "license_url": "https://urdformer.github.io/"
+    },
+    {
+      "id": "holodeck-pipeline-video",
+      "chapter": "generation",
+      "section_index": 5,
+      "paper_id": "holodeck",
+      "type": "video",
+      "src": "https://yueyang.ai/holodeck/static/videos/pipeline_upscale.mp4",
+      "poster": "assets/paper-media/holodeck-poster-23.jpg",
+      "title": "Holodeck generation pipeline",
+      "caption": "Language-guided scene generation is useful to embodied AI when it also preserves layout, assets, and the constraints needed to instantiate an environment.",
+      "source_url": "https://yueyang.ai/holodeck/",
+      "credit": "Yang et al., Holodeck (CVPR 2024); local poster derived from the official project video at approximately 23 s",
+      "license_label": "Official project video",
+      "license_url": "https://yueyang.ai/holodeck/"
+    },
+    {
+      "id": "robocasa-door-video",
+      "chapter": "robotics",
+      "section_index": 7,
+      "paper_id": "robocasa",
+      "type": "video",
+      "src": "https://robocasa.ai/assets/videos/basic_skills/door.mp4",
+      "poster": "assets/paper-media/robocasa-door-poster-3.jpg",
+      "title": "RoboCasa door-opening behavior",
+      "caption": "A simulated robot task makes the connection between an interactable scene and closed-loop behavior visible.",
+      "source_url": "https://robocasa.ai/",
+      "credit": "Nasiriany et al., RoboCasa; local poster derived from the official door-opening video at approximately 3 s",
+      "license_label": "Official project video",
+      "license_url": "https://robocasa.ai/"
+    }
+  ]
+}

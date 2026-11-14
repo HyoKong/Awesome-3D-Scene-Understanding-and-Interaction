@@ -58,3 +58,21 @@ python scripts/validate_catalog.py
 Review the generated README, topic pages, complete index, and benchmark guide. Open changed links and check paper identity against the primary source. If changing the detailed figure, edit `data/roadmap.json` and run `scripts/render_roadmap.py` in an environment with Matplotlib. The teaser has its own renderer, `scripts/render_teaser.py`. Inspect rendered figures for legibility as well as programmatic bounds checks.
 
 Existing surveys and awesome lists can reveal candidates. Verify those candidates against primary sources and write independent summaries. Reused figures or text require their source's attribution and license terms.
+
+## Update the website
+
+The website uses the same catalog, reading routes, and benchmark records as the README. The survey chapters live in `site/articles/` and generate both the continuous survey and individual chapter pages. Cite canonical paper IDs inline with `[cite:paper-id]`. Sections can include a comparison table (`caption`, `columns`, `rows`) and a short callout (`title`, `text`). Keep claims grounded in primary papers, distinguish proposed research directions from reported results, and compare methods under stated assumptions.
+
+Figures and videos are declared individually in `site/media.json`, with their target chapter and section, original paper, caption, source, credit, and license information. Keep copied assets under `assets/paper-media/`, add each file to the explicit `.gitignore` allowlist, and document attribution in `assets/ATTRIBUTION.md`. Stream official videos from their source; YouTube videos load only after a reader chooses to play. The builder copies only media explicitly named in the manifest.
+
+To preview the site:
+
+```bash
+python scripts/build_site.py
+python scripts/validate_site.py
+python -m http.server 8000 --directory _site
+```
+
+Open `http://localhost:8000` in your browser. The build needs only Python's standard library. Editing the templates, styles, or JavaScript in `site/` changes the presentation.
+
+GitHub Actions builds and deploys the website when its inputs change on `main`. Only the explicitly allowed output files in `_site/` enter the Pages artifact. Research notes and design drafts remain outside the public repository and deployment.
