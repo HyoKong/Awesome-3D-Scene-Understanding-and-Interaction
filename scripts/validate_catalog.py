@@ -62,7 +62,8 @@ def main():
     readme = (ROOT / "README.md").read_text()
     contents = readme.split("## Contents\n", 1)[1].split("## Reading routes\n", 1)[0]
     hero_version = hashlib.sha256((ROOT / "assets/survey-teaser.svg").read_bytes()).hexdigest()[:12]
-    assert f"](assets/survey-teaser.svg?v={hero_version})](assets/survey-teaser.png)" in readme
+    hero_url = f"https://raw.githubusercontent.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/main/assets/survey-teaser.svg?v={hero_version}"
+    assert f"]({hero_url})](assets/survey-teaser.png)" in readme
     assert readme.index("assets/survey-teaser.svg") < readme.index("## Contents") < readme.index("## Reading routes")
     for route in reading_routes["routes"]:
         assert f'(#route-{route["id"]})' in contents, f"Route missing from contents: {route['id']}"
