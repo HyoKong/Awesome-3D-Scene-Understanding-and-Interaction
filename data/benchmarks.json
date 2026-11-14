@@ -1,0 +1,392 @@
+{
+  "checked_on": "2026-11-13",
+  "benchmarks": [
+    {
+      "id": "scannetpp",
+      "name": "ScanNet++ Benchmark",
+      "url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/benchmark/docs",
+      "leaderboard_url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/benchmark/insseg",
+      "task": "3D semantic and instance segmentation on high-fidelity indoor scans.",
+      "protocol_notes": "Current public pages default to v2. Semantic segmentation evaluates the top 100 semantic classes, with top-1/top-3 multilabel IoU on decimated mesh vertices; instance segmentation uses the countable subset of those classes and AP/AP50/AP25. Preserve version, task, split and supervision when comparing methods.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "scannetpp",
+        "ptv3",
+        "point-transformer-v2",
+        "oneformer3d",
+        "softgroup",
+        "pointgroup",
+        "ditr",
+        "sonata",
+        "volume-transformer",
+        "context-aware-classifier",
+        "oa-cnns",
+        "octformer",
+        "lassm",
+        "sgiformer",
+        "spformer"
+      ],
+      "unresolved_entries": [
+        "Beyond Context Bias: Adaptive Instance Placement for Robust 3D Instance Segmentation (Rongkun Yang et al.; leaderboard row did not supply a publication URL). A primary project page and code repository exist, but this bounded import intentionally omits it pending a canonical paper record.",
+        "Anonymous instance-segmentation submissions have not been mapped to publications."
+      ],
+      "sources": [
+        "https://scannetpp.mlsg.cit.tum.de/scannetpp/benchmark/semseg",
+        "https://scannetpp.mlsg.cit.tum.de/scannetpp/benchmark/insseg"
+      ]
+    },
+    {
+      "id": "scannet",
+      "name": "ScanNet Benchmark",
+      "url": "https://www.scan-net.org/",
+      "leaderboard_url": "https://kaldir.vc.in.tum.de/scannet_benchmark/semantic_instance_3d",
+      "task": "Indoor 3D semantic and instance segmentation.",
+      "protocol_notes": "State semantic, instance, or panoptic task and split for every comparison.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "scannet-dataset",
+        "pointgroup",
+        "hais",
+        "softgroup",
+        "mask3d",
+        "oneformer3d",
+        "ptv3"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "scannet200",
+      "name": "ScanNet200",
+      "url": "https://kaldir.vc.in.tum.de/scannet_benchmark/documentation",
+      "leaderboard_url": "https://kaldir.vc.in.tum.de/scannet_benchmark/semantic_instance_3d",
+      "task": "Long-tail 3D semantic and instance segmentation with 200 classes.",
+      "protocol_notes": "Scores are not interchangeable with ScanNet20; preserve label set and metric.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "scannet200",
+        "mask3d",
+        "oneformer3d",
+        "ptv3",
+        "openmask3d",
+        "open3dis"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "s3dis",
+      "name": "S3DIS",
+      "url": "http://buildingparser.stanford.edu/dataset.html",
+      "leaderboard_url": null,
+      "task": "Indoor point-cloud semantic, instance, and panoptic segmentation.",
+      "protocol_notes": "Keep Area 5 and 6-fold protocols distinct.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "s3dis-dataset",
+        "pointnet",
+        "pointnet-plus-plus",
+        "superpoint-graph",
+        "superpoint-transformer",
+        "stratified-transformer",
+        "ptv3"
+      ],
+      "unresolved_entries": [
+        "No single official all-method leaderboard was confirmed in this pass."
+      ]
+    },
+    {
+      "id": "multiscan",
+      "name": "MultiScan Benchmark",
+      "url": "https://github.com/smartscenes/multiscan",
+      "leaderboard_url": null,
+      "task": "Object instance segmentation, part instance segmentation, and mobility prediction in articulated indoor environments.",
+      "protocol_notes": "Official repository exposes separate benchmark downloads and data preparation paths for object, part, and mobility tasks.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "multiscan"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "arkitscenes",
+      "name": "ARKitScenes",
+      "url": "https://github.com/apple/ARKitScenes",
+      "leaderboard_url": null,
+      "task": "Mobile RGB-D indoor scene understanding tasks.",
+      "protocol_notes": "Access and download are governed by the dataset repository and its terms; do not equate its task protocols with ScanNet.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "arkitscenes"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "articulation-xl2",
+      "name": "Articulation-XL2.0",
+      "url": "https://github.com/Seed3D/MagicArticulate",
+      "leaderboard_url": null,
+      "task": "Static 3D assets to articulated structure and motion.",
+      "protocol_notes": "Official MagicArticulate release links the data; no canonical public leaderboard was verified.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "magicarticulate"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "partnet-mobility",
+      "name": "PartNet-Mobility",
+      "url": "https://huggingface.co/datasets/sapien-sim/PartNetMobility",
+      "leaderboard_url": null,
+      "task": "Articulated object assets, motion annotations, rendering, and simulation.",
+      "protocol_notes": "Use paper-specific protocols; this is not a cross-paper leaderboard.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "sapien",
+        "ditto",
+        "cage",
+        "flowbot3d",
+        "pact"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "acd",
+      "name": "Articulated Container Dataset",
+      "url": "https://huggingface.co/datasets/3dlg-hcvc/s2o",
+      "leaderboard_url": null,
+      "task": "Openable containers with articulation annotations.",
+      "protocol_notes": "PAct evaluates on ACD; a canonical public leaderboard was not located in this pass.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "s2o",
+        "pact"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "maniskill2",
+      "name": "ManiSkill2",
+      "url": "https://maniskill2.github.io/",
+      "leaderboard_url": "https://sapien.ucsd.edu/challenges/maniskill/challenges/ms2-ongoing",
+      "task": "Generalizable manipulation with articulated tasks including cabinet doors/drawers, faucets, chairs, mobile-base and dual-arm settings.",
+      "protocol_notes": "Scores require task, observation modality, embodiment, controller, and split. The public ongoing leaderboard is benchmark-specific; this survey should ingest results only with those fields.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "maniskill2"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "rlbench",
+      "name": "RLBench",
+      "url": "https://github.com/stepjam/RLBench",
+      "leaderboard_url": null,
+      "task": "Vision-guided manipulation benchmark with diverse scripted tasks, including articulated-state interactions.",
+      "protocol_notes": "Treat it as an enabling benchmark: only methods evaluated on tasks explicitly involving articulated state should enter the articulation-specific comparison table.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "rlbench"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "behavior1k",
+      "name": "BEHAVIOR-1K / OmniGibson",
+      "url": "https://behavior.stanford.edu/",
+      "leaderboard_url": "https://github.com/StanfordVL/BEHAVIOR-1K/tree/main/docs/challenge",
+      "task": "Long-horizon household tasks in realistic scenes using mobile, bimanual-capable embodied agents and dynamic object states.",
+      "protocol_notes": "The 2026 challenge pins an evaluation configuration and restricts policies to onboard observations; retain version, robot configuration, task subset, and partial-credit rule with any result. OmniGibson is covered as BEHAVIOR-1K software, not as a separate misattributed paper record.",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "behavior1k"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "scenefun3d",
+      "name": "SceneFun3D",
+      "url": "https://scenefun3d.github.io/documentation/",
+      "leaderboard_url": "https://eval.ai/web/challenges/challenge-page/2466/overview",
+      "task": "Functionality segmentation, language-driven affordance grounding, and interaction-motion annotations.",
+      "protocol_notes": "SceneFun3D's documented segmentation/grounding evaluation uses dataset v0.2.0 and hidden test submissions. Segmentation is ranked by AP averaged over IoU thresholds; grounding by AP50. For scene-level motion estimation, see the Articulate3D challenge. Keep the datasets, inputs, and scoring protocols distinct.",
+      "related_challenge_url": "https://insait-institute.github.io/articulate3d.github.io/challenge.html",
+      "checked_on": "2026-11-13",
+      "paper_ids": [
+        "scenefun3d",
+        "articulate3d",
+        "volume-transformer"
+      ],
+      "unresolved_entries": [
+        "Revisit the dynamic EvalAI table before identifying current leaders or associating submission names with papers."
+      ],
+      "sources": [
+        "https://scenefun3d.github.io/documentation/benchmarks/guidelines/",
+        "https://scenefun3d.github.io/documentation/benchmarks/task1/",
+        "https://scenefun3d.github.io/documentation/benchmarks/task2/",
+        "https://scenefun3d.github.io/documentation/benchmarks/task3/",
+        "https://yilmazkadir.github.io/Volt/"
+      ]
+    },
+    {
+      "id": "articulate3d",
+      "name": "Articulate3D Challenge",
+      "url": "https://insait-institute.github.io/articulate3d.github.io/challenge.html",
+      "leaderboard_url": "https://insait-institute.github.io/articulate3d.github.io/challenge.html#leaderboard",
+      "task": "Scene-level movable-part and interactable-region segmentation, with motion type, axis and origin prediction.",
+      "protocol_notes": "The ECCV 2026 page specifies indoor scene point clouds and reports segmentation AP50 together with motion metrics MA, MO and MAO-ST. Keep challenge editions separate, and distinguish this motion-estimation protocol from SceneFun3D segmentation and grounding evaluation.",
+      "paper_ids": [
+        "articulate3d",
+        "segment-snap"
+      ],
+      "checked_on": "2026-11-13",
+      "unresolved_entries": [
+        "Resolve other named challenge submissions to their official papers before adding publication records."
+      ],
+      "sources": [
+        "https://insait-institute.github.io/articulate3d.github.io/challenge.html"
+      ]
+    },
+    {
+      "id": "robocasa",
+      "name": "RoboCasa / RoboCasa365",
+      "url": "https://robocasa.ai/",
+      "leaderboard_url": "https://robocasa.ai/leaderboard.html",
+      "task": "Generalist kitchen manipulation with mobile robots, articulated appliances and composite household tasks.",
+      "protocol_notes": "The current multi-task leaderboard evaluates 50 target tasks with Atomic-Seen, Composite-Seen and Composite-Unseen splits; its specified pretraining data and versioned horizons matter. Distinguish original RoboCasa from RoboCasa365 and model versions from the publications introducing their families.",
+      "paper_ids": [
+        "robocasa",
+        "robocasa365",
+        "diffusion-policy",
+        "pi-zero",
+        "pi-zero-point-five",
+        "groot-n1"
+      ],
+      "checked_on": "2026-11-13",
+      "unresolved_entries": [
+        "Many current policy submissions and agentic wrappers have not yet been mapped to individual canonical papers. The listed policy records are contextual references only; they do not assert an exact submitted configuration, score, or rank."
+      ],
+      "sources": [
+        "https://robocasa.ai/leaderboard.html"
+      ]
+    },
+    {
+      "id": "alfred",
+      "name": "ALFRED",
+      "url": "https://askforalfred.com/",
+      "leaderboard_url": null,
+      "task": "Language-guided household task completion with navigation and object interaction in AI2-THOR.",
+      "protocol_notes": "Record seen/unseen split, task type, observation setup, and whether language subgoals are provided.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "alfred",
+        "llm-planner"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "teach",
+      "name": "TEACh",
+      "url": "https://teachable-ai.org/",
+      "leaderboard_url": null,
+      "task": "Dialog-guided embodied household tasks with an interactive teacher in AI2-THOR.",
+      "protocol_notes": "Keep dialog setting, task split, and agent interaction budget alongside results.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "teach"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "openeqa",
+      "name": "OpenEQA",
+      "url": "https://open-eqa.github.io/",
+      "leaderboard_url": null,
+      "task": "Open-vocabulary embodied question answering from episodic memory or active exploration.",
+      "protocol_notes": "Distinguish episodic-memory and active-exploration settings; natural-language answers use the benchmark evaluation protocol.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "openeqa"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "embodiedqa",
+      "name": "EmbodiedQA",
+      "url": "https://embodiedqa.org/",
+      "leaderboard_url": null,
+      "task": "Navigation and question answering in 3D environments.",
+      "protocol_notes": "Treat navigation budget and answer accuracy as linked but separate aspects of the task.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "embodiedqa"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "habitat-rearrangement",
+      "name": "Habitat 2.0 / Home Assistant Benchmark",
+      "url": "https://aihabitat.org/habitat2/",
+      "leaderboard_url": null,
+      "task": "Physics-enabled household rearrangement and home-assistant tasks in interactive 3D environments.",
+      "protocol_notes": "Preserve task, robot embodiment, controller, observations, and generalization split when comparing agents.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "habitat2"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "habitat3",
+      "name": "Habitat 3.0",
+      "url": "https://aihabitat.org/habitat3/",
+      "leaderboard_url": null,
+      "task": "Collaborative social navigation and social rearrangement with humanoid avatars or human partners.",
+      "protocol_notes": "State whether evaluation uses avatar policies or humans-in-the-loop, plus task and environment setting.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "habitat3"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "goat-bench",
+      "name": "GOAT-Bench",
+      "url": "https://mukulkhanna.github.io/goat-bench/",
+      "leaderboard_url": null,
+      "task": "Lifelong navigation to object-category, image, and language goals.",
+      "protocol_notes": "Preserve goal modality, memory setting, noise configuration, and lifelong episode structure.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "goat-bench"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "r2r",
+      "name": "Room-to-Room (R2R)",
+      "url": "https://bringmeaspoon.org/",
+      "leaderboard_url": null,
+      "task": "Vision-and-language navigation in real scanned indoor environments.",
+      "protocol_notes": "Record split, navigation metric, instruction setting, and scene dataset/version.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "r2r"
+      ],
+      "unresolved_entries": []
+    },
+    {
+      "id": "habitat-navigation",
+      "name": "Habitat navigation ecosystem",
+      "url": "https://aihabitat.org/",
+      "leaderboard_url": null,
+      "task": "Embodied navigation with simulation, scene datasets, sensors, and task configurations.",
+      "protocol_notes": "Navigation papers use differing scene datasets, goal specifications, maps, and sensing; do not compare them without those fields.",
+      "checked_on": "2026-11-14",
+      "paper_ids": [
+        "vlmaps",
+        "vlfm"
+      ],
+      "unresolved_entries": []
+    }
+  ]
+}

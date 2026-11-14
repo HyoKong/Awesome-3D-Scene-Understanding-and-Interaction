@@ -1,0 +1,33 @@
+# Publish only the survey and the files needed to maintain it.
+# Local research notes, design drafts, caches, and other files stay untracked.
+*
+!.gitignore
+!README.md
+!PAPERS.md
+!BENCHMARKS.md
+!CONTRIBUTING.md
+!ROADMAP.md
+!topics/
+!topics/perception.md
+!topics/reconstruction.md
+!topics/generation.md
+!topics/robotics.md
+!topics/datasets.md
+!data/
+!data/catalog.json
+!data/benchmarks.json
+!data/reading_routes.json
+!data/roadmap.json
+!assets/
+!assets/ATTRIBUTION.md
+!assets/survey-teaser.png
+!assets/survey-teaser.svg
+!assets/survey-roadmap.png
+!assets/survey-roadmap.svg
+!assets/teaser-source/
+!assets/teaser-source/robocasa-kitchen-robot.png
+!scripts/
+!scripts/build_catalog.py
+!scripts/validate_catalog.py
+!scripts/render_teaser.py
+!scripts/render_roadmap.py

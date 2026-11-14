@@ -1,0 +1,60 @@
+# Contributing
+
+[Back to the survey](README.md)
+
+We welcome missing papers, official code releases, corrected metadata, benchmark connections, and better classifications. The scope includes scene perception and reconstruction, scene generation, embodied reasoning and navigation, robotic manipulation, and articulated objects.
+
+## Add or correct a paper
+
+Edit `data/catalog.json`; do not edit generated paper tables directly. An entry needs:
+
+| Field | Meaning |
+| --- | --- |
+| `id`, `short`, `title` | Stable unique ID, readable short name, full canonical title |
+| `year`, `venue`, `url` | Publication year, venue or explicit preprint status, primary paper page |
+| `category`, `section`, `subtopic` | Broad research area, browsing group, specific research question |
+| `additional_topics` (optional) | Other topic pages where this paper belongs, mapped to a section name, e.g. `{"datasets": "Functional indoor scenes and annotations"}` |
+| `dataset_summary` (optional) | Dataset, simulator, or benchmark contribution to describe on the datasets page when the main summary focuses on a method |
+| `scope` | `core` for methods directly studying scene understanding, reconstruction, generation, or embodied interaction; `enabling` for reusable backbones, general policy foundations, datasets, and infrastructure |
+| `evidence` | Brief original description of the contribution; avoid unqualified SOTA claims |
+| `project_url`, `code_url` | Official links, or `null` when not located |
+| `code_status` | `released`, `placeholder`, or `not-located`; an announcement is not a release |
+| `link_sources`, `last_verified` | Primary sources establishing the links and the date checked |
+
+Use `link_notes` for partial implementations, paper/code differences, or redirects. Set `code_kind` to `dataset-toolkit` for dataset/evaluation utilities. A weights download is not implementation code. Keep an arXiv preprint and its published version in one record unless they are materially different works.
+
+A paper can appear on multiple topic pages while keeping one record in the full index. If it introduces a dataset, benchmark, simulator, or reusable environment generator, include it on the datasets page using its primary category or `additional_topics`. The datasets page also includes every resource registered in `data/benchmarks.json`.
+
+When proposing an addition through an issue, a short submission is enough:
+
+```text
+Paper title / year / venue:
+Primary paper URL:
+Official project URL:
+Official code URL and release status:
+Research area and why it belongs:
+Benchmark or task, with source if applicable:
+```
+
+## Connect a benchmark
+
+Edit `data/benchmarks.json`. Record the task, version, split, inputs, metric, and official source before comparing scores. Resolve a submission name to its original paper; keep unresolved team names in `unresolved_entries`. A benchmark association does not imply a submitted result or rank. Preserve the distinction between semantic segmentation, instance segmentation, motion estimation, grounding, and robot task success.
+
+For motion estimation, see the [Articulate3D challenge](https://insait-institute.github.io/articulate3d.github.io/challenge.html). Keep its evaluation protocol distinct from SceneFun3D's segmentation and grounding tasks.
+
+## Improve a reading route
+
+Edit `data/reading_routes.json` to add a learning path or refine its stages. Each stage names a reading goal, existing catalog paper IDs, and a short explanation of what to look for. Keep routes focused on a question, and finish with a small comparison or exercise. The README displays every route in full and automatically includes it in the contents below the teaser.
+
+## Regenerate and review
+
+From this directory:
+
+```bash
+python scripts/build_catalog.py
+python scripts/validate_catalog.py
+```
+
+Review the generated README, topic pages, complete index, and benchmark guide. Open changed links and check paper identity against the primary source. If changing the detailed figure, edit `data/roadmap.json` and run `scripts/render_roadmap.py` in an environment with Matplotlib. The teaser has its own renderer, `scripts/render_teaser.py`. Inspect rendered figures for legibility as well as programmatic bounds checks.
+
+Existing surveys and awesome lists can reveal candidates. Verify those candidates against primary sources and write independent summaries. Reused figures or text require their source's attribution and license terms.

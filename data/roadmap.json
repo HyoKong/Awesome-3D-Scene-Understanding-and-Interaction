@@ -1,0 +1,267 @@
+{
+  "title": "3D Scene Understanding and Interaction",
+  "version": "0.5",
+  "figure_expansion": "Explore the topic pages for the full collection, official resources, and contribution paths.",
+  "description": "A map of scene perception, whole-scene reconstruction, scene generation, robotic interaction, embodied agents, and shared evaluation resources.",
+  "topics": [
+    {
+      "id": "scene-perception",
+      "label": "Scene perception",
+      "role": "geometry · semantics · function",
+      "color": "blue",
+      "subtopics": [
+        {
+          "id": "scene-backbones",
+          "label": "Scene representations",
+          "strategy": "Learn point and volumetric features for large-scale 3D scene understanding.",
+          "paper_ids": [
+            "ptv3",
+            "volume-transformer"
+          ]
+        },
+        {
+          "id": "scene-instances",
+          "label": "Objects and open vocabulary",
+          "strategy": "Segment scene instances and connect them to open-vocabulary descriptions.",
+          "paper_ids": [
+            "mask3d",
+            "open3dis"
+          ]
+        },
+        {
+          "id": "scene-relations",
+          "label": "Language and spatial relations",
+          "strategy": "Ground descriptions and build scene relations for spatial reasoning.",
+          "paper_ids": [
+            "conceptgraphs",
+            "scanrefer"
+          ]
+        },
+        {
+          "id": "scene-function",
+          "label": "Functional scene elements",
+          "strategy": "Connect scene regions to actionable parts, tasks, and affordances.",
+          "paper_ids": [
+            "scenefun3d",
+            "gapartnet"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scene-reconstruction",
+      "label": "Scene reconstruction",
+      "role": "geometry · appearance · digital twins",
+      "color": "teal",
+      "subtopics": [
+        {
+          "id": "capture-geometry",
+          "label": "Geometry from observations",
+          "strategy": "Recover cameras and scene structure from images or RGB-D observations.",
+          "paper_ids": [
+            "colmap-sfm",
+            "bundlefusion"
+          ]
+        },
+        {
+          "id": "neural-scenes",
+          "label": "Neural scene representations",
+          "strategy": "Represent captured appearance with neural fields or Gaussian primitives.",
+          "paper_ids": [
+            "nerf",
+            "gaussian-splatting"
+          ]
+        },
+        {
+          "id": "learned-geometry",
+          "label": "Feed-forward geometry",
+          "strategy": "Predict camera parameters and dense scene geometry from images.",
+          "paper_ids": [
+            "dust3r",
+            "vggt"
+          ]
+        },
+        {
+          "id": "mapping-and-twins",
+          "label": "Online maps and digital twins",
+          "strategy": "Update spatial maps over time or recover executable articulated structure.",
+          "paper_ids": [
+            "splatam",
+            "real2code"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scene-generation",
+      "label": "Scene generation",
+      "role": "layouts · visual scenes · simulation",
+      "color": "violet",
+      "subtopics": [
+        {
+          "id": "scene-layouts",
+          "label": "Layouts and scene graphs",
+          "strategy": "Generate object arrangements and semantic scene configurations.",
+          "paper_ids": [
+            "atiss",
+            "diffuscene"
+          ]
+        },
+        {
+          "id": "visual-scenes",
+          "label": "Conditioned scene synthesis",
+          "strategy": "Synthesize textured or Gaussian 3D environments from text and images.",
+          "paper_ids": [
+            "text2room",
+            "wonderworld"
+          ]
+        },
+        {
+          "id": "procedural-environments",
+          "label": "Procedural and task-driven worlds",
+          "strategy": "Construct environments with scene rules or language-specified requirements.",
+          "paper_ids": [
+            "infinigen",
+            "holodeck"
+          ]
+        },
+        {
+          "id": "interactive-assets",
+          "label": "Articulated assets",
+          "strategy": "Create part structure, joints, and programs for interactive objects.",
+          "paper_ids": [
+            "cage",
+            "articulate-anything"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "manipulation",
+      "label": "Robotic interaction",
+      "role": "affordances · control · feedback",
+      "color": "orange",
+      "subtopics": [
+        {
+          "id": "action-proposals",
+          "label": "Affordances and contacts",
+          "strategy": "Identify where and how a robot can interact with objects and tools.",
+          "paper_ids": [
+            "where2act",
+            "uniaff"
+          ]
+        },
+        {
+          "id": "motion-control",
+          "label": "Motion-aware control",
+          "strategy": "Use motion fields or articulation estimates to guide manipulation.",
+          "paper_ids": [
+            "flowbot3d",
+            "gamma"
+          ]
+        },
+        {
+          "id": "interactive-feedback",
+          "label": "Contact and adaptation",
+          "strategy": "Adapt articulated manipulation using tactile and visual feedback.",
+          "paper_ids": [
+            "tacman",
+            "vitacman"
+          ]
+        },
+        {
+          "id": "mobile-execution",
+          "label": "Grounded and mobile execution",
+          "strategy": "Connect semantic parts, navigation, and control to physical tasks.",
+          "paper_ids": [
+            "sage",
+            "mosart"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "embodied-agents",
+      "label": "Embodied agents",
+      "role": "memory · navigation · reasoning",
+      "color": "green",
+      "subtopics": [
+        {
+          "id": "spatial-navigation",
+          "label": "Spatial maps and navigation",
+          "strategy": "Use spatial language maps and exploration to reach semantic goals.",
+          "paper_ids": [
+            "vlmaps",
+            "vlfm"
+          ]
+        },
+        {
+          "id": "embodied-reasoning",
+          "label": "3D reasoning and generalists",
+          "strategy": "Connect scene observations to questions, dialogue, and embodied tasks.",
+          "paper_ids": [
+            "3d-llm",
+            "leo"
+          ]
+        },
+        {
+          "id": "language-planning",
+          "label": "Grounded task planning",
+          "strategy": "Translate language goals into plans tied to available robot skills.",
+          "paper_ids": [
+            "llm-planner",
+            "saycan"
+          ]
+        },
+        {
+          "id": "policy-foundations",
+          "label": "Vision-language-action policies",
+          "strategy": "Learn language-conditioned robot actions and adapt across tasks.",
+          "paper_ids": [
+            "openvla",
+            "pi-zero"
+          ]
+        }
+      ]
+    }
+  ],
+  "foundations": [
+    {
+      "id": "real-scenes",
+      "label": "Scene observations",
+      "strategy": "Real scene geometry, images, semantics, and mobility annotations.",
+      "paper_ids": [
+        "scannetpp",
+        "multiscan"
+      ]
+    },
+    {
+      "id": "scene-simulation",
+      "label": "Interactive simulation",
+      "strategy": "Physical object interaction and human-agent shared environments.",
+      "paper_ids": [
+        "sapien",
+        "habitat3"
+      ]
+    },
+    {
+      "id": "household-tasks",
+      "label": "Household task suites",
+      "strategy": "Evaluate manipulation, compositional tasks, and everyday activities.",
+      "paper_ids": [
+        "robocasa365",
+        "behavior1k"
+      ]
+    },
+    {
+      "id": "agent-evaluation",
+      "label": "Navigation and reasoning",
+      "strategy": "Evaluate multi-modal navigation goals and scene-grounded questions.",
+      "paper_ids": [
+        "goat-bench",
+        "openeqa"
+      ]
+    }
+  ],
+  "catalog": "catalog.json"
+}
