@@ -216,7 +216,7 @@ p { margin-bottom: 1.25em; }
 .back-link { display: inline-block; color: var(--muted); font-size: 12px; text-decoration: none; margin-bottom: 27px; }
 .article-header h1 { font-size: clamp(39px, 4.2vw, 62px); line-height: 1.08; letter-spacing: -.04em; max-width: 720px; margin-bottom: 22px; text-wrap: balance; }
 .article-dek { color: #596270; font-size: 18px; line-height: 1.78; max-width: 700px; margin-bottom: 0; }
-.chapter-cover { margin: 0; align-self: stretch; border: 1px solid #d6d0c3; background: #172226; overflow: hidden; }
+.chapter-cover { margin: 0; align-self: start; border: 1px solid #d6d0c3; background: #172226; overflow: hidden; }
 .chapter-cover > a { display: block; }
 .chapter-cover img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #172226; filter: saturate(.8) contrast(1.04); transition: transform .6s ease, filter .4s ease; }
 .chapter-cover:hover img { transform: scale(1.015); filter: saturate(1) contrast(1); }
