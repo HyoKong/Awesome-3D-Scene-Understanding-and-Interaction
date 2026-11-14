@@ -34,7 +34,7 @@
       ]
     },
     {
-      "heading": "Trade optimization time for direct prediction",
+      "heading": "Predict geometry without a long optimization",
       "paragraphs": [
         "Feed-forward approaches aim to infer useful structure from one or many views without fitting a scene from scratch. DUSt3R predicts dense point maps from uncalibrated image collections and supports camera recovery through global alignment [cite:dust3r]. VGGT predicts cameras, point maps, depth maps, and tracks with a transformer [cite:vggt].",
         "The useful question is what survives after the forward pass. Dense point maps support correspondence and geometry, but a long-lived map may still need fusion, uncertainty handling, or another representation. MASt3R ties dense local matching to metric point maps and global alignment [cite:mast3r]. Learned priors can fill in weakly textured areas, but a plausible surface is still an inference rather than a measurement."
@@ -62,7 +62,8 @@
       "heading": "Account for time and interaction",
       "paragraphs": [
         "Static-scene assumptions fail when a person opens a cupboard or when an object moves. D-NeRF models temporal deformation for non-rigid dynamic rendering [cite:dnerf]. MonST3R estimates per-timestep geometry from dynamic scenes, and 4D Gaussian Splatting combines a canonical Gaussian representation with learned temporal deformation [cite:monst3r] [cite:four-d-gaussian-splatting]. A time-varying appearance model is valuable, but it does not necessarily supply a causal description of motion.",
-        "An interactive twin asks for still more: parts, joints, states, and sometimes an executable asset. PARIS recovers part-level shape, appearance, and motion from multi-view observations in two states; DigitalTwinArt uses two RGB-D scans in different states [cite:paris] [cite:digital-twin-art]. These outputs connect reconstruction to functional perception and manipulation, but they should not be confused with a generic photorealistic scene model. A well-rendered door may still lack an estimated axis, allowable range, handle location, or collision behavior."
+        "An interactive twin asks for still more: parts, joints, states, and sometimes an executable asset. PARIS recovers part-level shape, appearance, and motion from multi-view observations in two states; DigitalTwinArt uses two RGB-D scans in different states [cite:paris] [cite:digital-twin-art]. These outputs connect reconstruction to functional perception and manipulation, but they should not be confused with a generic photorealistic scene model. A well-rendered door may still lack an estimated axis, allowable range, handle location, or collision behavior.",
+        "A video of a moving object gives us another way to recover its structure. Articulat3D follows 3D points through the video, groups their motion, and refines a kinematic model of the parts and joints [cite:articulat3d]. VideoArtGS estimates depth, camera poses, and 3D tracks from a monocular clip, then fits Gaussian geometry and an articulation-based deformation field together. It recovers geometry, part segmentation, and joint parameters in the same process [cite:videoartgs]."
       ],
       "paper_ids": [
         "dnerf",
@@ -73,7 +74,9 @@
         "ditto",
         "urdformer",
         "react3d",
-        "real2code"
+        "real2code",
+        "articulat3d",
+        "videoartgs"
       ]
     },
     {
@@ -93,7 +96,7 @@
       ]
     },
     {
-      "heading": "Treat an interactive twin as an explicit downstream commitment",
+      "heading": "Build a model that can run in a simulator",
       "paragraphs": [
         "Articulated reconstruction makes the interaction contract concrete. Ditto uses interaction to build digital twins of articulated objects; URDFormer constructs articulated simulation environments from real-world images; REACT3D recovers articulations for interactive physical scenes; and Real2Code explores reconstruction through executable code [cite:ditto] [cite:urdformer] [cite:react3d] [cite:real2code]. Their shared target is not a single rendering format, but a representation in which objects, joints, and state can be inspected or changed.",
         "The hard cases make the difference from view synthesis plain: hidden hinges, coupled parts, unknown friction, and furniture blocked by nearby clutter. A twin may be structurally plausible yet physically wrong. It should make clear which structure came from observations, which was inferred, and which needs another view or controlled interaction."
@@ -108,7 +111,7 @@
       ]
     },
     {
-      "heading": "Compare reconstruction commitments, not just images",
+      "heading": "What should we measure in a reconstruction?",
       "paragraphs": [
         "The table separates goals that are often conflated in demonstrations. It is not a performance ranking: an application may reasonably need fast view synthesis, a globally stable map, or an editable articulated state."
       ],

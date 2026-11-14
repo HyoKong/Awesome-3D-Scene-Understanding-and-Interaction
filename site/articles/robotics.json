@@ -10,7 +10,7 @@
   ],
   "sections": [
     {
-      "heading": "Define the loop before comparing agents",
+      "heading": "What does the agent observe, decide, and do?",
       "paragraphs": [
         "An embodied system receives observations, maintains some state, selects an action, and observes the result. State may be a metric map, a point cloud, image embeddings, a task graph, a learned latent, or a short action history. Actions may be navigation primitives, end-effector deltas, grasp candidates, language-selected skills, or tokenized robot commands. Comparisons become misleading when these interfaces differ but a single task-success number is treated as equivalent evidence.",
         "Five interfaces make comparisons concrete: observation and calibration; state or memory; goal grounding; action representation; and recovery signal. A system with a high-fidelity 3D map solves a different problem from one acting from a wrist camera. A VLA trained on broad demonstrations has different evidence from a planner that invokes verified skills. The label alone does not reveal which interface is absent."
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "heading": "Ground language in observed and reachable state",
+      "heading": "Turn an instruction into a plan",
       "paragraphs": [
         "Language models can turn an instruction into a task decomposition, but they cannot by themselves show that an object exists, is reachable, or has changed state. SayCan scores language-proposed skills with affordance information. LLM-Planner connects language-model planning to a low-level embodied controller. VoxPoser uses language-model programs and 3D value maps to express spatial manipulation constraints. What matters in execution is the perception and feasibility check that can stop an impossible next step. [cite:saycan] [cite:llm-planner] [cite:voxposer]",
         "3D-LLM and LEO attach language reasoning to 3D scene features across question answering, planning, navigation, and manipulation. They point to a useful interface: language can query objects and relations beyond one image. Grounding remains partial if those features cannot resolve visibility, reachability, or active state. A system may identify a refrigerator while failing to determine whether the handle is free, which direction the door opens, or whether a grasp is feasible. [cite:3d-llm] [cite:leo]",
@@ -60,7 +60,8 @@
       "paragraphs": [
         "Manipulation begins with a local decision: where to make contact, in which direction to move, and how the object can change state. Where2Act predicts where and how to interact through pixel-level actionability and action proposals for pushing and pulling. Act the Part and EnvAwareAfford extend attention to parts and environmental context. Where2Explore asks which actions reveal useful articulation information. Such affordance outputs are richer than a category label, but they remain hypotheses that interaction must validate. [cite:where2act] [cite:act-the-part] [cite:env-aware-affordance] [cite:where2explore]",
         "Motion-aware work makes the hypothesis more explicit. FlowBot3D predicts point-wise motion fields from point clouds; FlowBot++ and FlowBotHD extend flow-based representations for articulated manipulation. GAMMA combines grasp affordance with joint estimation, while RPMArt estimates articulation parameters and interaction points from noisy point clouds. CenterArt uses 3D scene structure to guide articulated-object manipulation. The common decomposition is: infer local movable structure, plan with it, and update when execution disagrees. [cite:flowbot3d] [cite:flowbot-plusplus] [cite:flowbothd] [cite:gamma] [cite:rpmart] [cite:centerart]",
-        "Static predictions are fragile under occlusion, symmetry, and contact uncertainty. Sim2Real² builds an object physics model from interaction before planning a target joint-state trajectory. Action is also sensing: a pull, grasp, or tactile signal can reveal constraints unavailable in passive images. [cite:sim2real2]"
+        "Static predictions are fragile under occlusion, symmetry, and contact uncertainty. Sim2Real² builds an object physics model from interaction before planning a target joint-state trajectory. Action is also sensing: a pull, grasp, or tactile signal can reveal constraints unavailable in passive images. [cite:sim2real2]",
+        "Opening a cabinet with a mobile robot involves more than choosing a good grasp. The robot has to approach the handle and coordinate its base and arm. MoSART studies this complete task on unseen articulated objects at real sites, without privileged scene information. Its results show how errors in perception can undermine the rest of the system [cite:mosart]."
       ],
       "paper_ids": [
         "where2act",
@@ -73,7 +74,8 @@
         "gamma",
         "rpmart",
         "centerart",
-        "sim2real2"
+        "sim2real2",
+        "mosart"
       ],
       "table": {
         "caption": "Embodied methods differ most clearly at their interface and recovery mechanism.",
@@ -112,7 +114,7 @@
       }
     },
     {
-      "heading": "Use tactile and contact feedback to correct visual confidence",
+      "heading": "Use touch to correct what vision gets wrong",
       "paragraphs": [
         "Contact-rich tasks expose the limit of purely visual action selection. Vi-TacMan combines a visual grasp and coarse motion direction with tactile feedback for precision without an explicit kinematic model. Tac-Man and contact-oriented systems treat tactile observations as state information, not only a final success flag. A handle can look graspable while slipping, be blocked by a latch, or move less than expected; tactile feedback can change the control decision at the time scale where a high-level plan is too coarse. [cite:vitacman] [cite:tacman]",
         "The integration question is where feedback enters. It may select a new grasp, update a joint estimate, terminate a motion, or call for a new plan. A paper that adds tactile sensing should be read for the counterfactual it resolves: which ambiguity persisted under vision alone, and does the evaluation include the cases that create it? Adding another sensor is not closed-loop control unless policy or planner behavior changes from that observation."
@@ -125,7 +127,7 @@
       ]
     },
     {
-      "heading": "Scale policies while exposing the data boundary",
+      "heading": "What changes when robot policies scale up?",
       "paragraphs": [
         "Generalist policies aim to reuse demonstrations and representations across tasks, scenes, and sometimes robots. Diffusion Policy models conditional action distributions with receding-horizon execution. Octo provides a transformer diffusion policy conditioned by language or goal images. RT-2 and PaLM-E connect vision-language models to robot action, while OpenVLA releases a vision-language-action model trained on robot demonstrations. π0, π0.5, and GR00T N1 represent newer directions toward broad multimodal robot policies. [cite:diffusion-policy] [cite:octo] [cite:rt-2] [cite:palm-e] [cite:openvla] [cite:pi-zero] [cite:pi-zero-point-five] [cite:groot-n1]",
         "These models change where prior knowledge lives; they do not dissolve the generalization problem. A policy may succeed because task, camera view, object geometry, or embodiment resembles demonstrations. Transfer claims should disclose action normalization, observation setup, data provenance, task novelty, and whether recovery actions were represented in training. A broad model can be a strong system component, but it should not be credited with geometry, memory, or force estimation that another module supplied.",
@@ -143,7 +145,7 @@
       ]
     },
     {
-      "heading": "Measure reliability as a closed-loop property",
+      "heading": "Test the whole robot task",
       "paragraphs": [
         "The field needs evaluations that reveal where a loop breaks. Manipulation benchmarks should vary object instances, initial joint states, clutter, occlusion, friction, and camera placement. Navigation should test incomplete maps, semantic ambiguity, exploration budgets, and dynamic obstacles. Language-conditioned tasks should separate understanding an instruction from grounding it, planning it, executing it, and recognizing failure. ManiSkill, RLBench, and BEHAVIOR-1K make different choices about these variables, so their scores should not be treated as interchangeable. [cite:maniskill] [cite:rlbench] [cite:behavior1k]",
         "The most valuable result is often a structured failure analysis: did perception select the wrong part, did the planner assume a false relation, did a controller miss contact, or did a recovery policy fail to respond? This makes a system improvable and links the result back to the survey taxonomy. It also gives a generated or reconstructed scene a concrete role: a representation is good when it helps the next decision, and updateable when that decision fails.",

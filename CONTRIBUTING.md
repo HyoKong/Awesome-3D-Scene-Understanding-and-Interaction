@@ -46,6 +46,8 @@ For motion estimation, see the [Articulate3D challenge](https://insait-institute
 
 Edit `data/reading_routes.json` to add a learning path or refine its stages. Each stage names a reading goal, existing catalog paper IDs, and a short explanation of what to look for. Keep routes focused on a question, and finish with a small comparison or exercise. The README displays every route in full and automatically includes it in the contents below the teaser.
 
+Each step also needs `chapter_sections`: one or two references such as `{"chapter": "perception", "section": 3}`, with a one-based section number. Put the section that explains the method first; use a second link for useful background. Check the actual chapter text before linking, and update it if the route introduces a method the chapter does not yet cover. The website uses these references for direct reading links and previous/next-step navigation. Write the Chinese route descriptions for Chinese readers rather than translating English phrasing word for word; preserve the learning objectives and step order.
+
 ## Regenerate and review
 
 From this directory:

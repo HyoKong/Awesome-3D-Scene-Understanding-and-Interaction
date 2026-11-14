@@ -30,10 +30,10 @@
     <header class="survey-hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow">{{t:Papers, explanations, and reading routes}}</p>
+          <p class="eyebrow">{{t:A guide to the research}}</p>
           <h1>{{t:3D Scene}}<br>{{t:Understanding}}<br><span>{{t:& Interaction}}</span></h1>
-          <p class="hero-dek">{{t:Read across 3D vision and embodied AI.}}</p>
-          <p class="hero-description">{{t:Reconstructing a room, generating a new one, and teaching a robot to use it draw on many of the same ideas. We bring those papers together and help you find a place to start.}}</p>
+          <p class="hero-dek">{{t:Where should you start with 3D scenes?}}</p>
+          <p class="hero-description">{{t:You might want to reconstruct a room from photos, generate a new one, or teach a robot to open a drawer. We explain the ideas behind these tasks and suggest what to read next.}}</p>
           <div class="hero-actions"><a class="button button-primary" href="#reading-routes">{{t:Choose a reading route}} <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="library.html">{{t:Search papers}} <span aria-hidden="true">↗</span></a></div>
         </div>
         <figure class="hero-scene">
@@ -44,12 +44,12 @@
     </header>
 
     <section id="reading-routes" class="home-section" aria-labelledby="start-title">
-      <div class="home-heading"><p class="eyebrow">{{t:Start with your question}}</p><h2 id="start-title">{{t:What are you working on?}}</h2><p>{{t:Choose an area below. Each route connects a few papers in a useful order, with a question to keep in mind as you read.}}</p></div>
+      <div class="home-heading"><p class="eyebrow">{{t:Find a place to start}}</p><h2 id="start-title">{{t:What are you working on?}}</h2><p>{{t:Pick a topic and start with the explanation. The papers are there when you're ready for the details.}}</p></div>
       <div class="route-tabs" role="group" aria-label="{{t:Choose a research area}}">
-        <button type="button" data-route-topic="perception" aria-pressed="true">{{t:Understand a scene}}</button>
-        <button type="button" data-route-topic="reconstruction" aria-pressed="false">{{t:Reconstruct a world}}</button>
-        <button type="button" data-route-topic="generation" aria-pressed="false">{{t:Generate environments}}</button>
-        <button type="button" data-route-topic="robotics" aria-pressed="false">{{t:Build an embodied agent}}</button>
+        <button type="button" data-route-topic="perception" aria-pressed="true">{{t:Scene perception}}</button>
+        <button type="button" data-route-topic="reconstruction" aria-pressed="false">{{t:Scene reconstruction}}</button>
+        <button type="button" data-route-topic="generation" aria-pressed="false">{{t:Scene generation}}</button>
+        <button type="button" data-route-topic="robotics" aria-pressed="false">{{t:Robots & embodied agents}}</button>
       </div>
       <p id="route-results" class="sr-only" role="status" aria-live="polite"></p>
       <div class="home-routes">{{FEATURED_ROUTES}}</div>
@@ -57,11 +57,11 @@
     </section>
 
     <section id="survey" class="home-section home-chapters" aria-labelledby="chapters-title">
-      <div class="home-heading"><p class="eyebrow">{{t:When you want the bigger picture}}</p><h2 id="chapters-title">{{t:Read the illustrated chapters.}}</h2><p>{{t:Follow a method through its inputs, representation, and results, with figures and videos from the original papers and project pages.}}</p></div>
+      <div class="home-heading"><p class="eyebrow">{{t:More to explore}}</p><h2 id="chapters-title">{{t:The full survey, chapter by chapter.}}</h2><p>{{t:These chapters explain how the methods work and where they differ, with figures and demos from the original papers and projects.}}</p></div>
       <div class="chapter-index">{{CHAPTER_INDEX}}</div>
       <div class="home-resources"><a href="survey.html">{{t:Read the full survey →}}</a><a href="benchmarks.html">{{t:Find a dataset or benchmark ↗}}</a></div>
     </section>
-    <section class="home-contribute"><h2>{{t:Something missing?}}</h2><p>{{t:Send us a paper, a correction, or a clearer example. This collection grows with the field.}}</p><a class="text-link" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/CONTRIBUTING.md">{{t:Contribute on GitHub ↗}}</a></section>
+    <section class="home-contribute"><h2>{{t:What should we add?}}</h2><p>{{t:Tell us about a paper we've missed, a broken link, or something we could explain better.}}</p><a class="text-link" href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/CONTRIBUTING.md">{{t:Contribute on GitHub ↗}}</a></section>
   </main>
   <footer><span>{{t:3D Scene Understanding & Interaction}}</span><div><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction">{{t:Repository}}</a><a href="https://github.com/HyoKong/Awesome-3D-Scene-Understanding-and-Interaction/blob/main/assets/ATTRIBUTION.md">{{t:Figure attribution}}</a><a href="#main-content">{{t:Back to top ↑}}</a></div></footer>
 </body>

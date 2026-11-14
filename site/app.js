@@ -16,6 +16,7 @@
     window.addEventListener("hashchange", syncLanguageLinks);
     window.addEventListener("popstate", syncLanguageLinks);
     initReadingRoutes();
+    initRouteContext();
     initSurveyNavigation();
     initDeferredVideo();
     const form = document.querySelector("#paper-filters");
@@ -252,6 +253,24 @@
     for (const button of buttons) button.addEventListener("click", () => select(button.dataset.routeTopic, true));
     const restore = () => select(new URLSearchParams(location.search).get("area"));
     window.addEventListener("popstate", restore);
+    restore();
+  }
+
+  function initRouteContext() {
+    const contexts = [...document.querySelectorAll(".route-context[data-route-id][data-route-step]")];
+    if (!contexts.length) return;
+    function restore() {
+      const params = new URLSearchParams(location.search);
+      const route = params.get("route");
+      const step = params.get("step");
+      const matches = contexts.filter((context) => context.dataset.routeId === route && context.dataset.routeStep === step);
+      const selected = matches.find((context) => `#${context.closest("section").id}` === location.hash) || matches[0];
+      for (const context of contexts) {
+        context.hidden = context !== selected;
+      }
+    }
+    window.addEventListener("popstate", restore);
+    window.addEventListener("hashchange", restore);
     restore();
   }
 

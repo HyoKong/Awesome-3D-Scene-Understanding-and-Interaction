@@ -84,6 +84,7 @@ def topic_records(catalog, category, include_additional=False):
 
 def verify_reading_routes(data, paper_map):
     routes = data["routes"]
+    chapters = {p.stem: json.loads(p.read_text()) for p in (ROOT / "site/articles").glob("*.json")}
     assert routes, "No reading routes"
     assert len({route["id"] for route in routes}) == len(routes), "Duplicate route IDs"
     for route in routes:
@@ -94,12 +95,22 @@ def verify_reading_routes(data, paper_map):
         for step in route["steps"]:
             assert step["label"] and step["focus"] and step["paper_ids"], route["id"]
             assert set(step["paper_ids"]) <= set(paper_map), f"Unknown route paper: {route['id']}"
+            references = step.get("chapter_sections", [])
+            assert 1 <= len(references) <= 2, f"Route step needs a chapter section: {route['id']} / {step['label']}"
+            seen = set()
+            for reference in references:
+                assert set(reference) == {"chapter", "section"}, reference
+                chapter, section = reference["chapter"], reference["section"]
+                assert chapter in chapters, f"Unknown route chapter: {reference}"
+                assert type(section) is int and 1 <= section <= len(chapters[chapter]["sections"]), f"Unknown route section: {reference}"
+                assert (chapter, section) not in seen, f"Duplicate route section: {reference}"
+                seen.add((chapter, section))
 
 
 def build_reading_routes(data, paper_map):
     lines = [
         "## Reading routes", "",
-        "Follow a route in order, or jump to the part you need. Papers grouped in one stage offer complementary approaches; each linked entry includes project and code resources where available.", "",
+        "Each step links to an explanation in the survey, followed by papers that develop the idea. Read the explanation first, or go straight to the papers if you already know the background.", "",
     ]
     for route in data["routes"]:
         lines += [
@@ -111,7 +122,8 @@ def build_reading_routes(data, paper_map):
         ]
         for i, step in enumerate(route["steps"], 1):
             papers = " · ".join(f"[{cell(paper_map[pid]['short'])}](PAPERS.md#{pid})" for pid in step["paper_ids"])
-            lines.append(f"| **{i}. {cell(step['label'])}** | {papers} | {cell(step['focus'])} |")
+            sections = " · ".join(f"[{reference['chapter'].title()} §{reference['section']}](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/{reference['chapter']}.html?route={route['id']}&step={i}#section-{reference['section']})" for reference in step["chapter_sections"])
+            lines.append(f"| **{i}. {cell(step['label'])}** | {sections}<br>{papers} | {cell(step['focus'])} |")
         topics = " · ".join(f"[{TOPIC_MAP[category][0]}](topics/{category}.md)" for category in route["topics"])
         lines += ["", f"**Try it:** {route['try_it']}", "", f"**Explore more:** {topics} · [Back to contents](#contents)", ""]
     return lines

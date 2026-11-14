@@ -11,56 +11,133 @@
   ],
   "sections": [
     {
-      "heading": "Begin with the unit of prediction",
+      "heading": "How do models represent a point cloud?",
       "paragraphs": [
         "A semantic map labels each observation with a class such as wall, cabinet, or chair. An instance map separates two cabinets of the same class. Panoptic prediction keeps both decisions. This distinction matters in a cluttered room: a planner cannot choose the left cabinet if both cabinets collapse into one semantic region.",
         "Point-set backbones decide which neighbors get to inform a prediction. PointNet reads a whole set, while PointNet++ introduces a hierarchy of local neighborhoods [cite:pointnet] [cite:pointnet-plus-plus]. PTv3 and Volt make later choices about how sparse room-scale evidence is organized before a task head turns it into labels or masks [cite:ptv3] [cite:volume-transformer].",
-        "At room scale, this is also a compute decision. Fine point-level processing retains thin handles and boundaries but can be costly over a dense scan. Superpoint, sparse, and octree abstractions make wider context cheaper but can merge nearby surfaces or erase small functional elements [cite:superpoint-graph] [cite:superpoint-transformer] [cite:octformer]. Before interpreting a result, ask whether the model saw an isolated object, a fused room scan, or a temporal stream; the spatial support determines what ambiguity it can resolve."
+        "At room scale, this is also a compute decision. Fine point-level processing retains thin handles and boundaries but can be costly over a dense scan. Superpoint, sparse, and octree abstractions make wider context cheaper but can merge nearby surfaces or erase small functional elements [cite:superpoint-graph] [cite:superpoint-transformer] [cite:octformer]. Before interpreting a result, ask whether the model saw an isolated object, a fused room scan, or a temporal stream; the spatial support determines what ambiguity it can resolve.",
+        "A segmentation model does not have to learn only from its own 3D labels. DITR brings 2D foundation-model features into 3D segmentation and can distill them into the backbone when images will not be available at inference [cite:ditr]. Point Prompt Training instead trains one backbone on several 3D datasets, using dataset-specific prompts and label-space alignment to handle their differences [cite:multi-dataset-point-prompt-training]."
       ],
-      "paper_ids": ["pointnet", "pointnet-plus-plus", "ptv3", "volume-transformer"]
+      "paper_ids": [
+        "pointnet",
+        "pointnet-plus-plus",
+        "ptv3",
+        "volume-transformer",
+        "ditr",
+        "multi-dataset-point-prompt-training"
+      ]
     },
     {
-      "heading": "From classes to objects",
+      "heading": "Tell individual objects apart",
       "paragraphs": [
         "Instance segmentation adds a grouping problem. Bottom-up systems can aggregate nearby points; PointGroup, HAIS, and SoftGroup make this family concrete [cite:pointgroup] [cite:hais] [cite:softgroup]. Query-based systems can predict masks directly. Mask3D and OneFormer3D make a useful contrast because the latter explicitly brings semantic, instance, and panoptic predictions into one transformer formulation [cite:mask3d] [cite:oneformer3d].",
         "A clean mask is not yet a physical object model. It may describe only what was visible, merge two adjacent objects, or say nothing about the geometry that produced it. In a real kitchen, that difference is practical: a planner that cannot separate the left cabinet from the right one cannot choose a door to open."
       ],
-      "paper_ids": ["pointgroup", "mask3d", "oneformer3d"]
+      "paper_ids": [
+        "pointgroup",
+        "mask3d",
+        "oneformer3d"
+      ]
     },
     {
-      "heading": "Make the scene queryable in language",
+      "heading": "Find objects with a text query",
       "paragraphs": [
         "Fixed taxonomies make it difficult to ask for an unfamiliar object or a descriptive concept. Open-vocabulary systems instead associate visual-language features with 3D regions. OpenScene transfers such features into 3D, while OpenMask3D and Open3DIS operate around instance masks or proposals [cite:openscene] [cite:openmask3d] [cite:open3dis]. ConceptFusion broadens the query interface beyond text to other modalities [cite:conceptfusion].",
         "Language does not replace geometry. 'The cabinet left of the oven' names an instance and a spatial relation, not merely a compatible text embedding. ConceptGraphs makes that connection explicit by building an open-vocabulary scene graph from RGB-D observations for later queries and planning [cite:conceptgraphs]. This is why a fixed-class score is only part of the story for open-world grounding."
       ],
-      "paper_ids": ["openscene", "openmask3d", "open3dis", "conceptgraphs"]
+      "paper_ids": [
+        "openscene",
+        "openmask3d",
+        "open3dis",
+        "conceptgraphs"
+      ]
     },
     {
-      "heading": "Recognize the parts that change the task",
+      "heading": "Find doors, handles, and other useful parts",
       "paragraphs": [
         "Interaction adds a finer target than an object category. Opening a refrigerator calls for a door or handle, a joint type, an axis or motion direction, and clearance for the robot. GAPartNet frames actionable parts across categories; OPD and OPDMulti estimate openable parts and motion parameters from one image, including multi-object views [cite:gapartnet] [cite:opd] [cite:opdmulti]. Earlier category-level work on articulated pose and tracking makes the state-estimation problem explicit [cite:ancsh] [cite:captra].",
         "Scene-scale functionality is harder because parts are small, connected to cluttered furniture, and embedded in a room. SceneFun3D links functional-element masks, affordances, task descriptions, and interaction motions. Articulate3D records parts, connectivity, articulation, and executable scene structure [cite:scenefun3d] [cite:articulate3d]. These are related but not interchangeable outputs: a function label, a movable-part mask, and a simulator-ready relation answer different questions. A single-view motion estimate can remain ambiguous even when the visible part boundary is accurate."
       ],
-      "paper_ids": ["gapartnet", "opd", "opdmulti", "scenefun3d", "articulate3d"]
+      "paper_ids": [
+        "gapartnet",
+        "opd",
+        "opdmulti",
+        "scenefun3d",
+        "articulate3d"
+      ]
     },
     {
-      "heading": "Use temporal and geometric evidence to resolve state",
+      "heading": "Estimate how parts move",
       "paragraphs": [
         "A room scan is usually the result of a sequence, even when it is delivered as one fused point cloud. That sequence contains information that a single view does not: a handle may appear only from an oblique angle, a movable part may be revealed after another object shifts, and repeated observations can distinguish sensor noise from a persistent edge. CAPTRA addresses category-level articulated pose tracking from point clouds, making temporal state rather than one-shot recognition the central output [cite:captra].",
         "Geometric-semantic coupling is another route to interaction understanding. Segment–Snap explicitly connects geometry and semantics in 3D scenes [cite:segment-snap]. The broader lesson is that semantic labels should not float independently of the coordinate frame, observed surfaces, and candidate contacts that support them. A robot that receives a label for ‘drawer’ but not the local geometry around its front face cannot readily choose a grasp pose or tell whether opening is blocked.",
         "More views help, but they do not settle every case. A seam in a static scan may not be a joint; motion can reveal movement without revealing the exact constraint behind it. Good systems keep that uncertainty visible and make room for another view or a careful contact. That is where passive scene understanding becomes embodied perception."
       ],
-      "paper_ids": ["captra", "segment-snap", "shape2motion", "articulate3d"]
+      "paper_ids": [
+        "captra",
+        "segment-snap",
+        "shape2motion",
+        "articulate3d"
+      ]
     },
     {
-      "heading": "Choose an output for the next decision",
+      "heading": "What does the robot need to know?",
       "paragraphs": [
         "Segmentation tells us whether a model recognizes the annotated target. It does not show that a robot can grasp, open, or recover after contact. Retrieval may only need language features; mapping needs identities that survive a revisit; manipulation needs a local surface, a candidate motion, and often a confidence estimate.",
         "For that reason, read every result with its sensing setup and intended use in mind: point cloud, RGB-D, images, or video; visible region or completed structure; semantic label or action hypothesis. The scene model needed by a long-running agent must also survive change—a door opens, an object moves, and a later view resolves an earlier mistake."
       ],
-      "table": {"caption": "A qualitative map of what common scene-perception outputs preserve.", "columns": ["Output", "Preserves", "Leaves ambiguous", "Representative work"], "rows": [["Semantic field", "Category evidence over observed geometry", "Object identity and functional parts", "PointNet++ [cite:pointnet-plus-plus]; PTv3 [cite:ptv3]"], ["Instance or panoptic masks", "Separate visible object hypotheses", "Hidden geometry and motion state", "Mask3D [cite:mask3d]; OneFormer3D [cite:oneformer3d]"], ["Open-vocabulary map", "Language-aligned regions or instances", "Guaranteed relation and action grounding", "OpenScene [cite:openscene]; Open3DIS [cite:open3dis]"], ["Functional structure", "Actionable parts and candidate motions", "Contact success under real dynamics", "GAPartNet [cite:gapartnet]; Articulate3D [cite:articulate3d]"]]},
-      "callout": {"title": "Evaluation boundary", "text": "A benchmark validates its annotated target. It does not, by itself, validate an executable twin or a manipulation policy."},
-      "paper_ids": ["scanrefer", "segment-snap", "captra", "pointnet-plus-plus", "ptv3", "mask3d", "oneformer3d", "openscene", "open3dis", "gapartnet", "articulate3d"]
+      "table": {
+        "caption": "A qualitative map of what common scene-perception outputs preserve.",
+        "columns": [
+          "Output",
+          "Preserves",
+          "Leaves ambiguous",
+          "Representative work"
+        ],
+        "rows": [
+          [
+            "Semantic field",
+            "Category evidence over observed geometry",
+            "Object identity and functional parts",
+            "PointNet++ [cite:pointnet-plus-plus]; PTv3 [cite:ptv3]"
+          ],
+          [
+            "Instance or panoptic masks",
+            "Separate visible object hypotheses",
+            "Hidden geometry and motion state",
+            "Mask3D [cite:mask3d]; OneFormer3D [cite:oneformer3d]"
+          ],
+          [
+            "Open-vocabulary map",
+            "Language-aligned regions or instances",
+            "Guaranteed relation and action grounding",
+            "OpenScene [cite:openscene]; Open3DIS [cite:open3dis]"
+          ],
+          [
+            "Functional structure",
+            "Actionable parts and candidate motions",
+            "Contact success under real dynamics",
+            "GAPartNet [cite:gapartnet]; Articulate3D [cite:articulate3d]"
+          ]
+        ]
+      },
+      "callout": {
+        "title": "Evaluation boundary",
+        "text": "A benchmark validates its annotated target. It does not, by itself, validate an executable twin or a manipulation policy."
+      },
+      "paper_ids": [
+        "scanrefer",
+        "segment-snap",
+        "captra",
+        "pointnet-plus-plus",
+        "ptv3",
+        "mask3d",
+        "oneformer3d",
+        "openscene",
+        "open3dis",
+        "gapartnet",
+        "articulate3d"
+      ]
     }
   ],
   "takeaway": "A useful 3D scene representation is layered: geometry supports regions, regions support instances, language makes them queryable, and functional structure makes selected regions actionable. The right layer is defined by the decision that follows it.",

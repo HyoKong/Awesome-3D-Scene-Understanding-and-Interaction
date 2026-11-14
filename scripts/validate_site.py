@@ -6,7 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from build_site import ARTICLE_ORDER, PUBLIC_URL, ROOT, expected_output_files, load_media, output_paths
 
@@ -61,6 +61,24 @@ def language_switches(page: Page) -> dict[str, str]:
         if tag == "a" and "data-language-switch" in attrs:
             links[attrs.get("hreflang", "")] = attrs.get("href", "")
     return links
+
+
+def class_links(page: Page, class_name: str) -> list[str]:
+    return [attrs["href"] for tag, attrs in page.elements
+            if tag == "a" and class_name in attrs.get("class", "").split() and attrs.get("href")]
+
+
+def route_contexts(source: str) -> list[tuple[str, int, str]]:
+    """Return each contextual route aside and its rendered navigation markup."""
+    pattern = r'<aside class="route-context" data-route-id="([^"]+)" data-route-step="(\d+)" hidden>(.*?)</aside>'
+    return [(route_id, int(step), body) for route_id, step, body in re.findall(pattern, source, re.S)]
+
+
+def assert_route_url(url: str, route_id: str, step: int, chapter: str, section: int) -> None:
+    parsed = urlsplit(url)
+    assert parsed.path == f"{chapter}.html", f"Wrong route chapter link: {url}"
+    assert parse_qs(parsed.query) == {"route": [route_id], "step": [str(step)]}, f"Wrong route query: {url}"
+    assert parsed.fragment == f"section-{section}", f"Wrong route section anchor: {url}"
 
 
 def main():
@@ -128,6 +146,57 @@ def main():
     for route in routes:
         assert f"route-{route['id']}" in pages["reading-routes.html"].ids
         assert f"route-{route['id']}" in pages["zh/reading-routes.html"].ids
+
+    # Every reading step must take the reader to its declared survey section in
+    # either language, and the contextual aside must preserve route progress.
+    for prefix in ("", "zh/"):
+        route_page_name = prefix + "reading-routes.html"
+        route_page = pages[route_page_name]
+        route_links = class_links(route_page, "step-chapter")
+        expected_step_links = []
+        expected_contexts = []
+        for route in routes:
+            total = len(route["steps"])
+            for step_number, step in enumerate(route["steps"], 1):
+                for reference in step["chapter_sections"]:
+                    target = (route["id"], step_number, reference["chapter"], reference["section"])
+                    expected_step_links.append(target)
+                    expected_contexts.append(target)
+        assert len(route_links) == len(expected_step_links), f"Wrong step-link count in {route_page_name}"
+        for url, (route_id, step, chapter, section) in zip(route_links, expected_step_links):
+            assert_route_url(url, route_id, step, chapter, section)
+
+        rendered_contexts = []
+        for chapter in ARTICLE_ORDER:
+            article_name = prefix + chapter + ".html"
+            rendered_contexts.extend((route_id, step, chapter, body)
+                                     for route_id, step, body in route_contexts((output / article_name).read_text()))
+        assert len(rendered_contexts) == len(expected_contexts), f"Wrong route-context count in {prefix or 'en'}"
+        chapter_order = {chapter: index for index, chapter in enumerate(ARTICLE_ORDER)}
+        expected_contexts.sort(key=lambda value: (chapter_order[value[2]], value[3]))
+        for (route_id, step, chapter, body), target in zip(rendered_contexts, expected_contexts):
+            expected_route, expected_step, expected_chapter, expected_section = target
+            assert (route_id, step, chapter) == (expected_route, expected_step, expected_chapter), f"Route context order mismatch in {prefix or 'en'}"
+            assert f'href="reading-routes.html#route-{route_id}-step-{step}"' in body, f"Missing route return in {prefix or 'en'}"
+            route = next(item for item in routes if item["id"] == route_id)
+            context_links = Page(body).links
+            if step > 1:
+                previous = route["steps"][step - 2]["chapter_sections"][0]
+                expected_url = f'{previous["chapter"]}.html?route={route_id}&step={step - 1}#section-{previous["section"]}'
+                assert expected_url in context_links, f"Broken previous route link in {prefix or 'en'}"
+            if step < len(route["steps"]):
+                following = route["steps"][step]["chapter_sections"][0]
+                expected_url = f'{following["chapter"]}.html?route={route_id}&step={step + 1}#section-{following["section"]}'
+                assert expected_url in context_links, f"Broken next route link in {prefix or 'en'}"
+            else:
+                assert f'href="reading-routes.html#route-{route_id}-exercise"' in body, f"Broken route end link in {prefix or 'en'}"
+
+        for topic, route_ids in {"perception": ["scene-perception", "language-and-function", "articulated-perception"], "reconstruction": ["scene-reconstruction", "reconstruction", "articulated-perception"], "generation": ["scene-generation", "generation", "reconstruction"], "robotics": ["spatial-navigation", "manipulation", "policies-and-agents"]}.items():
+            for route_id in route_ids:
+                route = next(item for item in routes if item["id"] == route_id)
+                first = route["steps"][0]["chapter_sections"][0]
+                expected_url = f'{first["chapter"]}.html?route={route_id}&step=1#section-{first["section"]}'
+                assert expected_url in class_links(pages[prefix + "index.html"], "text-link"), f"Missing homepage direct entry: {prefix}{route_id}"
     for benchmark in benchmarks:
         assert f"benchmark-{benchmark['id']}" in pages["benchmarks.html"].ids
         assert f"benchmark-{benchmark['id']}" in pages["zh/benchmarks.html"].ids

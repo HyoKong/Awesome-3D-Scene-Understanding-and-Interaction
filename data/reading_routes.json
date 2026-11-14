@@ -2,44 +2,72 @@
   "routes": [
     {
       "id": "scene-perception",
-      "title": "🏙️ Understand a 3D scene",
-      "summary": "Point features → semantic labels → object instances",
-      "goal": "Connect point-cloud representations to the objects and regions a scene contains.",
+      "title": "🏙️ Recognize objects in a 3D scene",
+      "summary": "Point features → semantic labels → separate object instances",
+      "goal": "Labeling points as 'chair' doesn't tell you how many chairs there are. Start with point-cloud features, then look at the methods that separate individual objects.",
       "steps": [
         {
-          "label": "Learn point representations",
+          "label": "Start with what a point feature remembers",
           "paper_ids": [
             "pointnet",
             "pointnet-plus-plus"
           ],
-          "focus": "Compare whole-set features with hierarchical local geometry."
+          "focus": "PointNet summarizes a whole set; PointNet++ brings local neighborhoods back into the representation.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 1
+            }
+          ]
         },
         {
-          "label": "Compare scalable backbones",
+          "label": "See how the backbone scales up",
           "paper_ids": [
             "ptv3",
             "volume-transformer"
           ],
-          "focus": "Compare point serialization with volumetric patch tokens and global attention."
+          "focus": "Compare Point Transformer V3's serialized points with volumetric patch tokens and global attention.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 1
+            }
+          ]
         },
         {
-          "label": "Separate object instances",
+          "label": "Turn labels into individual objects",
           "paper_ids": [
             "mask3d",
             "oneformer3d"
           ],
-          "focus": "Follow the change from point features to semantic, instance, and panoptic predictions."
+          "focus": "Watch point features become semantic, instance, and panoptic predictions rather than one class label per point.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Transfer and generalize representations",
+          "label": "Ask what survives a new dataset",
           "paper_ids": [
             "ditr",
             "multi-dataset-point-prompt-training"
           ],
-          "focus": "Compare transferred 2D features with training across multiple 3D datasets."
+          "focus": "Contrast transferred 2D features with training across multiple 3D datasets, then ask what was actually held out.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 1
+            },
+            {
+              "chapter": "datasets",
+              "section": 6
+            }
+          ]
         }
       ],
-      "try_it": "For a kitchen scan, sketch the difference between a semantic map, an instance map, and a panoptic map.",
+      "try_it": "Take a kitchen scan and mark what a semantic map, an instance map, and a panoptic map would each preserve.",
       "topics": [
         "perception",
         "datasets"
@@ -47,41 +75,69 @@
     },
     {
       "id": "language-and-function",
-      "title": "🗣️ Connect language, objects, and function",
+      "title": "🗣️ Find objects and parts using language",
       "summary": "Open vocabulary → scene relations → actionable parts",
-      "goal": "Move from naming objects to locating the parts and relationships relevant to a task.",
+      "goal": "Finding a fridge and opening it are different jobs. Start with text queries, then see how methods locate doors, handles, and other parts a robot can use.",
       "steps": [
         {
-          "label": "Build a queryable 3D map",
+          "label": "Query a map with text",
           "paper_ids": [
             "openscene",
             "conceptfusion"
           ],
-          "focus": "See how visual and language features support queries beyond a fixed label set."
+          "focus": "See how visual-language features answer queries that a fixed category list cannot anticipate.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 3
+            }
+          ]
         },
         {
-          "label": "Ground queries in instances",
+          "label": "Find the particular object being described",
           "paper_ids": [
             "openmask3d",
             "open3dis"
           ],
-          "focus": "Compare how 2D observations and 3D proposals produce object-level masks."
+          "focus": "Compare how 2D observations and 3D proposals turn an open-vocabulary query into an object mask.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 3
+            },
+            {
+              "chapter": "perception",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Add language and relations",
+          "label": "Understand descriptions such as “the one on the left”",
           "paper_ids": [
             "scanrefer",
             "conceptgraphs"
           ],
-          "focus": "Contrast referring-expression localization with a scene graph for reasoning and planning."
+          "focus": "Put referring-expression localization beside a scene graph: one finds an object, the other keeps relations available for planning.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 3
+            }
+          ]
         },
         {
-          "label": "Identify functional regions",
+          "label": "Find the door or handle needed for the task",
           "paper_ids": [
             "scenefun3d",
             "gapartnet"
           ],
-          "focus": "Relate task descriptions and affordances to actionable parts and part poses."
+          "focus": "Follow task descriptions and affordances down to actionable parts, part poses, and candidate interaction regions.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 4
+            }
+          ]
         }
       ],
       "try_it": "Compare the regions needed for 'find the refrigerator' and 'open the refrigerator': object, door, handle, and action space.",
@@ -92,9 +148,9 @@
     },
     {
       "id": "scene-reconstruction",
-      "title": "🏗️ Reconstruct a whole 3D scene",
+      "title": "🏗️ Reconstruct a room from photos or video",
       "summary": "Camera geometry → neural representations → learned geometry → online mapping",
-      "goal": "Compare ways to recover scene structure and appearance from images, depth, and video.",
+      "goal": "Do you need a new camera view, a surface model, or a map that updates as you move? That choice matters when you pick a reconstruction method.",
       "steps": [
         {
           "label": "Recover cameras and geometry",
@@ -102,7 +158,13 @@
             "colmap-sfm",
             "bundlefusion"
           ],
-          "focus": "Compare image-based structure from motion with globally consistent RGB-D fusion."
+          "focus": "Compare camera-and-sparse-structure recovery from images with globally consistent RGB-D surface fusion.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 1
+            }
+          ]
         },
         {
           "label": "Represent scene appearance",
@@ -110,7 +172,13 @@
             "nerf",
             "gaussian-splatting"
           ],
-          "focus": "Contrast a continuous radiance field with explicit Gaussian primitives; separate rendering quality from surface geometry."
+          "focus": "Contrast a continuous radiance field with explicit Gaussians, keeping rendering quality separate from surface geometry.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 2
+            }
+          ]
         },
         {
           "label": "Predict geometry directly",
@@ -118,7 +186,13 @@
             "dust3r",
             "vggt"
           ],
-          "focus": "Study feed-forward point maps, camera recovery, depth, and multi-view consistency."
+          "focus": "Study feed-forward point maps, camera recovery, depth, and how much multi-view consistency is built in.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 3
+            }
+          ]
         },
         {
           "label": "Map an ongoing observation stream",
@@ -126,7 +200,13 @@
             "nice-slam",
             "splatam"
           ],
-          "focus": "Compare implicit and Gaussian maps jointly updated with camera tracking."
+          "focus": "Compare implicit and Gaussian maps as both map and camera pose are updated during a stream.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 4
+            }
+          ]
         },
         {
           "label": "Handle a changing scene",
@@ -134,7 +214,13 @@
             "monst3r",
             "four-d-gaussian-splatting"
           ],
-          "focus": "Distinguish time-varying geometry and camera estimation from dynamic-scene rendering."
+          "focus": "Separate estimating changing geometry and cameras from merely rendering a dynamic scene.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 5
+            }
+          ]
         }
       ],
       "try_it": "For one captured room, list which methods need depth, camera poses, multiple views, or scene-specific optimization, and which outputs support rendering or geometry queries.",
@@ -145,52 +231,90 @@
     },
     {
       "id": "scene-generation",
-      "title": "🌍 Generate scenes and environments",
-      "summary": "Layouts → visual scenes → procedural worlds → interactive simulation",
-      "goal": "Follow how scene generation combines room structure, object placement, appearance, and task requirements.",
+      "title": "🌍 Generate a 3D environment",
+      "summary": "Layouts → visual worlds → procedural environments → simulation tasks",
+      "goal": "Start by arranging furniture, then look at how methods build whole rooms and worlds. If a robot needs to use the result, there's more to check than how it looks.",
       "steps": [
         {
-          "label": "Arrange objects in a scene",
+          "label": "Place objects before rendering them",
           "paper_ids": [
             "atiss",
             "diffuscene"
           ],
-          "focus": "Compare autoregressive layout prediction with diffusion over scene configurations."
+          "focus": "Compare autoregressive layout prediction with diffusion over scene configurations.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Control composition with language",
+          "label": "Turn a room request into spatial constraints",
           "paper_ids": [
             "layoutgpt",
             "instructscene"
           ],
-          "focus": "Study how text conditions become object relations and spatial layouts."
+          "focus": "Ask whether the text becomes explicit object relations and layout constraints, or only a loose conditioning signal.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Synthesize a visual 3D world",
+          "label": "Build a world from a prompt or image",
           "paper_ids": [
             "text2room",
             "wonderworld"
           ],
-          "focus": "Contrast a generated textured room mesh with interactive scene expansion from an image."
+          "focus": "Contrast a generated textured room mesh with interactive scene expansion from an image.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 3
+            },
+            {
+              "chapter": "generation",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Generate environments procedurally",
+          "label": "Sample a training world procedurally",
           "paper_ids": [
             "procthor",
             "infinigen"
           ],
-          "focus": "Compare interactive indoor-house sampling with procedural natural-world geometry and materials."
+          "focus": "Compare interactive indoor-house sampling with procedural natural-world geometry and materials.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 5
+            }
+          ]
         },
         {
-          "label": "Connect generation to embodied tasks",
+          "label": "Give generation a task and a simulator",
           "paper_ids": [
             "holodeck",
             "robogen"
           ],
-          "focus": "Read for task-driven scene construction and the interface between generated environments and agent training."
+          "focus": "Read for task-driven scene construction and the interface between generated environments and agent training.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 5
+            },
+            {
+              "chapter": "generation",
+              "section": 7
+            }
+          ]
         }
       ],
-      "try_it": "Give the same room description to a layout generator, a visual scene generator, and a simulator-environment generator. List the different outputs and what each would still need for a robot task.",
+      "try_it": "Give one room description to a layout generator, a visual scene generator, and a simulator generator. Write down what each returns and what a robot would still be missing.",
       "topics": [
         "generation",
         "datasets"
@@ -198,43 +322,75 @@
     },
     {
       "id": "articulated-perception",
-      "title": "⚙️ Understand what moves, and how",
+      "title": "⚙️ Work out how doors and drawers move",
       "summary": "Parts → joints and pose → tracking → scene articulation",
-      "goal": "Distinguish movable-part segmentation, motion parameters, articulated pose, and temporal tracking.",
+      "goal": "A robot needs to know which side a door hinges on and which way a drawer slides. Read about finding movable parts, estimating motion, and tracking their state.",
       "steps": [
         {
-          "label": "Recover parts and motion",
+          "label": "Separate a moving part from its motion",
           "paper_ids": [
             "shape2motion",
             "ancsh"
           ],
-          "focus": "Compare motion-part analysis with category-level pose and canonical part coordinates."
+          "focus": "Compare a motion-part decomposition with category-level pose and canonical part coordinates: which variables make the joint explicit?",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 5
+            },
+            {
+              "chapter": "perception",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Track articulated state",
+          "label": "Keep track of a moving joint over time",
           "paper_ids": [
             "captra"
           ],
-          "focus": "Study how previous-frame estimates support online per-part pose tracking."
+          "focus": "Study how previous-frame estimates support online per-part pose tracking.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 5
+            }
+          ]
         },
         {
-          "label": "Work from a single image",
+          "label": "Infer opening parts from one image",
           "paper_ids": [
             "opd",
             "opdmulti"
           ],
-          "focus": "Follow openable-part detection and axis estimation from single-object to multi-object images."
+          "focus": "Follow openable-part detection and axis estimation from single-object to multi-object images.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Scale to indoor scenes",
+          "label": "Carry articulation into a cluttered room",
           "paper_ids": [
             "articulate3d",
             "segment-snap"
           ],
-          "focus": "Examine scene-level parts, handles, connectivity, and articulation predictions."
+          "focus": "Examine scene-level parts, handles, connectivity, and articulation predictions.",
+          "chapter_sections": [
+            {
+              "chapter": "perception",
+              "section": 4
+            },
+            {
+              "chapter": "perception",
+              "section": 5
+            }
+          ]
         }
       ],
-      "try_it": "For one door and one drawer, list the part mask, joint type, axis, origin, and state a robot would need.",
+      "try_it": "For one door and one drawer, write the part mask, joint type, axis, origin, and state a robot would need before acting.",
       "topics": [
         "perception",
         "reconstruction"
@@ -242,44 +398,72 @@
     },
     {
       "id": "reconstruction",
-      "title": "🧩 Build an articulated digital twin",
+      "title": "🧩 Rebuild an object with moving parts",
       "summary": "Observations → geometry and motion → executable models",
-      "goal": "Recover the geometry, joints, and executable structure of objects that move within a scene.",
+      "goal": "A reconstructed cabinet may look right but still have no doors that open. Here's how methods recover parts and joints so the model can move in a simulator.",
       "steps": [
         {
-          "label": "Observe multiple states",
+          "label": "Use state changes as evidence",
           "paper_ids": [
             "ditto",
             "paris"
           ],
-          "focus": "Compare before/after interaction observations with multi-view capture in two states."
+          "focus": "Compare before/after interaction observations with multi-view capture in two states: what becomes observable only after motion?",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 5
+            }
+          ]
         },
         {
-          "label": "Reconstruct from video",
+          "label": "Recover parts and joints from video",
           "paper_ids": [
             "articulat3d",
             "videoartgs"
           ],
-          "focus": "Study geometry, part decomposition, and articulation recovery from monocular video."
+          "focus": "Compare how the methods recover shape, separate moving parts, and estimate joints from a monocular video.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 5
+            }
+          ]
         },
         {
-          "label": "Produce executable structure",
+          "label": "Write the result into an executable model",
           "paper_ids": [
             "real2code",
             "urdformer"
           ],
-          "focus": "Compare reconstructed parts and articulation code with single-image, mesh-based URDF prediction."
+          "focus": "Compare reconstructed parts and articulation code with single-image, mesh-based URDF prediction.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 7
+            }
+          ]
         },
         {
-          "label": "Make static assets interactive",
+          "label": "Add motion to a static asset",
           "paper_ids": [
             "s2o",
             "react3d"
           ],
-          "focus": "Inspect part detection, motion inference, hidden-geometry completion, and scene assembly."
+          "focus": "Inspect part detection, motion inference, hidden-geometry completion, and scene assembly.",
+          "chapter_sections": [
+            {
+              "chapter": "reconstruction",
+              "section": 7
+            },
+            {
+              "chapter": "reconstruction",
+              "section": 6
+            }
+          ]
         }
       ],
-      "try_it": "Make an input/output table: single image, two states, video, or static mesh in; geometry, joints, and executable assets out.",
+      "try_it": "Make a small input/output table: single image, two states, video, or static mesh in; geometry, joints, and executable assets out.",
       "topics": [
         "reconstruction",
         "generation"
@@ -287,44 +471,72 @@
     },
     {
       "id": "generation",
-      "title": "🛠️ Generate articulated assets",
+      "title": "🛠️ Generate objects with joints",
       "summary": "Part graphs → conditional generation → asset programs",
-      "goal": "Understand how geometry and kinematic structure are generated together under different conditions.",
+      "goal": "Generating a cabinet with working doors means producing more than its shape. Look at how models generate parts, connections, and motion parameters together.",
       "steps": [
         {
-          "label": "Represent the articulation graph",
+          "label": "Write down the part graph first",
           "paper_ids": [
             "nap",
             "cage"
           ],
-          "focus": "Read for graph representations, part geometry, motion parameters, and structural constraints."
+          "focus": "Read for graph representations, part geometry, motion parameters, and structural constraints.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Add physical or text conditions",
+          "label": "Condition the graph on evidence or language",
           "paper_ids": [
             "physnap",
             "artformer"
           ],
-          "focus": "Compare physical guidance and partial observations with text-conditioned tree generation."
+          "focus": "Compare physical guidance and partial observations with text-conditioned tree generation; note which constraint fixes which ambiguity.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Generate from an image",
+          "label": "Infer a movable asset from one view",
           "paper_ids": [
             "singapo",
             "pact"
           ],
-          "focus": "Compare plausible geometry and kinematics inferred from one image."
+          "focus": "Compare plausible geometry and kinematics inferred from one image.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Author assets through programs",
+          "label": "Generate the program behind the asset",
           "paper_ids": [
             "articulate-anything",
             "articraft"
           ],
-          "focus": "Trace how language/vision models produce programs defining parts, joints, and simulator assets."
+          "focus": "Trace how language/vision models produce programs defining parts, joints, and simulator assets.",
+          "chapter_sections": [
+            {
+              "chapter": "generation",
+              "section": 6
+            },
+            {
+              "chapter": "generation",
+              "section": 7
+            }
+          ]
         }
       ],
-      "try_it": "Compare two plausible models of the same closed cabinet: what can the image determine, and what must the generator infer?",
+      "try_it": "Draw two plausible models of the same closed cabinet. What does the image settle, and what must the generator invent?",
       "topics": [
         "generation",
         "reconstruction"
@@ -332,41 +544,69 @@
     },
     {
       "id": "spatial-navigation",
-      "title": "🧭 Navigate with maps, language, and memory",
+      "title": "🧭 Help an agent find its way",
       "summary": "Spatial maps → semantic goals → language instructions → lifelong navigation",
-      "goal": "Connect scene representations to where an agent should move and what it should remember.",
+      "goal": "The target may be out of sight, and the instruction may be vague. See how maps, exploration, and memory help an agent decide where to go.",
       "steps": [
         {
-          "label": "Build a language-queryable map",
+          "label": "Put language features on a map",
           "paper_ids": [
             "vlmaps"
           ],
-          "focus": "Follow visual-language feature fusion into a spatial map for navigation goals and obstacles."
+          "focus": "See how visual-language features are fused into a spatial map that can name both a goal and an obstacle.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Explore toward a semantic goal",
+          "label": "Choose where to look next",
           "paper_ids": [
             "vlfm"
           ],
-          "focus": "Study how frontier exploration and goal recognition guide object-goal navigation."
+          "focus": "Ask how frontier exploration changes once the robot can recognize a semantic goal from its current view.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Follow a language instruction",
+          "label": "Turn route language into landmarks",
           "paper_ids": [
             "lm-nav"
           ],
-          "focus": "Trace landmarks from language through visual grounding to low-level navigation."
+          "focus": "Trace a named landmark from language to visual grounding and then to the navigation controller.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 2
+            },
+            {
+              "chapter": "robotics",
+              "section": 3
+            }
+          ]
         },
         {
-          "label": "Test instructions and memory",
+          "label": "Test whether memory helps after the first goal",
           "paper_ids": [
             "r2r",
             "goat-bench"
           ],
-          "focus": "Compare route-following from natural language with repeated category, image, and language goals."
+          "focus": "Compare one-off route following with repeated category, image, and language goals that reward retaining scene memory.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 5
+            }
+          ]
         }
       ],
-      "try_it": "For “find the mug near the sofa,” separate the target description, the map representation, the exploration decision, and memory carried over from earlier goals.",
+      "try_it": "For “find the mug near the sofa,” separate the target description, map state, next exploration move, and memory carried over from earlier goals.",
       "topics": [
         "robotics",
         "datasets"
@@ -374,43 +614,75 @@
     },
     {
       "id": "embodied-reasoning",
-      "title": "💡 Reason and answer questions about a 3D world",
+      "title": "💡 Let an agent explore and answer questions",
       "summary": "Gather observations → ground questions → reason → plan",
-      "goal": "Explore how an agent uses scene observations to answer questions and choose meaningful actions.",
+      "goal": "To answer 'what is on the table?', an agent may need to go and look. This route covers gathering observations, reasoning about the scene, and planning what to do next.",
       "steps": [
         {
-          "label": "Define the information-gathering task",
+          "label": "Decide what evidence the question needs",
           "paper_ids": [
             "embodiedqa",
             "openeqa"
           ],
-          "focus": "Compare navigation to gather evidence with episodic-memory and active-exploration question answering."
+          "focus": "Compare navigating to gather fresh evidence with answering from episodic memory and active exploration.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 5
+            },
+            {
+              "chapter": "robotics",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Give language models 3D context",
+          "label": "Give a language model a scene to reason over",
           "paper_ids": [
             "3d-llm"
           ],
-          "focus": "Study the interface between 3D scene features and language-based questions, dialogue, and plans."
+          "focus": "Study the interface between 3D scene features and language-based questions, dialogue, and plans.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 3
+            }
+          ]
         },
         {
-          "label": "Connect perception to multiple tasks",
+          "label": "Reuse scene features across tasks",
           "paper_ids": [
             "leo",
             "palm-e"
           ],
-          "focus": "Compare 3D vision-language-action instruction tuning with continuous visual and robot-state inputs to language models."
+          "focus": "Compare 3D vision-language-action instruction tuning with language models that receive continuous visual and robot-state inputs.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 3
+            },
+            {
+              "chapter": "robotics",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Ground an executable plan",
+          "label": "Reject a plan that cannot be executed",
           "paper_ids": [
             "llm-planner",
             "saycan"
           ],
-          "focus": "Contrast high-level plans grounded through a controller with skill selection constrained by learned feasibility."
+          "focus": "Contrast controller-grounded plans with skill selection constrained by learned feasibility; where can each stop a bad action?",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 3
+            }
+          ]
         }
       ],
-      "try_it": "Compare answering “what is on the kitchen table?” from remembered images with actively exploring to answer it. What evidence is missing, and which action would reveal it?",
+      "try_it": "Ask “what is on the kitchen table?” from remembered images, then decide what missing evidence would justify one more action.",
       "topics": [
         "robotics",
         "datasets"
@@ -418,43 +690,71 @@
     },
     {
       "id": "manipulation",
-      "title": "🦾 Turn perception into robot interaction",
+      "title": "🦾 Get a robot to grasp, push, or open",
       "summary": "Affordances → motion planning → feedback → mobile manipulation",
-      "goal": "Follow the information a robot needs to choose a contact, move an articulated object, and adapt.",
+      "goal": "Where should the robot make contact, which way should it move, and what should it do if that fails? Read about affordances, motion estimates, and feedback from touch.",
       "steps": [
         {
-          "label": "Choose where to interact",
+          "label": "Choose a contact region",
           "paper_ids": [
             "where2act",
             "env-aware-affordance"
           ],
-          "focus": "Compare actionability predictions with affordances conditioned on occlusion and robot position."
+          "focus": "Compare actionability predictions with affordances that explicitly account for occlusion and robot position.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Represent the motion",
+          "label": "Represent how the object can move",
           "paper_ids": [
             "flowbot3d",
             "gamma"
           ],
-          "focus": "Contrast dense motion fields with articulation models and adaptive joint estimation."
+          "focus": "Contrast dense motion fields with articulation models and adaptive joint estimation before choosing a trajectory.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Use history and contact",
+          "label": "Let contact revise the motion hypothesis",
           "paper_ids": [
             "flowbothd",
             "tacman"
           ],
-          "focus": "Study uncertain motion hypotheses from observation history and adaptation through tactile feedback."
+          "focus": "Use observation history for uncertain motion hypotheses, then see how tactile feedback changes the controller.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 5
+            }
+          ]
         },
         {
-          "label": "Bring the robot to the object",
+          "label": "Move the base as well as the arm",
           "paper_ids": [
             "mosart"
           ],
-          "focus": "Connect perception to navigation, whole-body planning, grasping, and adaptation at real sites."
+          "focus": "See how perception, base navigation, whole-body planning, grasping, and adaptation have to agree at a real site.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 4
+            },
+            {
+              "chapter": "robotics",
+              "section": 2
+            }
+          ]
         }
       ],
-      "try_it": "Trace one failed door-opening attempt: what would a new camera view, contact measurement, or base movement change?",
+      "try_it": "Trace one failed door-opening attempt: what would a new camera view, contact measurement, or base move change?",
       "topics": [
         "robotics",
         "perception"
@@ -462,50 +762,84 @@
     },
     {
       "id": "policies-and-agents",
-      "title": "🤖 Connect generalist policies and embodied agents",
+      "title": "🤖 Understand general-purpose robot policies",
       "summary": "Action learning → vision-language-action → planning and recovery",
-      "goal": "Compare learned action policies with language-guided planning and their interfaces to scene understanding.",
+      "goal": "Some models predict actions directly; others make a language plan first. Compare these approaches and the scene information they need during a task.",
       "steps": [
         {
-          "label": "Learn action distributions",
+          "label": "Sample actions from demonstrations",
           "paper_ids": [
             "diffusion-policy"
           ],
-          "focus": "Read for conditional action diffusion, visual conditioning, and receding-horizon execution."
+          "focus": "See how conditional action diffusion uses visual input and receding-horizon execution rather than one fixed trajectory.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Connect vision, language, and action",
+          "label": "Add language to the action model",
           "paper_ids": [
             "pi-zero",
             "pi-zero-point-five"
           ],
-          "focus": "Study flow-matching action experts and co-training across robot and semantic data."
+          "focus": "Compare flow-matching action experts with co-training across robot and semantic data.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Compare open policy foundations",
+          "label": "Compare two open policy families",
           "paper_ids": [
             "openvla",
             "octo"
           ],
-          "focus": "Contrast a vision-language-action model with a transformer diffusion policy across embodiments and adaptation settings."
+          "focus": "Contrast a vision-language-action model with a transformer diffusion policy across embodiments and adaptation settings.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Ground language plans",
+          "label": "Check language plans against the scene",
           "paper_ids": [
             "saycan",
             "voxposer"
           ],
-          "focus": "Compare affordance-value-guided skill selection with programs that build 3D value maps."
+          "focus": "Compare affordance-value-guided skill selection with programs that build spatial 3D value maps.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 3
+            }
+          ]
         },
         {
-          "label": "Recover through interaction",
+          "label": "Recover after a failed interaction",
           "paper_ids": [
             "sage"
           ],
-          "focus": "Follow the link from semantic and actionable parts to executable policies and feedback after failure."
+          "focus": "Track how semantic, actionable parts become an executable policy and a feedback-driven retry.",
+          "chapter_sections": [
+            {
+              "chapter": "robotics",
+              "section": 3
+            },
+            {
+              "chapter": "robotics",
+              "section": 7
+            }
+          ]
         }
       ],
-      "try_it": "For 'put the cup in the cabinet,' separate task planning, scene grounding, contact selection, and action execution.",
+      "try_it": "For “put the cup in the cabinet,” separate task planning, scene grounding, contact selection, and action execution.",
       "topics": [
         "robotics",
         "datasets"
@@ -513,62 +847,110 @@
     },
     {
       "id": "data-and-evaluation",
-      "title": "📊 Choose data and evaluation for your task",
+      "title": "📊 Pick a dataset and decide what to measure",
       "summary": "Scene labels → functional annotations → simulation → household tasks",
-      "goal": "Match the desired capability to observations, annotations, environments, and evaluation protocols.",
+      "goal": "Scene segmentation and opening a cabinet need different data and different tests. Start with the ability you want to measure, then choose a benchmark that can test it.",
       "steps": [
         {
-          "label": "Evaluate scene understanding",
+          "label": "Choose the scene evidence you need",
           "paper_ids": [
             "scannetpp",
             "scannet200"
           ],
-          "focus": "Compare high-fidelity scene capture with long-tail semantic and instance label coverage."
+          "focus": "Compare high-fidelity scene capture with long-tail semantic and instance-label coverage; neither one alone defines the task.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 1
+            }
+          ]
         },
         {
-          "label": "Add function and articulation",
+          "label": "Add labels for function and motion",
           "paper_ids": [
             "multiscan",
             "scenefun3d",
             "articulate3d"
           ],
-          "focus": "Compare mobility annotations, task-grounded functional regions, and executable articulated scene structure."
+          "focus": "Compare mobility annotations, task-grounded functional regions, and executable articulated scene structure.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 2
+            }
+          ]
         },
         {
-          "label": "Use interactive object assets",
+          "label": "Move from annotations to interactive assets",
           "paper_ids": [
             "sapien",
             "arti-pg"
           ],
-          "focus": "Explore physics-based part interaction and procedural articulated-object data."
+          "focus": "Compare physics-based part interaction with procedurally generated articulated-object data.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 4
+            }
+          ]
         },
         {
-          "label": "Benchmark manipulation",
+          "label": "Check what a manipulation score really measures",
           "paper_ids": [
             "maniskill2",
             "rlbench"
           ],
-          "focus": "Compare task coverage, robot interfaces, observations, demonstrations, and learning settings."
+          "focus": "Read the robot interface, observations, demonstrations, and split before comparing a manipulation score.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 4
+            },
+            {
+              "chapter": "datasets",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Evaluate household activity",
+          "label": "Test long-horizon household behavior",
           "paper_ids": [
             "robocasa365",
             "behavior1k"
           ],
-          "focus": "Study compositional kitchen-task generalization and long-horizon activity with dynamic object states."
+          "focus": "Compare compositional kitchen-task generalization with long-horizon activity that changes object state.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 4
+            },
+            {
+              "chapter": "datasets",
+              "section": 6
+            }
+          ]
         },
         {
-          "label": "Evaluate reasoning and instruction following",
+          "label": "Separate answering, doing, and asking",
           "paper_ids": [
             "openeqa",
             "alfred",
             "teach"
           ],
-          "focus": "Separate question-answering accuracy, household task completion, and dialogue-conditioned interaction."
+          "focus": "Keep question-answering accuracy, household task completion, and dialogue-conditioned interaction as separate evidence.",
+          "chapter_sections": [
+            {
+              "chapter": "datasets",
+              "section": 5
+            },
+            {
+              "chapter": "datasets",
+              "section": 6
+            }
+          ]
         }
       ],
-      "try_it": "Choose one benchmark for scene segmentation and one for opening a cabinet; write down their inputs, success metrics, and generalization splits.",
+      "try_it": "Choose one segmentation benchmark and one cabinet-opening benchmark; write down their inputs, success metric, and withheld split.",
       "topics": [
         "datasets",
         "robotics"

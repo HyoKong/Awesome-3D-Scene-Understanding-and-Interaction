@@ -445,3 +445,33 @@ html[lang="zh-CN"] .home-route > p { font-size: 14px; }
 }
 
 html[lang="zh-CN"] .survey-hero h1 br:first-of-type { display: none; }
+
+/* Read the explanation first, then return to the route or open its papers. */
+.home-route-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 9px; }
+.home-route-links > a { font-size: 12px; text-decoration: none; }
+.home-route-links > a:last-child { color: var(--muted); }
+.step-focus { font-size: 13px; margin-bottom: 16px; }
+.step-reading { padding: 15px 17px; border-left: 3px solid #9db6da; background: #f3f6fb; margin-bottom: 14px; }
+.step-reading .reading-label { margin: 0 0 7px; font-size: 10px; color: #6b7d98; }
+.step-chapter { display: block; font-size: 14px; font-weight: 600; line-height: 1.6; text-decoration: none; }
+.step-chapter + .step-chapter { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; }
+.step-chapter span { display: block; font-size: 10px; font-weight: 500; color: var(--muted); margin-bottom: 4px; }
+.step-chapter b { font-weight: 500; }
+.step-chapter:hover { text-decoration: underline; }
+.step-papers > span { display: block; color: var(--muted); font-size: 10px; font-weight: 500; margin-bottom: 4px; }
+.reading-route li:target { scroll-margin-top: 30px; }
+.route-context { border: 1px solid #d6e1f0; border-left: 3px solid #7295c8; border-radius: 4px; background: #f5f8fc; padding: 14px 18px; margin: 0 0 24px; }
+.route-context p { display: flex; flex-wrap: wrap; gap: 5px 15px; margin: 0 0 9px; font-size: 12px; line-height: 1.65; }
+.route-context p span { color: #6b7d98; }
+.route-context strong { font-weight: 600; }
+.route-context nav { display: flex; flex-wrap: wrap; gap: 9px 22px; font-size: 12px; }
+.route-context nav a { text-decoration: none; }
+.route-context .route-return { margin-right: auto; color: var(--muted); }
+.route-context .route-next { font-weight: 650; }
+@media (max-width: 480px) {
+  .route-context { padding: 12px 14px; }
+  .route-context nav { gap: 10px 15px; }
+}
+.route-context .route-focus { display: block; color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+.route-context .route-focus strong { display: block; color: var(--ink); margin-bottom: 4px; }
+.step-papers a { display: inline-block; margin-right: 10px; }

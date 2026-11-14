@@ -135,7 +135,16 @@ def route_nav(routes: list[dict]) -> str:
     )
 
 
-def route_sections(routes: list[dict], papers: dict[str, dict], lang: str = "en") -> str:
+def route_section_url(route: dict, step_number: int, reference: dict | None = None) -> str:
+    reference = reference or route["steps"][step_number - 1]["chapter_sections"][0]
+    return f'{reference["chapter"]}.html?route={route["id"]}&step={step_number}#section-{reference["section"]}'
+
+
+def route_section_label(reference: dict, articles: dict[str, dict]) -> str:
+    return articles[reference["chapter"]]["sections"][reference["section"] - 1]["heading"]
+
+
+def route_sections(routes: list[dict], papers: dict[str, dict], articles: dict[str, dict], lang: str = "en") -> str:
     sections = []
     for route in routes:
         steps = []
@@ -144,14 +153,49 @@ def route_sections(routes: list[dict], papers: dict[str, dict], lang: str = "en"
                 f'<a href="library.html#paper-{text(pid)}" data-paper-link="{text(pid)}">{text(papers[pid]["short"])}</a>'
                 for pid in step["paper_ids"]
             )
-            steps.append(f'''<li><span class="step-number">{number}</span><div class="step-content">
-  <div class="step-label"><h4>{text(step['label'])}</h4></div><p class="step-papers">{references}</p><p class="step-focus">{text(step['focus'])}</p>
+            chapters = "".join(
+                f'<a class="step-chapter" href="{text(route_section_url(route, number, reference))}">'
+                f'<span>{text(ui(CHAPTER_LABELS[reference["chapter"]], lang))} · §{reference["section"]}</span>'
+                f'{text(route_section_label(reference, articles))} <b aria-hidden="true">→</b></a>'
+                for reference in step["chapter_sections"]
+            )
+            steps.append(f'''<li id="route-{text(route['id'])}-step-{number}"><span class="step-number">{number}</span><div class="step-content">
+  <div class="step-label"><h4>{text(step['label'])}</h4></div><p class="step-focus">{text(step['focus'])}</p>
+  <div class="step-reading"><p class="reading-label">{text(ui("Read in the survey", lang))}</p>{chapters}</div>
+  <p class="step-papers"><span>{text(ui("Related papers", lang))}</span> {references}</p>
 </div></li>''')
         sections.append(f'''<section class="reading-route" id="route-{text(route['id'])}">
   <h3>{text(route['title'])}</h3><p class="route-summary">{text(route['summary'])}</p><p class="route-goal">{text(route['goal'])}</p>
-  <ol class="route-steps">{' '.join(steps)}</ol><p class="route-exercise"><strong>{text(ui("Try it:", lang))}</strong> {text(route['try_it'])}</p>
+  <ol class="route-steps">{' '.join(steps)}</ol><p class="route-exercise" id="route-{text(route['id'])}-exercise"><strong>{text(ui("Something to try:", lang))}</strong> {text(route['try_it'])}</p>
 </section>''')
     return "\n".join(sections)
+
+
+def route_contexts(routes: list[dict], lang: str) -> dict[tuple[str, int], str]:
+    """Keep the chosen reading route available inside its chapter sections."""
+    result: dict[tuple[str, int], str] = {}
+    for route in routes:
+        for number, step in enumerate(route["steps"], 1):
+            total = len(route["steps"])
+            progress = f"Step {number} of {total}" if lang == "en" else f"第 {number} 步，共 {total} 步"
+            back = f'reading-routes.html#route-{route["id"]}-step-{number}'
+            links = f'<a class="route-return" href="{back}">{text(ui("All steps", lang))}</a>'
+            if number > 1:
+                links += f'<a href="{text(route_section_url(route, number - 1))}">{text(ui("← Previous step", lang))}</a>'
+            if number < total:
+                links += f'<a class="route-next" href="{text(route_section_url(route, number + 1))}">{text(ui("Next step →", lang))}</a>'
+            else:
+                links += f'<a class="route-next" href="reading-routes.html#route-{route["id"]}-exercise">{text(ui("Try it yourself →", lang))}</a>'
+            context = (
+                f'<aside class="route-context" data-route-id="{text(route["id"])}" data-route-step="{number}" hidden>'
+                f'<p><span>{text(progress)}</span><strong>{text(route["title"])}</strong></p>'
+                f'<p class="route-focus"><strong>{text(step["label"])}</strong> {text(step["focus"])}</p>'
+                f'<nav aria-label="{text(ui("Reading route navigation", lang))}">{links}</nav></aside>'
+            )
+            for reference in step["chapter_sections"]:
+                key = (reference["chapter"], reference["section"])
+                result[key] = result.get(key, "") + context
+    return result
 
 
 def benchmark_markup(benchmark: dict, papers: dict[str, dict], lang: str = "en") -> str:
@@ -278,7 +322,7 @@ def table_markup(table: dict, citations: CitationRegistry) -> str:
     return f'<figure class="comparison-table"><figcaption>{caption}</figcaption><div tabindex="0" role="region" aria-label="{text(table["caption"])}"><table><thead><tr>{heading}</tr></thead><tbody>{rows}</tbody></table></div></figure>'
 
 
-def article_markup(article: dict, papers: dict[str, dict], articles: dict[str, dict], citations: CitationRegistry | None = None, section_prefix: str = "", media: dict[tuple[str, int], list[dict]] | None = None, section_heading: str = "h2", include_references: bool = True, lang: str = "en") -> dict[str, str]:
+def article_markup(article: dict, papers: dict[str, dict], articles: dict[str, dict], citations: CitationRegistry | None = None, section_prefix: str = "", media: dict[tuple[str, int], list[dict]] | None = None, section_heading: str = "h2", include_references: bool = True, lang: str = "en", contexts: dict[tuple[str, int], str] | None = None) -> dict[str, str]:
     citations = citations or CitationRegistry(papers, lang)
     content, toc = [], []
     intro = paragraphs(article["intro"], citations, "article-lead")
@@ -290,7 +334,8 @@ def article_markup(article: dict, papers: dict[str, dict], articles: dict[str, d
         callout = (f'<aside class="article-callout"><strong>{text(section["callout"]["title"])}</strong><p>{citations.prose(section["callout"]["text"])}</p></aside>' if section.get("callout") else "")
         section_media = "".join(media_markup(item, lang) for item in (media or {}).get((article["id"], number), []))
         citations.include(section.get("paper_ids", []))
-        content.append(f'<section id="{section_id}"><{section_heading}>{text(section["heading"])}</{section_heading}>{body}{table}{callout}{section_media}</section>')
+        context = (contexts or {}).get((article["id"], number), "")
+        content.append(f'<section id="{section_id}">{context}<{section_heading}>{text(section["heading"])}</{section_heading}>{body}{table}{callout}{section_media}</section>')
     next_article = articles[article["next_topic"]]
     footer = (
         f'<aside class="article-takeaway"><p class="reading-label">{text(ui("Takeaway", lang))}</p><p>{text(article["takeaway"])}</p></aside>'
@@ -425,19 +470,19 @@ HOME_ROUTES = {
 }
 
 
-def featured_routes(routes: list[dict], papers: dict[str, dict], lang: str) -> str:
+def featured_routes(routes: list[dict], articles: dict[str, dict], lang: str) -> str:
     cards = []
     for route in routes:
         topics = [topic for topic, ids in HOME_ROUTES.items() if route["id"] in ids]
         if not topics:
             continue
-        first = route["steps"][0]
-        starting_papers = " · ".join(papers[pid]["short"] for pid in first["paper_ids"])
+        first = route["steps"][0]["chapter_sections"][0]
         cards.append(
             f'<article class="home-route" data-route-topics="{text(" ".join(topics))}">'
             f'<h3><a href="reading-routes.html#route-{text(route["id"])}">{text(route["title"])}</a></h3>'
-            f'<p>{text(route["goal"])}</p><p class="route-start"><span>{text(ui("Start with", lang))}</span>{text(starting_papers)}</p>'
-            f'<a class="text-link" href="reading-routes.html#route-{text(route["id"])}">{text(ui("Follow this route →", lang))}</a></article>'
+            f'<p>{text(route["goal"])}</p><p class="route-start"><span>{text(ui("First section", lang))}</span>{text(route_section_label(first, articles))}</p>'
+            f'<div class="home-route-links"><a class="text-link" href="{text(route_section_url(route, 1))}">{text(ui("Start reading →", lang))}</a>'
+            f'<a href="reading-routes.html#route-{text(route["id"])}">{text(ui("All steps", lang))}</a></div></article>'
         )
     return "".join(cards)
 
@@ -500,13 +545,13 @@ def build(output: Path) -> None:
             standard = {
                 "{{SURVEY_TOC}}": "".join(chapter_toc), "{{SURVEY_CHAPTERS}}": "".join(chapters),
                 "{{REFERENCES}}": survey_citations.bibliography(),
-                "{{FEATURED_ROUTES}}": featured_routes(local_routes["routes"], papers, lang),
+                "{{FEATURED_ROUTES}}": featured_routes(local_routes["routes"], articles, lang),
                 "{{CHAPTER_INDEX}}": "".join(chapter_index),
                 "{{TOPIC_BUTTONS}}": "".join(f'<button type="button" data-topic="{text(key)}" aria-pressed="false">{text(ui(title, lang))}</button>' for key, title, _ in TOPICS),
                 "{{YEAR_OPTIONS}}": "".join(f'<option value="{year}">{year}</option>' for year in sorted({int(p["year"]) for p in papers.values()}, reverse=True)),
                 "{{PAPER_ITEMS}}": "".join(paper_markup(paper, benchmark_names, lang) for paper in sorted(localized_papers.values(), key=lambda p: (-int(p["year"]), p["short"].lower()))),
                 "{{TOTAL_PAPERS}}": text(len(papers)), "{{ROUTE_NAV}}": route_nav(local_routes["routes"]),
-                "{{ROUTE_SECTIONS}}": route_sections(local_routes["routes"], papers, lang),
+                "{{ROUTE_SECTIONS}}": route_sections(local_routes["routes"], papers, articles, lang),
                 "{{BENCHMARK_ITEMS}}": "".join(benchmark_markup(item, papers, lang) for item in local_benchmarks["benchmarks"]),
             }
             for filename, (template_name, required) in TEMPLATES.items():
@@ -514,7 +559,7 @@ def build(output: Path) -> None:
                 (destination / filename).write_text(rendered)
             for topic, article in articles.items():
                 filename = f"{topic}.html"
-                rendered = replace_template("article.template.html", article_markup(article, papers, articles, media=media, lang=lang), ARTICLE_TOKENS, lang, filename)
+                rendered = replace_template("article.template.html", article_markup(article, papers, articles, media=media, lang=lang, contexts=route_contexts(local_routes["routes"], lang)), ARTICLE_TOKENS, lang, filename)
                 (destination / filename).write_text(rendered)
         copy_output_files(staging, media_items)
         expected = expected_output_files(media_items)

@@ -11,21 +11,24 @@
   ],
   "sections": [
     {
-      "heading": "先明确预测单位",
+      "heading": "点云特征是怎么提取的？",
       "paragraphs": [
         "语义图为观测赋予墙、橱柜、椅子等类别；实例图把两个同类橱柜分开；全景预测同时保留这两种决定。在杂乱房间中，这一差别很直接：若左右两个柜子被合成同一区域，规划器就无法选择其中一个。",
         "点云骨干网络决定哪些邻域参与预测。PointNet 读取整个点集，PointNet++ 引入局部邻域的层级 [cite:pointnet] [cite:pointnet-plus-plus]。PTv3 和 Volt 则以不同方式组织稀疏、房间尺度的证据，再由任务头生成标签或掩码 [cite:ptv3] [cite:volume-transformer]。",
-        "在房间尺度上，这还是计算取舍：细粒度点处理保留把手和边界，却代价更高；超点、稀疏和八叉树抽象便于看得更广，也可能合并相邻表面 [cite:superpoint-graph] [cite:superpoint-transformer] [cite:octformer]。"
+        "在房间尺度上，这还是计算取舍：细粒度点处理保留把手和边界，却代价更高；超点、稀疏和八叉树抽象便于看得更广，也可能合并相邻表面 [cite:superpoint-graph] [cite:superpoint-transformer] [cite:octformer]。",
+        "点云分割模型也可以借用其他数据中的知识。DITR 将二维基础模型的特征引入三维分割；如果推理时没有图像，还可以先把这些知识蒸馏进三维骨干网络 [cite:ditr]。Point Prompt Training 则让一个骨干网络同时学习多个三维数据集，用各数据集的提示参数处理域差异，并对齐不同的标签体系 [cite:multi-dataset-point-prompt-training]。"
       ],
       "paper_ids": [
         "pointnet",
         "pointnet-plus-plus",
         "ptv3",
-        "volume-transformer"
+        "volume-transformer",
+        "ditr",
+        "multi-dataset-point-prompt-training"
       ]
     },
     {
-      "heading": "从类别走向对象",
+      "heading": "怎样区分场景中的不同物体？",
       "paragraphs": [
         "实例分割还要解决分组问题。自底向上方法聚合相邻点，PointGroup、HAIS 和 SoftGroup 是这一类的代表 [cite:pointgroup] [cite:hais] [cite:softgroup]。查询式方法可直接预测掩码；Mask3D 与 OneFormer3D 的对比尤其清楚，后者在同一 transformer 中统一语义、实例和全景预测 [cite:mask3d] [cite:oneformer3d]。",
         "干净的掩码并不等于物理对象模型。它可能只描述可见部分，可能合并相邻物体，也可能没有说明其几何来源。在真实厨房里，这会直接妨碍规划器选择要打开的那扇门。"
@@ -37,7 +40,7 @@
       ]
     },
     {
-      "heading": "让场景能被语言查询",
+      "heading": "怎样用文字在场景中找物体？",
       "paragraphs": [
         "固定类别表难以处理陌生物体或描述性概念。开放词汇方法把视觉—语言特征关联到三维区域；OpenScene 将这类特征迁移到三维，OpenMask3D 与 Open3DIS 则围绕实例掩码或候选区域工作 [cite:openscene] [cite:openmask3d] [cite:open3dis]。ConceptFusion 还将查询界面扩展到文本以外的模态 [cite:conceptfusion]。",
         "语言不能取代几何。“烤箱左边的橱柜”既指定实例也指定空间关系，而不只是相容的文本嵌入。ConceptGraphs 从 RGB-D 观测构建开放词汇场景图，供后续查询和规划使用 [cite:conceptgraphs]。这也是为何固定类别得分不足以说明开放世界中的定位能力。"
@@ -50,7 +53,7 @@
       ]
     },
     {
-      "heading": "识别会改变任务的部件",
+      "heading": "识别门、把手等可操作部件",
       "paragraphs": [
         "交互需要比对象类别更细的目标。打开冰箱意味着识别门或把手、关节类型、轴或运动方向，以及机器人的运动余量。GAPartNet 描述跨类别的可行动部件；OPD 与 OPDMulti 从单张图像估计可开部件和运动参数 [cite:gapartnet] [cite:opd] [cite:opdmulti]。更早的关节物体姿态与跟踪工作则将状态估计问题直接提出 [cite:ancsh] [cite:captra]。",
         "在场景尺度，这更难：部件很小，连在杂乱家具上，也嵌在整间房中。SceneFun3D 将功能元件掩码、可供性、任务描述和交互运动联系起来；Articulate3D 记录部件、连接关系、关节和可执行场景结构 [cite:scenefun3d] [cite:articulate3d]。"
@@ -64,7 +67,7 @@
       ]
     },
     {
-      "heading": "用时间与几何证据辨识状态",
+      "heading": "判断部件怎样运动",
       "paragraphs": [
         "即使最终得到一张融合点云，房间扫描往往来自一段序列。斜视角可能才显露把手，物体移动可能暴露可动部件，重复观测能区分噪声和稳定边缘。CAPTRA 从点云跟踪类别级关节姿态，把时间状态而非一次识别作为核心输出 [cite:captra]。",
         "几何—语义耦合是理解交互的另一条路径。Segment–Snap 在三维场景中显式连接几何和语义 [cite:segment-snap]。如果机器人只收到“抽屉”标签，却没有正面局部几何，便难以选择抓取位姿或判断开启是否受阻。",
@@ -78,7 +81,7 @@
       ]
     },
     {
-      "heading": "为下一步决策选择输出",
+      "heading": "机器人下一步需要什么信息？",
       "paragraphs": [
         "分割结果说明模型是否识别了标注目标，却不能说明机器人能否抓取、打开或在接触后恢复。检索可能只需语言特征；建图需要可持续的身份；操作则需要局部表面、候选运动和常常不可或缺的置信度。",
         "阅读结果时，应同时看传感设置和用途：点云、RGB-D、图像还是视频；可见区域还是补全结构；语义标签还是行动假设。长期运行的智能体还必须在门打开、物体移动以及后续视角纠错后保持身份和关系。"
