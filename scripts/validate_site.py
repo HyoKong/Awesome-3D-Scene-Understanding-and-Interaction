@@ -2,6 +2,7 @@
 """Check public website coverage, navigation, and the deployment file boundary."""
 
 from html.parser import HTMLParser
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -85,6 +86,9 @@ def main():
         assert "{{" not in source, f"Unexpanded placeholder in {name}"
         assert "library.html?topic=overview" not in source and "library.html?topic=outlook" not in source, f"Invalid library topic link in {name}"
         validate_citations(source, name)
+        for asset in ("styles.css", "app.js"):
+            version = hashlib.sha256((output / asset).read_bytes()).hexdigest()[:12]
+            assert any(link.endswith(f"{asset}?v={version}") for link in page.links), f"Missing content version for {asset} in {name}"
         relative = name.removeprefix("zh/")
         switches = language_switches(page)
         expected_switches = {"en": f"../{relative}" if name.startswith("zh/") else relative,

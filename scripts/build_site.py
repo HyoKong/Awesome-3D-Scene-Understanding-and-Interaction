@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from html import escape
 import json
 from pathlib import Path
@@ -319,6 +320,8 @@ def replace_template(template_name: str, replacements: dict[str, str], required:
     common = {
         "{{HTML_LANG}}": "zh-CN" if lang == "zh" else "en",
         "{{ASSET_PREFIX}}": prefix,
+        "{{STYLE_VERSION}}": hashlib.sha256((SITE / "styles.css").read_bytes()).hexdigest()[:12],
+        "{{SCRIPT_VERSION}}": hashlib.sha256((SITE / "app.js").read_bytes()).hexdigest()[:12],
         "{{LANGUAGE_SWITCH}}": switch,
         "{{EN_URL}}": PUBLIC_URL + filename,
         "{{ZH_URL}}": PUBLIC_URL + "zh/" + filename,
