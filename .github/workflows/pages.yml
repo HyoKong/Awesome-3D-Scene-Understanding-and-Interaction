@@ -10,6 +10,7 @@ on:
       - 'assets/survey-roadmap.svg'
       - 'assets/teaser-source/robocasa-kitchen-robot.png'
       - 'assets/paper-media/**'
+      - 'assets/fonts/**'
       - 'scripts/build_site.py'
       - 'scripts/validate_site.py'
       - 'scripts/build_catalog.py'

@@ -392,7 +392,7 @@
     "section": "三维骨干与表示学习"
   },
   "lassm": {
-    "evidence": "结合由超点导出的语义—空间查询初始化、局部聚合和坐标引导的状态空间解码器，预测 3D instance mask。",
+    "evidence": "结合由超点导出的语义与空间查询初始化、局部聚合和坐标引导的状态空间解码器，预测 3D instance mask。",
     "section": "场景分割"
   },
   "sgiformer": {

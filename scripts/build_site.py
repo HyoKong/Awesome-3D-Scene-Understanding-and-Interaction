@@ -31,12 +31,18 @@ CHAPTER_LABELS = {
     "robotics": "Agents & interaction", "datasets": "Datasets & evaluation",
     "outlook": "Open questions",
 }
+FONT_FILES = {
+    "assets/fonts/source-serif-4-roman.woff2", "assets/fonts/source-sans-3-roman.woff2",
+    "assets/fonts/noto-serif-sc.woff2", "assets/fonts/source-serif-OFL.txt",
+    "assets/fonts/source-sans-OFL.txt", "assets/fonts/noto-serif-OFL.txt",
+}
 OUTPUT_FILES = {
     ".nojekyll", "index.html", "survey.html", "library.html", "reading-routes.html", "benchmarks.html",
     "overview.html", "perception.html", "reconstruction.html", "generation.html", "robotics.html", "datasets.html", "outlook.html",
     "styles.css", "app.js", "assets/survey-teaser.svg", "assets/survey-teaser.png", "assets/survey-roadmap.svg",
     "assets/teaser-source/robocasa-kitchen-robot.png",
 }
+OUTPUT_FILES |= FONT_FILES
 OUTPUT_FILES |= {"zh/" + name for name in tuple(OUTPUT_FILES) if name.endswith(".html")}
 TEMPLATES = {
     "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{CHAPTER_INDEX}}"}),
@@ -446,6 +452,7 @@ def copy_output_files(destination: Path, media: list[dict]) -> None:
         "assets/survey-roadmap.svg": ROOT / "assets" / "survey-roadmap.svg",
         "assets/teaser-source/robocasa-kitchen-robot.png": ROOT / "assets" / "teaser-source" / "robocasa-kitchen-robot.png",
     }
+    sources.update({relative: ROOT / relative for relative in FONT_FILES})
     for relative, source in sources.items():
         assert source.is_file(), f"Missing public site asset: {source}"
         target = destination / relative

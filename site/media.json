@@ -50,16 +50,17 @@
       "paper_id": "conceptgraphs",
       "type": "youtube",
       "src": "https://www.youtube-nocookie.com/embed/ie9VdL7wieY",
+      "poster": "https://i.ytimg.com/vi/ie9VdL7wieY/maxresdefault.jpg",
       "title": "ConceptGraphs: objects, language, and spatial relations",
       "caption": "The scene is built up as an object graph. Watch how language queries refer to objects and their relations, giving a planner a way to ask about the mapped environment.",
       "source_url": "https://concept-graphs.github.io/",
-      "credit": "Gu et al., ConceptGraphs (ICRA 2024)",
+      "credit": "Gu et al., ConceptGraphs (ICRA 2024); preview uses the official video thumbnail",
       "license_label": "Official project video",
       "license_url": "https://concept-graphs.github.io/",
       "zh": {
         "title": "ConceptGraphs：物体、语言与空间关系",
         "caption": "视频展示了如何将观测整理成包含物体及其关系的场景图，再用语言查询图中的目标，辅助机器人规划。",
-        "credit": "Gu 等，ConceptGraphs（ICRA 2024）",
+        "credit": "Gu 等，ConceptGraphs（ICRA 2024）；预览图为官方视频缩略图",
         "license_label": "官方项目视频"
       }
     },

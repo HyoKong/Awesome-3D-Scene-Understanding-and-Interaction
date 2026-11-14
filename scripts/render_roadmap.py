@@ -230,7 +230,7 @@ def render(data):
     target.mkdir(exist_ok=True)
     svg_path = target / "survey-roadmap.svg"
     fig.savefig(svg_path, format="svg", metadata={"Date": None,
-        "Title": "3D Scene Understanding and Interaction — research roadmap",
+        "Title": "3D Scene Understanding and Interaction: research roadmap",
         "Description": data["description"], "Creator": "Awesome 3D Scene Understanding and Interaction"})
     svg = svg_path.read_text()
     svg = svg.replace("<defs>", "<desc>Five research lanes branch into subtopics, strategies, and linked representative papers: scene perception, articulated geometry, generation and authoring, manipulation, and embodied agents and evaluation. Shared resources cover real scenes, articulated assets and physics, functional supervision, and robot-task benchmarks.</desc>\n<defs>", 1)

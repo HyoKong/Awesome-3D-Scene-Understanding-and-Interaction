@@ -13,7 +13,7 @@ The article captions identify the original work and link to the official source.
 | Visual | Source and credit | Use in this survey |
 | --- | --- | --- |
 | SceneFun3D teaser | Delitzas et al., [SceneFun3D](https://scenefun3d.github.io/), CVPR 2024. The project website states [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). | Unmodified source figure stored as [scenefun3d-teaser.png](paper-media/scenefun3d-teaser.png), displayed at responsive sizes. The figure retains its source license. |
-| ConceptGraphs video | Gu et al., [ConceptGraphs](https://concept-graphs.github.io/), ICRA 2024. | Official YouTube video embedded on request; no local video copy. |
+| ConceptGraphs video | Gu et al., [ConceptGraphs](https://concept-graphs.github.io/), ICRA 2024. | Streams the official YouTube video after a reader chooses to play. The preview is YouTube's thumbnail for that official video; no local video copy. |
 | Segment–Snap method overview | Kong and Yang, [Segment–Snap](https://hyokong.github.io/segment-snap-page/), 2026. | Streams the official 73-second method overview. [Preview frame](paper-media/segment-snap-video-poster.jpg) extracted at approximately 18 seconds shows a scene-level articulation hypothesis. |
 | URDFormer video | Chen et al., [URDFormer](https://urdformer.github.io/), RSS 2024. | Streams the official project video. [Preview frame](paper-media/urdformer-poster-90.jpg) extracted at approximately 90 seconds and resized. |
 | Holodeck pipeline | Yang et al., [Holodeck](https://yueyang.ai/holodeck/), CVPR 2024. | Streams the official pipeline video. [Preview frame](paper-media/holodeck-poster-23.jpg) extracted at approximately 23 seconds and resized. |
@@ -32,3 +32,13 @@ The article captions identify the original work and link to the official source.
 | UMPNet articulation structure inferred from action | [Xu, He, and Song, UMPNet (RA-L / ICRA 2022)](https://ump-net.cs.columbia.edu/) | Displays the unmodified figure from the official project website. |
 
 Figure and video rights remain with the original creators. Linking or embedding a project video does not apply this repository's terms to it; no separate media license is inferred from a source-code license. Exact media URLs and placements are recorded in `site/media.json`.
+
+## Website fonts
+
+The website serves these open-source fonts locally. The WOFF2 files retain the original outlines and variable font axes; the accompanying licenses are included in the repository and website output.
+
+| Typeface | Upstream source | Local license |
+| --- | --- | --- |
+| Source Serif 4 | [Adobe Source Serif](https://github.com/adobe-fonts/source-serif/tree/80d3f8894c09c937bebfa9011247d2e1c79fd6f4), variable Roman, converted from TTF to WOFF2. | [SIL Open Font License](fonts/source-serif-OFL.txt) |
+| Source Sans 3 | [Adobe Source Sans](https://github.com/adobe-fonts/source-sans/tree/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e), variable Upright, converted from TTF to WOFF2. | [SIL Open Font License](fonts/source-sans-OFL.txt) |
+| Noto Serif SC | [Noto CJK](https://github.com/notofonts/noto-cjk/tree/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Serif), Simplified Chinese variable font, subset to the GB2312 repertoire plus ASCII, punctuation, and additional characters used by the Chinese edition. | [SIL Open Font License](fonts/noto-serif-OFL.txt) |

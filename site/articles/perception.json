@@ -84,7 +84,7 @@
       "heading": "What does the robot need to know?",
       "paragraphs": [
         "Segmentation tells us whether a model recognizes the annotated target. It does not show that a robot can grasp, open, or recover after contact. Retrieval may only need language features; mapping needs identities that survive a revisit; manipulation needs a local surface, a candidate motion, and often a confidence estimate.",
-        "For that reason, read every result with its sensing setup and intended use in mind: point cloud, RGB-D, images, or video; visible region or completed structure; semantic label or action hypothesis. The scene model needed by a long-running agent must also survive change—a door opens, an object moves, and a later view resolves an earlier mistake."
+        "For that reason, read every result with its sensing setup and intended use in mind: point cloud, RGB-D, images, or video; visible region or completed structure; semantic label or action hypothesis. The scene model needed by a long-running agent must also survive change: a door opens, an object moves, and a later view resolves an earlier mistake."
       ],
       "table": {
         "caption": "A qualitative map of what common scene-perception outputs preserve.",

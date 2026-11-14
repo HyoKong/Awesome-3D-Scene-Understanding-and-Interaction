@@ -106,6 +106,6 @@
       }
     }
   ],
-  "takeaway": "The unifying test is simple to state: does a scene representation help an agent choose better, notice an error, or learn from interaction? Progress needs strong components—and evidence that the handoffs between them work.",
+  "takeaway": "The unifying test is simple to state: does a scene representation help an agent choose better, notice an error, or learn from interaction? Progress needs strong components and evidence that the handoffs between them work.",
   "next_topic": "overview"
 }

@@ -76,3 +76,12 @@
 !site/zh/articles/robotics.json
 !site/zh/articles/datasets.json
 !site/zh/articles/outlook.json
+
+# Self-hosted website fonts and their redistribution licenses.
+!assets/fonts/
+!assets/fonts/source-serif-4-roman.woff2
+!assets/fonts/source-sans-3-roman.woff2
+!assets/fonts/noto-serif-sc.woff2
+!assets/fonts/source-serif-OFL.txt
+!assets/fonts/source-sans-OFL.txt
+!assets/fonts/noto-serif-OFL.txt

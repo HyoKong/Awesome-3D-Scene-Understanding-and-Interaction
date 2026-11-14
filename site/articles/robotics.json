@@ -2,7 +2,7 @@
   "id": "robotics",
   "title": "How does a scene model become embodied action?",
   "kicker": "Embodied agents and robotic interaction",
-  "dek": "Embodied systems turn partial observations into decisions, motions, and corrective feedback. Mapping, grounding, skill selection, control, and recovery each leave a different trace when a physical task succeeds—or fails.",
+  "dek": "Embodied systems turn partial observations into decisions, motions, and corrective feedback. Mapping, grounding, skill selection, control, and recovery each leave a different trace when a physical task succeeds or fails.",
   "reading_minutes": 15,
   "intro": [
     "A robot asked to retrieve a mug from a kitchen has to make several kinds of uncertainty visible: where the mug might be, which surfaces are traversable, whether a cabinet is closed, which handle can be grasped, and what to do when contact does not move the door as expected. A successful trajectory is the outcome of a loop between perception, memory, planning, control, and feedback. Calling the loop an agent does not remove those interfaces; it makes them more important to inspect.",

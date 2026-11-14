@@ -89,6 +89,13 @@ def main():
     expected = expected_output_files(media)
     assert output_paths(output) == expected, "Website output differs from its publication allowlist"
     assert not any(p.is_symlink() for p in output.rglob("*")), "Website output must not contain symlinks"
+    # Font requests come from CSS rather than HTML, so validate them explicitly.
+    css = (output / "styles.css").read_text()
+    font_urls = re.findall(r'url\("(assets/fonts/[^"?#]+\.woff2)"\)', css)
+    assert len(font_urls) == 3, "Expected three self-hosted font faces"
+    for relative in font_urls:
+        assert relative in expected, f"Font missing from publication allowlist: {relative}"
+        assert (output / relative).read_bytes()[:4] == b"wOF2", f"Invalid WOFF2 font: {relative}"
     page_files = sorted(output.rglob("*.html"))
     pages = {page_name(p, output): Page(p.read_text()) for p in page_files}
     expected_pages = {path for path in expected if path.endswith(".html")}

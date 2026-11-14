@@ -19,6 +19,7 @@
     initRouteContext();
     initSurveyNavigation();
     initDeferredVideo();
+    alignInitialFragmentAfterFonts();
     const form = document.querySelector("#paper-filters");
     const search = document.querySelector("#paper-search");
     const topicFilters = document.querySelector("#topic-filters");
@@ -274,6 +275,24 @@
     restore();
   }
 
+  function alignInitialFragmentAfterFonts() {
+    const hash = location.hash;
+    if (!hash || !document.fonts) return;
+    let id;
+    try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+    let interacted = false;
+    const cancel = () => { interacted = true; };
+    const events = ["wheel", "touchstart", "pointerdown", "keydown"];
+    for (const event of events) window.addEventListener(event, cancel, { once: true, passive: true });
+    // A font swap can move a chapter far below the browser's initial hash jump.
+    document.fonts.ready.then(() => {
+      for (const event of events) window.removeEventListener(event, cancel);
+      if (!interacted && location.hash === hash) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "instant", block: "start" });
+      }
+    });
+  }
+
   function initDeferredVideo() {
     for (const button of document.querySelectorAll(".media-consent[data-youtube-src]")) {
       button.addEventListener("click", () => {
@@ -283,9 +302,12 @@
         if (url.protocol !== "https:" || !/(^|\.)youtube-nocookie\.com$/.test(url.hostname)) return;
         url.searchParams.set("autoplay", "1");
         const frame = document.createElement("iframe");
-        frame.src = url.toString();
         frame.title = button.closest(".paper-media")?.querySelector("figcaption strong")?.textContent || "Official video";
         frame.loading = "lazy";
+        // The page-level policy intentionally omits referrers. YouTube embeds
+        // require the embedding origin, however, and reject playback without it.
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.src = url.toString();
         frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         frame.allowFullscreen = true;
         button.replaceWith(frame);
