@@ -45,7 +45,7 @@ OUTPUT_FILES = {
 OUTPUT_FILES |= FONT_FILES
 OUTPUT_FILES |= {"zh/" + name for name in tuple(OUTPUT_FILES) if name.endswith(".html")}
 TEMPLATES = {
-    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{CHAPTER_INDEX}}"}),
+    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{CHAPTER_INDEX}}", "{{HOME_ROUTES_EYEBROW}}", "{{HOME_CHAPTERS_EYEBROW}}"}),
     "survey.html": ("survey.template.html", {"{{SURVEY_TOC}}", "{{SURVEY_CHAPTERS}}", "{{REFERENCES}}"}),
     "library.html": ("library.template.html", {"{{TOPIC_BUTTONS}}", "{{YEAR_OPTIONS}}", "{{PAPER_ITEMS}}", "{{TOTAL_PAPERS}}"}),
     "reading-routes.html": ("routes.template.html", {"{{ROUTE_NAV}}", "{{ROUTE_SECTIONS}}"}),
@@ -554,6 +554,8 @@ def build(output: Path) -> None:
                 "{{REFERENCES}}": survey_citations.bibliography(),
                 "{{FEATURED_ROUTES}}": featured_routes(local_routes["routes"], articles, lang),
                 "{{CHAPTER_INDEX}}": "".join(chapter_index),
+                "{{HOME_ROUTES_EYEBROW}}": '<p class="eyebrow">Find a place to start</p>' if lang == "en" else "",
+                "{{HOME_CHAPTERS_EYEBROW}}": '<p class="eyebrow">More to explore</p>' if lang == "en" else "",
                 "{{TOPIC_BUTTONS}}": "".join(f'<button type="button" data-topic="{text(key)}" aria-pressed="false">{text(ui(title, lang))}</button>' for key, title, _ in TOPICS),
                 "{{YEAR_OPTIONS}}": "".join(f'<option value="{year}">{year}</option>' for year in sorted({int(p["year"]) for p in papers.values()}, reverse=True)),
                 "{{PAPER_ITEMS}}": "".join(paper_markup(paper, benchmark_names, lang) for paper in sorted(localized_papers.values(), key=lambda p: (-int(p["year"]), p["short"].lower()))),

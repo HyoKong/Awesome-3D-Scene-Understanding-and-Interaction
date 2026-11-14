@@ -1,7 +1,7 @@
 {
   "id": "reconstruction",
-  "title": "场景重建与数字孪生",
-  "kicker": "场景重建与数字孪生",
+  "title": "三维场景重建",
+  "kicker": "三维场景重建",
   "dek": "重建结果可以用来渲染、建图，也可以放进模拟器。用途不同，需要恢复的信息也不同。",
   "reading_minutes": 8,
   "intro": [
