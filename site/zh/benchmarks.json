@@ -1,98 +1,98 @@
 {
   "scannetpp": {
     "name": "ScanNet++ Benchmark",
-    "task": "高保真室内扫描上的 3D 语义与实例分割。"
+    "task": "高保真室内扫描数据上的 3D 语义分割与实例分割。"
   },
   "scannet": {
     "name": "ScanNet Benchmark",
-    "task": "室内 3D 语义与实例分割。"
+    "task": "室内 RGB-D 场景的 3D 语义分割与实例分割。"
   },
   "scannet200": {
     "name": "ScanNet200",
-    "task": "涵盖 200 个类别的长尾 3D 语义与实例分割。"
+    "task": "覆盖 200 个类别的长尾室内 3D 语义分割与实例分割。"
   },
   "s3dis": {
     "name": "S3DIS",
-    "task": "室内点云的语义、实例与全景分割。"
+    "task": "室内点云的语义分割、实例分割和全景分割。"
   },
   "multiscan": {
     "name": "MultiScan Benchmark",
-    "task": "关节式室内环境中的物体实例分割、部件实例分割与可动性预测。"
+    "task": "室内可动物体的实例分割、部件实例分割和可动性预测。"
   },
   "arkitscenes": {
     "name": "ARKitScenes",
-    "task": "移动端 RGB-D 室内场景理解任务。"
+    "task": "由移动设备采集的 RGB-D 室内数据上的场景理解任务。"
   },
   "articulation-xl2": {
     "name": "Articulation-XL2.0",
-    "task": "从静态 3D 资产到关节结构与运动。"
+    "task": "为静态 3D 模型补充部件、关节结构和运动参数。"
   },
   "partnet-mobility": {
     "name": "PartNet-Mobility",
-    "task": "关节物体资产、运动标注、渲染与仿真。"
+    "task": "带部件和关节运动标注的物体模型，支持渲染与物理仿真。"
   },
   "acd": {
     "name": "Articulated Container Dataset",
-    "task": "带有关节结构标注的可开启容器。"
+    "task": "带有关节结构标注的可开启容器物体。"
   },
   "maniskill2": {
     "name": "ManiSkill2",
-    "task": "可泛化操作：包括橱柜门/抽屉、水龙头、椅子、移动底座和双臂等关节任务。"
+    "task": "可泛化机器人操作，涵盖橱柜门、抽屉、水龙头、椅子、移动底座和双臂等任务。"
   },
   "rlbench": {
     "name": "RLBench",
-    "task": "多样化脚本任务的视觉引导操作基准，包括关节状态交互。"
+    "task": "多样化脚本任务的视觉引导操作基准，包含关节物体状态交互。"
   },
   "behavior1k": {
     "name": "BEHAVIOR-1K / OmniGibson",
-    "task": "在真实感场景中，利用可移动、支持双臂的具身智能体与动态物体状态完成长时程家庭任务。"
+    "task": "在真实感场景中，使用移动双臂具身智能体完成涉及物体状态变化的长时程家庭任务。"
   },
   "scenefun3d": {
     "name": "SceneFun3D",
-    "task": "功能分割、语言驱动的可供性定位与交互运动标注。"
+    "task": "功能区域分割、语言驱动的可供性定位和交互运动标注。"
   },
   "articulate3d": {
     "name": "Articulate3D Challenge",
-    "task": "场景级可动部件与可交互区域分割，以及运动类型、轴和原点预测。"
+    "task": "场景级可动部件与交互区域分割，以及运动类型、关节轴和原点预测。"
   },
   "robocasa": {
     "name": "RoboCasa / RoboCasa365",
-    "task": "面向移动机器人的通用厨房操作，涵盖关节式家电和组合式家庭任务。"
+    "task": "面向移动机器人的通用厨房操作，覆盖可动家电和组合式家庭任务。"
   },
   "alfred": {
     "name": "ALFRED",
-    "task": "在 AI2-THOR 中通过语言引导完成包含导航和物体交互的家庭任务。"
+    "task": "在 AI2-THOR 中根据语言指令完成包含导航和物体交互的家庭任务。"
   },
   "teach": {
     "name": "TEACh",
-    "task": "在 AI2-THOR 中与交互式教师进行对话引导的具身家庭任务。"
+    "task": "在 AI2-THOR 中通过与交互式教师对话完成具身家庭任务。"
   },
   "openeqa": {
     "name": "OpenEQA",
-    "task": "基于情景记忆或主动探索的开放词汇具身问答。"
+    "task": "基于情景记忆或主动探索的开放词汇具身问答任务。"
   },
   "embodiedqa": {
     "name": "EmbodiedQA",
-    "task": "3D 环境中的导航与问答。"
+    "task": "三维环境中的导航和视觉问答。"
   },
   "habitat-rearrangement": {
     "name": "Habitat 2.0 / Home Assistant Benchmark",
-    "task": "可交互 3D 环境中支持物理的家庭整理与家庭助手任务。"
+    "task": "支持物理交互的三维环境中的家庭整理和家庭助手任务。"
   },
   "habitat3": {
     "name": "Habitat 3.0",
-    "task": "借助人形化身或人类伙伴开展协作式社交导航与社交整理。"
+    "task": "人形化身或人类伙伴参与的协作式社交导航和物体整理。"
   },
   "goat-bench": {
     "name": "GOAT-Bench",
-    "task": "前往物体类别、图像和语言目标的持续导航。"
+    "task": "面向物体类别、图像和语言目标的持续导航。"
   },
   "r2r": {
     "name": "Room-to-Room (R2R)",
-    "task": "真实扫描室内环境中的视觉与语言导航。"
+    "task": "真实扫描室内环境中的视觉语言导航。"
   },
   "habitat-navigation": {
     "name": "Habitat navigation ecosystem",
-    "task": "具身导航，覆盖仿真、场景数据集、传感器与任务配置。"
+    "task": "具身导航环境，覆盖仿真器、场景数据集、传感器和任务配置。"
   }
 }

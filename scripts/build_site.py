@@ -45,7 +45,7 @@ OUTPUT_FILES = {
 OUTPUT_FILES |= FONT_FILES
 OUTPUT_FILES |= {"zh/" + name for name in tuple(OUTPUT_FILES) if name.endswith(".html")}
 TEMPLATES = {
-    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{CHAPTER_INDEX}}", "{{HOME_HERO_EYEBROW}}", "{{HOME_ROUTES_EYEBROW}}", "{{HOME_CHAPTERS_EYEBROW}}"}),
+    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{TOPIC_PREVIEWS}}", "{{CHAPTER_INDEX}}", "{{HOME_HERO_EYEBROW}}", "{{HOME_ROUTES_EYEBROW}}", "{{HOME_CHAPTERS_EYEBROW}}"}),
     "survey.html": ("survey.template.html", {"{{SURVEY_TOC}}", "{{SURVEY_CHAPTERS}}", "{{REFERENCES}}"}),
     "library.html": ("library.template.html", {"{{TOPIC_BUTTONS}}", "{{YEAR_OPTIONS}}", "{{PAPER_ITEMS}}", "{{TOTAL_PAPERS}}"}),
     "reading-routes.html": ("routes.template.html", {"{{ROUTE_NAV}}", "{{ROUTE_SECTIONS}}"}),
@@ -54,6 +54,7 @@ TEMPLATES = {
 ARTICLE_TOKENS = {
     "{{ARTICLE_TITLE}}", "{{ARTICLE_KICKER}}", "{{ARTICLE_DEK}}", "{{READING_MINUTES}}",
     "{{ARTICLE_INTRO}}", "{{ARTICLE_CONTENT}}", "{{ARTICLE_TOC}}", "{{ARTICLE_FOOTER}}", "{{REFERENCES}}",
+    "{{ARTICLE_COVER}}",
 }
 
 
@@ -354,6 +355,7 @@ def article_markup(article: dict, papers: dict[str, dict], articles: dict[str, d
         "{{ARTICLE_INTRO}}": intro, "{{ARTICLE_CONTENT}}": "\n".join(content),
         "{{ARTICLE_TOC}}": "\n".join(toc), "{{ARTICLE_FOOTER}}": footer,
         "{{REFERENCES}}": citations.bibliography() if include_references else "",
+        "{{ARTICLE_COVER}}": chapter_cover(article["id"], media or {}, lang),
     }
 
 
@@ -477,6 +479,59 @@ HOME_ROUTES = {
 }
 
 
+CHAPTER_VISUALS = {
+    "overview": "articulate3d-articulation-video",
+    "perception": "conceptgraphs-video",
+    "reconstruction": "gaussian-splatting-garden-video",
+    "generation": "holodeck-pipeline-video",
+    "robotics": "robocasa-door-video",
+    "datasets": "scenefun3d-functionality-teaser",
+    "outlook": "umpnet-structure-inference",
+}
+
+
+def chapter_visual(topic: str, media: dict[tuple[str, int], list[dict]]) -> dict:
+    return next(item for items in media.values() for item in items if item["id"] == CHAPTER_VISUALS[topic])
+
+
+def visual_credit(item: dict, lang: str) -> str:
+    labels = item if lang == "en" else item["zh"]
+    return f'{text(labels["credit"])} · {external_link(item["license_url"], labels["license_label"])} · {external_link(item["source_url"], ui("Source ↗", lang))}'
+
+
+def chapter_cover(topic: str, media: dict[tuple[str, int], list[dict]], lang: str) -> str:
+    item = chapter_visual(topic, media)
+    labels = item if lang == "en" else item["zh"]
+    image = asset_url(item.get("poster", item["src"]), lang)
+    return (
+        f'<figure class="chapter-cover"><a href="#media-{text(item["id"])}">'
+        f'<img src="{text(image)}" alt="{text(labels["title"])}" decoding="async"></a>'
+        f'<figcaption>{visual_credit(item, lang)}</figcaption></figure>'
+    )
+
+
+def topic_previews(media: dict[tuple[str, int], list[dict]], lang: str) -> str:
+    previews = []
+    for number, topic in enumerate(HOME_ROUTES, 1):
+        item = chapter_visual(topic, media)
+        labels = item if lang == "en" else item["zh"]
+        image = asset_url(item.get("poster", item["src"]), lang)
+        href = f'{topic}.html#media-{item["id"]}'
+        action = ui("Watch in this chapter →" if item["type"] != "image" else "Read in this chapter →", lang)
+        hidden = "" if number == 1 else " hidden"
+        previews.append(
+            f'<section class="topic-preview" data-preview-topic="{topic}" id="preview-{topic}"{hidden}>'
+            f'<div class="preview-heading"><p class="eyebrow">{number:02d} / {text(ui("A closer look", lang))}</p>'
+            f'<h3>{text(labels["title"])}</h3></div>'
+            f'<figure class="paper-media"><a class="preview-image" href="{text(href)}">'
+            f'<img src="{text(image)}" alt="{text(labels["title"])}" loading="lazy" decoding="async">'
+            f'<span class="preview-action">{text(action)}</span></a>'
+            f'<figcaption><span>{text(labels["caption"])}</span><small>{visual_credit(item, lang)}</small></figcaption></figure>'
+            f'<a class="preview-chapter" href="{topic}.html">{text(ui("Open this chapter ↗", lang))}</a></section>'
+        )
+    return "".join(previews)
+
+
 def featured_routes(routes: list[dict], articles: dict[str, dict], lang: str) -> str:
     cards = []
     for route in routes:
@@ -540,7 +595,7 @@ def build(output: Path) -> None:
                 chapter_id = f"chapter-{number}"
                 rendered = article_markup(article, papers, articles, survey_citations, f"{chapter_id}-", media, "h3", False, lang)
                 chapter_toc.append(f'<a href="#{chapter_id}" title="{text(article["title"])}"><span>{number:02d}</span>{text(ui(CHAPTER_LABELS[topic], lang))}</a>')
-                chapter_index.append(f'<a href="{topic}.html"><span>{number:02d}</span><div><strong>{text(ui(CHAPTER_LABELS[topic], lang))}</strong><p>{text(article["title"])}</p></div><b aria-hidden="true">↗</b></a>')
+                chapter_index.append(f'<a href="{topic}.html" data-topic="{topic}"><span>{number:02d}</span><div><strong>{text(article["title"])}</strong><p>{text(article["dek"])}</p></div><b aria-hidden="true">↗</b></a>')
                 chapter_name = f"Chapter {number:02d}" if lang == "en" else f"第 {number:02d} 章"
                 chapters.append(
                     f'<section class="survey-chapter" id="{chapter_id}" data-topic="{text(topic)}">'
@@ -553,6 +608,7 @@ def build(output: Path) -> None:
                 "{{SURVEY_TOC}}": "".join(chapter_toc), "{{SURVEY_CHAPTERS}}": "".join(chapters),
                 "{{REFERENCES}}": survey_citations.bibliography(),
                 "{{FEATURED_ROUTES}}": featured_routes(local_routes["routes"], articles, lang),
+                "{{TOPIC_PREVIEWS}}": topic_previews(media, lang),
                 "{{CHAPTER_INDEX}}": "".join(chapter_index),
                 "{{HOME_HERO_EYEBROW}}": '<p class="eyebrow">A guide to the research</p>' if lang == "en" else "",
                 "{{HOME_ROUTES_EYEBROW}}": '<p class="eyebrow">Find a place to start</p>' if lang == "en" else "",

@@ -31,13 +31,20 @@
       <div class="hero-inner">
         <div class="hero-copy">
           {{HOME_HERO_EYEBROW}}
-          <h1>{{t:3D Scene}}<br>{{t:Understanding}}<br><span>{{t:& Interaction}}</span></h1>
+          <h1><span class="hero-title-lead">{{t:3D Scene Understanding}}</span><span class="hero-title-tail">{{t:& Interaction}}</span></h1>
           <p class="hero-dek">{{t:Where should you start with 3D scenes?}}</p>
           <p class="hero-description">{{t:You might want to reconstruct a room from photos, generate a new one, or teach a robot to open a drawer. We explain the ideas behind these tasks and suggest what to read next.}}</p>
           <div class="hero-actions"><a class="button button-primary" href="#reading-routes">{{t:Choose a reading route}} <span aria-hidden="true">↓</span></a><a class="button button-secondary" href="library.html">{{t:Search papers}} <span aria-hidden="true">↗</span></a></div>
         </div>
         <figure class="hero-scene">
+          <div class="scene-label"><span class="scene-dot" aria-hidden="true"></span> RoboCasa <span>{{t:An interactive environment}}</span></div>
           <a href="survey.html#chapter-5" aria-label="{{t:Explore embodied agents and robotic interaction}}"><img src="{{ASSET_PREFIX}}assets/teaser-source/robocasa-kitchen-robot.png" alt="{{t:A mobile robot in a simulated kitchen with cupboards, drawers, and appliances.}}" width="1920" height="1080" fetchpriority="high"></a>
+          <nav class="scene-lenses" aria-label="{{t:Four research perspectives}}">
+            <a href="?area=perception#reading-routes"><span>01</span>{{t:Perception}}</a>
+            <a href="?area=reconstruction#reading-routes"><span>02</span>{{t:Reconstruction}}</a>
+            <a href="?area=generation#reading-routes"><span>03</span>{{t:Generation}}</a>
+            <a href="?area=robotics#reading-routes"><span>04</span>{{t:Interaction}}</a>
+          </nav>
           <figcaption><span>{{t:A mobile robot in a simulated kitchen.}}</span><a href="https://robocasa.ai/" target="_blank" rel="noopener noreferrer">{{t:RoboCasa · source ↗}}</a></figcaption>
         </figure>
       </div>
@@ -46,13 +53,13 @@
     <section id="reading-routes" class="home-section" aria-labelledby="start-title">
       <div class="home-heading">{{HOME_ROUTES_EYEBROW}}<h2 id="start-title">{{t:What are you working on?}}</h2><p>{{t:Pick a topic and start with the explanation. The papers are there when you're ready for the details.}}</p></div>
       <div class="route-tabs" role="group" aria-label="{{t:Choose a research area}}">
-        <button type="button" data-route-topic="perception" aria-pressed="true">{{t:Scene perception}}</button>
-        <button type="button" data-route-topic="reconstruction" aria-pressed="false">{{t:Scene reconstruction}}</button>
-        <button type="button" data-route-topic="generation" aria-pressed="false">{{t:Scene generation}}</button>
-        <button type="button" data-route-topic="robotics" aria-pressed="false">{{t:Robots & embodied agents}}</button>
+        <button type="button" data-route-topic="perception" aria-pressed="true"><span aria-hidden="true">01</span>{{t:Scene perception}}</button>
+        <button type="button" data-route-topic="reconstruction" aria-pressed="false"><span aria-hidden="true">02</span>{{t:Scene reconstruction}}</button>
+        <button type="button" data-route-topic="generation" aria-pressed="false"><span aria-hidden="true">03</span>{{t:Scene generation}}</button>
+        <button type="button" data-route-topic="robotics" aria-pressed="false"><span aria-hidden="true">04</span>{{t:Robots & embodied agents}}</button>
       </div>
       <p id="route-results" class="sr-only" role="status" aria-live="polite"></p>
-      <div class="home-routes">{{FEATURED_ROUTES}}</div>
+      <div class="topic-workspace" data-active-topic="perception"><div class="topic-previews">{{TOPIC_PREVIEWS}}</div><div class="home-routes">{{FEATURED_ROUTES}}</div></div>
       <a class="text-link home-more" href="reading-routes.html">{{t:See all reading routes →}}</a>
     </section>
 

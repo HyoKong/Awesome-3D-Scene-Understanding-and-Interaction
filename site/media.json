@@ -14,8 +14,8 @@
       "license_label": "CC BY-SA 4.0 (project website)",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
-        "title": "Articulate3D / USDNet：从场景到部件的预测",
-        "caption": "USDNet 以场景点云为输入，分别预测可动部件、交互区域和运动参数。图中不同分支对应这些预测任务。",
+        "title": "Articulate3D / USDNet：场景点云中的部件与运动预测",
+        "caption": "USDNet 输入场景点云，分别预测可动部件、交互区域和关节运动参数。图中展示了各预测分支及其输出。",
         "credit": "Halacheva 等，Articulate3D（ICCV 2025）",
         "license_label": "CC BY-SA 4.0（项目网站）"
       },
@@ -58,8 +58,8 @@
       "license_label": "Official project video",
       "license_url": "https://concept-graphs.github.io/",
       "zh": {
-        "title": "ConceptGraphs：物体、语言与空间关系",
-        "caption": "视频展示了如何将观测整理成包含物体及其关系的场景图，再用语言查询图中的目标，辅助机器人规划。",
+        "title": "ConceptGraphs：开放词汇三维场景图",
+        "caption": "ConceptGraphs 将连续观测融合为物体级三维场景图，记录物体及其空间关系。机器人可以通过语言查询场景中的目标，并利用这些关系进行规划。",
         "credit": "Gu 等，ConceptGraphs（ICRA 2024）；预览图为官方视频缩略图",
         "license_label": "官方项目视频"
       }
@@ -80,8 +80,8 @@
       "license_label": "CC BY-SA 4.0 (project website)",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
-        "title": "Open3DIS：结合 2D mask 与三维候选区域",
-        "caption": "流程从左到右：借助超点将不同视角的 2D mask 映射到三维，合并得到候选区域，再通过逐点特征与文本匹配。",
+        "title": "Open3DIS：由 2D mask 构建三维候选区域",
+        "caption": "Open3DIS 借助 superpoint 将多视角的 2D mask 映射到三维并合并为候选区域，再利用逐点特征进行文本匹配。",
         "credit": "Nguyen 等，Open3DIS（CVPR 2024）",
         "license_label": "CC BY-SA 4.0（项目网站）"
       }
@@ -101,8 +101,8 @@
       "license_label": "Official project video",
       "license_url": "https://hyokong.github.io/segment-snap-page/",
       "zh": {
-        "title": "Segment–Snap：连接部件与把手",
-        "caption": "把手位置为门的铰链侧提供线索，周围部件则帮助判断把手类别。视频展示了如何利用这两类线索，改进场景点云中的运动和交互区域预测。",
+        "title": "Segment–Snap：联合建模可动部件与把手",
+        "caption": "把手位置有助于判断柜门的铰链侧，所属部件也能帮助识别把手。Segment–Snap 联合利用两者的几何关系，改进场景点云中的运动参数与交互区域预测。",
         "credit": "Kong 与 Yang，Segment–Snap（2026）；预览图取自官方视频约第 18 秒",
         "license_label": "官方项目视频"
       }
@@ -185,8 +185,8 @@
       "license_label": "Official project figure; rights not stated",
       "license_url": "https://scene-dreamer.github.io/",
       "zh": {
-        "title": "SceneDreamer：可无限扩展的生成式景观",
-        "caption": "SceneDreamer 生成大范围的三维景观。与生成单张风景图不同，相机移动后，同一片地形仍需保持形状和外观的一致。",
+        "title": "SceneDreamer：大范围三维场景生成",
+        "caption": "SceneDreamer 生成可从不同视角观察的大范围三维景观，重点处理地形、外观及其跨视角一致性。",
         "credit": "Chen 等，SceneDreamer（TPAMI 2023），官方项目图",
         "license_label": "官方项目图；未声明权利许可"
       }
@@ -206,8 +206,8 @@
       "license_label": "Official project video",
       "license_url": "https://yueyang.ai/holodeck/",
       "zh": {
-        "title": "Holodeck：根据描述构建房间",
-        "caption": "Holodeck 根据文本描述生成房间布局，选择物体资产，再按空间约束摆放物体，得到可用于智能体仿真的室内场景。",
+        "title": "Holodeck：文本驱动的室内环境生成",
+        "caption": "Holodeck 根据文本描述规划房间布局，从模型库中选择物体，并按空间约束进行摆放，生成用于具身智能仿真的室内环境。",
         "credit": "Yang 等，Holodeck（CVPR 2024）；预览图取自官方视频约第 23 秒",
         "license_label": "官方项目视频"
       }
@@ -250,8 +250,8 @@
       "license_label": "Official project figure; rights not stated",
       "license_url": "https://voxposer.github.io/",
       "zh": {
-        "title": "VoxPoser：从语言程序到三维价值图",
-        "caption": "VoxPoser 根据语言指令和视觉观测构建三维价值图，用它描述目标位置、可接触区域及约束，再交给运动规划器生成轨迹。执行过程中可以根据新观测更新价值图。",
+        "title": "VoxPoser：语言指令与三维价值图",
+        "caption": "VoxPoser 根据语言指令和视觉观测构建三维价值图，表达目标位置和动作约束，再由运动规划器生成轨迹。执行过程中，价值图会随新观测更新。",
         "credit": "Huang 等，VoxPoser（CoRL 2023），官方项目图",
         "license_label": "官方项目图；未声明权利许可"
       }
@@ -312,8 +312,8 @@
       "license_label": "ScanNet++ Terms of Use (project website)",
       "license_url": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
       "zh": {
-        "title": "ScanNet++ 多传感器场景采集",
-        "caption": "激光扫描、DSLR 图像和移动 RGB-D 序列以不同精细程度记录同一个房间。比较重建或分割方法时，需要注意它们使用了哪种输入。",
+        "title": "ScanNet++：多传感器室内场景采集",
+        "caption": "ScanNet++ 使用激光扫描仪、DSLR 相机和移动设备采集同一场景，提供不同精度和形式的观测。比较方法时，需要区分其使用的输入数据。",
         "credit": "Yeshwanth 等，ScanNet++（ICCV 2023）",
         "license_label": "ScanNet++ 使用条款（项目网站）"
       },
@@ -334,8 +334,8 @@
       "license_label": "CC BY-SA 4.0 (project website)",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
-        "title": "SceneFun3D：从任务到功能区域",
-        "caption": "要打开抽屉，目标区域需要比整个柜子更小、更具体。SceneFun3D 为这些功能区域提供语言描述和运动标注。",
+        "title": "SceneFun3D：三维场景中的功能区域标注",
+        "caption": "SceneFun3D 标注了把手等任务相关的功能区域，并提供语言描述和运动信息，可用于研究机器人操作目标的定位。",
         "credit": "Delitzas 等，SceneFun3D（CVPR 2024）",
         "license_label": "CC BY-SA 4.0（项目网站）"
       },
@@ -356,8 +356,8 @@
       "license_label": "Official project figure",
       "license_url": "https://ump-net.cs.columbia.edu/",
       "zh": {
-        "title": "UMPNet 的开放式探索",
-        "caption": "图中的箭头表示候选动作方向及预测的状态变化。机器人通过尝试这些动作，观察物体能够怎样运动。",
+        "title": "UMPNet：通过交互探索物体运动",
+        "caption": "图中展示了候选交互方向及相应的状态变化。UMPNet 通过连续操作观察部件运动，探索物体的可动结构。",
         "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
         "license_label": "官方项目图"
       },
@@ -378,8 +378,8 @@
       "license_label": "Official project figure",
       "license_url": "https://ump-net.cs.columbia.edu/",
       "zh": {
-        "title": "UMPNet：由动作推断关节结构",
-        "caption": "机器人根据探索过程中观察到的部件运动估计关节轴。这类运动信息很难从一张静态图像中直接获得。",
+        "title": "UMPNet：从交互观测估计关节结构",
+        "caption": "机器人根据多次交互中观察到的部件运动估计关节轴，补充静态图像难以确定的运动信息。",
         "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
         "license_label": "官方项目图"
       },

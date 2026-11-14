@@ -231,6 +231,8 @@
   function initReadingRoutes() {
     const buttons = [...document.querySelectorAll("button[data-route-topic]")];
     const routes = [...document.querySelectorAll(".home-route[data-route-topics]")];
+    const previews = [...document.querySelectorAll(".topic-preview[data-preview-topic]")];
+    const workspace = document.querySelector(".topic-workspace");
     const results = document.querySelector("#route-results");
     if (!buttons.length || !routes.length || !results) return;
     const areas = new Set(buttons.map((button) => button.dataset.routeTopic));
@@ -242,7 +244,9 @@
         if (!route.hidden) count += 1;
       }
       for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.routeTopic === topic));
-      results.textContent = root.lang.startsWith("zh") ? `${count} 条推荐阅读路线` : `${count} suggested reading routes`;
+      for (const preview of previews) preview.hidden = preview.dataset.previewTopic !== topic;
+      if (workspace) workspace.dataset.activeTopic = topic;
+      results.textContent = root.lang.startsWith("zh") ? `${count} 个相关专题` : `${count} suggested reading routes`;
       if (updateUrl) {
         const url = new URL(location.href);
         if (topic === "perception") url.searchParams.delete("area");
