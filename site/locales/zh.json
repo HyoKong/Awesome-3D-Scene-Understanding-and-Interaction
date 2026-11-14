@@ -122,7 +122,6 @@
   "Datasets, simulators, and benchmarks": "数据集、仿真器与评测基准",
   "Where should you start with 3D scenes?": "场景感知 · 三维重建 · 场景生成 · 具身智能",
   "You might want to reconstruct a room from photos, generate a new one, or teach a robot to open a drawer. We explain the ideas behind these tasks and suggest what to read next.": "整理三维视觉与具身智能的研究进展，结合论文图示与演示视频，介绍主要方法、数据集和机器人应用。",
-  "Pick a topic and start with the explanation. The papers are there when you're ready for the details.": "按研究方向组织阅读顺序，附综述章节与代表论文。",
   "Scene reconstruction": "场景重建",
   "Robots & embodied agents": "机器人与具身智能体",
   "The full survey, chapter by chapter.": "综述目录",

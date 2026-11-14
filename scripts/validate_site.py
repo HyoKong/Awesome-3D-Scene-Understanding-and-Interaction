@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 from urllib.parse import parse_qs, unquote, urlsplit
 
-from build_site import ARTICLE_ORDER, CHAPTER_VISUALS, HOME_ROUTES, PUBLIC_URL, ROOT, expected_output_files, load_media, output_paths
+from build_site import ARTICLE_ORDER, CHAPTER_VISUALS, PUBLIC_URL, ROOT, expected_output_files, load_media, output_paths
 
 
 class Page(HTMLParser):
@@ -208,14 +208,6 @@ def main():
         assert f"benchmark-{benchmark['id']}" in pages["benchmarks.html"].ids
         assert f"benchmark-{benchmark['id']}" in pages["zh/benchmarks.html"].ids
     for prefix in ("", "zh/"):
-        homepage = (output / (prefix + "index.html")).read_text()
-        for topic in HOME_ROUTES:
-            assert f' id="preview-{topic}"' in homepage, f"Missing topic preview: {prefix}{topic}"
-            visual = next(item for item in media if item["id"] == CHAPTER_VISUALS[topic])
-            assert f'{topic}.html#media-{visual["id"]}' in pages[prefix + "index.html"].links, f"Preview must lead to its original figure: {prefix}{topic}"
-            assert visual["source_url"] in homepage and visual["license_url"] in homepage, f"Uncredited homepage preview: {topic}"
-        assert homepage.count('class="topic-preview"') == 4, "Expected one preview per research area"
-        assert homepage.count('class="topic-preview" data-preview-topic=') == homepage.count('id="preview-'), "Preview identifiers must be stable"
         for topic in ARTICLE_ORDER:
             chapter = (output / (prefix + topic + ".html")).read_text()
             assert 'class="chapter-cover"' in chapter, f"Missing chapter cover: {prefix}{topic}"

@@ -45,7 +45,7 @@ OUTPUT_FILES = {
 OUTPUT_FILES |= FONT_FILES
 OUTPUT_FILES |= {"zh/" + name for name in tuple(OUTPUT_FILES) if name.endswith(".html")}
 TEMPLATES = {
-    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{TOPIC_PREVIEWS}}", "{{CHAPTER_INDEX}}", "{{HOME_HERO_EYEBROW}}", "{{HOME_ROUTES_EYEBROW}}", "{{HOME_CHAPTERS_EYEBROW}}"}),
+    "index.html": ("index.template.html", {"{{FEATURED_ROUTES}}", "{{CHAPTER_INDEX}}", "{{HOME_HERO_EYEBROW}}", "{{HOME_ROUTES_EYEBROW}}", "{{HOME_ROUTES_DESCRIPTION}}", "{{HOME_CHAPTERS_EYEBROW}}"}),
     "survey.html": ("survey.template.html", {"{{SURVEY_TOC}}", "{{SURVEY_CHAPTERS}}", "{{REFERENCES}}"}),
     "library.html": ("library.template.html", {"{{TOPIC_BUTTONS}}", "{{YEAR_OPTIONS}}", "{{PAPER_ITEMS}}", "{{TOTAL_PAPERS}}"}),
     "reading-routes.html": ("routes.template.html", {"{{ROUTE_NAV}}", "{{ROUTE_SECTIONS}}"}),
@@ -510,28 +510,6 @@ def chapter_cover(topic: str, media: dict[tuple[str, int], list[dict]], lang: st
     )
 
 
-def topic_previews(media: dict[tuple[str, int], list[dict]], lang: str) -> str:
-    previews = []
-    for number, topic in enumerate(HOME_ROUTES, 1):
-        item = chapter_visual(topic, media)
-        labels = item if lang == "en" else item["zh"]
-        image = asset_url(item.get("poster", item["src"]), lang)
-        href = f'{topic}.html#media-{item["id"]}'
-        action = ui("Watch in this chapter →" if item["type"] != "image" else "Read in this chapter →", lang)
-        hidden = "" if number == 1 else " hidden"
-        previews.append(
-            f'<section class="topic-preview" data-preview-topic="{topic}" id="preview-{topic}"{hidden}>'
-            f'<div class="preview-heading"><p class="eyebrow">{number:02d} / {text(ui("A closer look", lang))}</p>'
-            f'<h3>{text(labels["title"])}</h3></div>'
-            f'<figure class="paper-media"><a class="preview-image" href="{text(href)}">'
-            f'<img src="{text(image)}" alt="{text(labels["title"])}" loading="lazy" decoding="async">'
-            f'<span class="preview-action">{text(action)}</span></a>'
-            f'<figcaption><span>{text(labels["caption"])}</span><small>{visual_credit(item, lang)}</small></figcaption></figure>'
-            f'<a class="preview-chapter" href="{topic}.html">{text(ui("Open this chapter ↗", lang))}</a></section>'
-        )
-    return "".join(previews)
-
-
 def featured_routes(routes: list[dict], articles: dict[str, dict], lang: str) -> str:
     cards = []
     for route in routes:
@@ -608,10 +586,10 @@ def build(output: Path) -> None:
                 "{{SURVEY_TOC}}": "".join(chapter_toc), "{{SURVEY_CHAPTERS}}": "".join(chapters),
                 "{{REFERENCES}}": survey_citations.bibliography(),
                 "{{FEATURED_ROUTES}}": featured_routes(local_routes["routes"], articles, lang),
-                "{{TOPIC_PREVIEWS}}": topic_previews(media, lang),
                 "{{CHAPTER_INDEX}}": "".join(chapter_index),
                 "{{HOME_HERO_EYEBROW}}": '<p class="eyebrow">A guide to the research</p>' if lang == "en" else "",
                 "{{HOME_ROUTES_EYEBROW}}": '<p class="eyebrow">Find a place to start</p>' if lang == "en" else "",
+                "{{HOME_ROUTES_DESCRIPTION}}": "<p>Pick a topic and start with the explanation. The papers are there when you're ready for the details.</p>" if lang == "en" else "",
                 "{{HOME_CHAPTERS_EYEBROW}}": '<p class="eyebrow">More to explore</p>' if lang == "en" else "",
                 "{{TOPIC_BUTTONS}}": "".join(f'<button type="button" data-topic="{text(key)}" aria-pressed="false">{text(ui(title, lang))}</button>' for key, title, _ in TOPICS),
                 "{{YEAR_OPTIONS}}": "".join(f'<option value="{year}">{year}</option>' for year in sorted({int(p["year"]) for p in papers.values()}, reverse=True)),
