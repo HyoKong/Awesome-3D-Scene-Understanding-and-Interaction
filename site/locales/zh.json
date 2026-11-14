@@ -143,7 +143,7 @@
   "An interactive environment": "交互仿真环境",
   "Four research perspectives": "四个研究方向",
   "Recognize objects, parts, and motion": "识别物体、部件与运动状态",
-  "Recover the scene's 3D geometry": "恢复场景的三维几何结构",
+  "Reconstruct 3D scenes from images and scans": "从图像与扫描数据重建三维场景",
   "Create layouts and environments": "生成场景布局与仿真环境",
   "Navigate, plan, and manipulate": "导航、任务规划与物体操作",
   "RoboCasa simulation · survey annotations": "RoboCasa 仿真场景 · 研究任务示意",
