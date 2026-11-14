@@ -15,7 +15,7 @@
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
         "title": "Articulate3D / USDNet：从场景到部件的预测",
-        "caption": "从场景点云开始，沿不同分支查看可动部件、交互区域与运动参数。每项输出回答了场景交互中的一个不同问题。",
+        "caption": "USDNet 以场景点云为输入，分别预测可动部件、交互区域和运动参数。图中不同分支对应这些预测任务。",
         "credit": "Halacheva 等，Articulate3D（ICCV 2025）",
         "license_label": "CC BY-SA 4.0（项目网站）"
       },
@@ -37,7 +37,7 @@
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
         "title": "Articulate3D 关节标注示例",
-        "caption": "观察部件级标注如何随场景运动。该示例帮助区分可见边界与同时说明部件运动方式的表示。",
+        "caption": "视频演示了带有关节标注的场景：哪些部件能够移动，以及它们沿什么方向平移或旋转。",
         "credit": "Halacheva 等，Articulate3D（ICCV 2025）；预览使用官方项目图",
         "license_label": "CC BY-SA 4.0（项目网站）"
       },
@@ -58,7 +58,7 @@
       "license_url": "https://concept-graphs.github.io/",
       "zh": {
         "title": "ConceptGraphs：物体、语言与空间关系",
-        "caption": "场景被逐步组织成物体图。观察语言查询如何指向物体及其关系，规划器便可据此查询已建立的环境地图。",
+        "caption": "视频展示了如何将观测整理成包含物体及其关系的场景图，再用语言查询图中的目标，辅助机器人规划。",
         "credit": "Gu 等，ConceptGraphs（ICRA 2024）",
         "license_label": "官方项目视频"
       }
@@ -79,8 +79,8 @@
       "license_label": "CC BY-SA 4.0 (project website)",
       "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "zh": {
-        "title": "Open3DIS：结合二维掩码与三维候选区域",
-        "caption": "从左向右阅读：先将各视角的掩码借助超点提升到三维，再合并为候选区域，最后通过逐点特征与文本匹配。",
+        "title": "Open3DIS：结合 2D mask 与三维候选区域",
+        "caption": "流程从左到右：借助超点将不同视角的 2D mask 映射到三维，合并得到候选区域，再通过逐点特征与文本匹配。",
         "credit": "Nguyen 等，Open3DIS（CVPR 2024）",
         "license_label": "CC BY-SA 4.0（项目网站）"
       }
@@ -121,7 +121,7 @@
       "license_url": "https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/",
       "zh": {
         "title": "3D Gaussian Splatting：新视角渲染",
-        "caption": "这段官方场景漫游展示了高斯 splat 的目标：以显式的各向异性基元实现快速、视角相关的渲染。",
+        "caption": "这段场景漫游展示了 3D Gaussian Splatting 的新视角渲染效果。场景由一组 Gaussian primitives 表示，可以在相机移动时快速生成画面。",
         "credit": "Kerbl 等，3D Gaussian Splatting（SIGGRAPH 2023）；预览使用官方项目图",
         "license_label": "官方项目视频"
       },
@@ -142,7 +142,7 @@
       "license_url": "https://spla-tam.github.io/",
       "zh": {
         "title": "SplaTAM：在线 RGB-D 重建",
-        "caption": "观察相机移动时地图如何累积。视频将在线位姿估计、高斯地图扩展与扫描过程中逐渐可用的重建联系起来。",
+        "caption": "随着相机移动，SplaTAM 一边估计相机位姿，一边更新 Gaussian map。视频展示了扫描过程中重建结果的变化。",
         "credit": "Keetha 等，SplaTAM（CVPR 2024）",
         "license_label": "官方项目视频"
       }
@@ -163,7 +163,7 @@
       "license_url": "https://urdformer.github.io/",
       "zh": {
         "title": "URDFormer：从图像到关节场景",
-        "caption": "观察单张图像如何被转化为结构化场景描述。这里关注的输出是可以在模拟器中组装起来的物体、部件与关节。",
+        "caption": "URDFormer 从图像中预测物体、部件及其关节关系，再将它们组装成模拟器中的场景。",
         "credit": "Chen 等，URDFormer（RSS 2024）；预览图取自官方视频约第 90 秒",
         "license_label": "官方项目视频"
       }
@@ -185,7 +185,7 @@
       "license_url": "https://scene-dreamer.github.io/",
       "zh": {
         "title": "SceneDreamer：可无限扩展的生成式景观",
-        "caption": "SceneDreamer 将景观延展到单个视角之外。图中展示的地形与外观，需要在相机穿行于生成世界时保持一致。",
+        "caption": "SceneDreamer 生成大范围的三维景观。与生成单张风景图不同，相机移动后，同一片地形仍需保持形状和外观的一致。",
         "credit": "Chen 等，SceneDreamer（TPAMI 2023），官方项目图",
         "license_label": "官方项目图；未声明权利许可"
       }
@@ -206,7 +206,7 @@
       "license_url": "https://yueyang.ai/holodeck/",
       "zh": {
         "title": "Holodeck：根据描述构建房间",
-        "caption": "该流程将文本要求转化为房间布局，选择资产，并在空间约束下摆放物体。这些中间步骤让生成的房间成为智能体可以进入的环境。",
+        "caption": "Holodeck 根据文本描述生成房间布局，选择物体资产，再按空间约束摆放物体，得到可用于智能体仿真的室内场景。",
         "credit": "Yang 等，Holodeck（CVPR 2024）；预览图取自官方视频约第 23 秒",
         "license_label": "官方项目视频"
       }
@@ -250,7 +250,7 @@
       "license_url": "https://voxposer.github.io/",
       "zh": {
         "title": "VoxPoser：从语言程序到三维价值图",
-        "caption": "该流程将语言推导出的可供性与约束同运动规划器分离：三维价值图把文本指令转化为空间目标，并可在执行过程中由机器人重新评估。",
+        "caption": "VoxPoser 根据语言指令和视觉观测构建三维价值图，用它描述目标位置、可接触区域及约束，再交给运动规划器生成轨迹。执行过程中可以根据新观测更新价值图。",
         "credit": "Huang 等，VoxPoser（CoRL 2023），官方项目图",
         "license_label": "官方项目图；未声明权利许可"
       }
@@ -269,8 +269,8 @@
       "license_label": "Official project video; rights not stated",
       "license_url": "https://openvla.github.io/",
       "zh": {
-        "title": "OpenVLA：杂乱场景中的恢复执行",
-        "caption": "观察抓取失败之后的动作：机器人调整位置，再次尝试将茄子放入锅中，桌面上的其他物体仍然存在。",
+        "title": "OpenVLA：抓取失败后的再次尝试",
+        "caption": "第一次抓取失败后，机器人调整位置，再次尝试将茄子放入锅中。这个片段展示了策略如何根据新的观测继续执行任务。",
         "credit": "Kim 等，OpenVLA（2024），官方项目视频；预览使用官方项目图",
         "license_label": "官方项目视频；未声明权利许可"
       },
@@ -292,7 +292,7 @@
       "license_url": "https://robocasa.ai/",
       "zh": {
         "title": "RoboCasa：打开柜门",
-        "caption": "机器人需要够到把手、保持接触，并顺着柜门的运动轨迹操作。这个简短示例展示了场景表示最终需要支持的执行过程。",
+        "caption": "机器人先靠近并抓住把手，再随着柜门转动调整手臂轨迹。完成这个动作既需要找到把手，也需要在开门过程中维持接触。",
         "credit": "Nasiriany 等，RoboCasa；预览图取自官方视频约第 3 秒",
         "license_label": "官方项目视频"
       }
@@ -356,7 +356,7 @@
       "license_url": "https://ump-net.cs.columbia.edu/",
       "zh": {
         "title": "UMPNet 的开放式探索",
-        "caption": "箭头编码候选方向和预测状态变化。可将它看作动作同时承担两种角色的例子：推动物体，也揭示哪种运动假设更有用。",
+        "caption": "图中的箭头表示候选动作方向及预测的状态变化。机器人通过尝试这些动作，观察物体能够怎样运动。",
         "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
         "license_label": "官方项目图"
       },
@@ -378,7 +378,7 @@
       "license_url": "https://ump-net.cs.columbia.edu/",
       "zh": {
         "title": "UMPNet：由动作推断关节结构",
-        "caption": "推断出的关节轴概括了探索动作揭示的关节结构。交互补充了单张静态图像难以提供的信息。",
+        "caption": "机器人根据探索过程中观察到的部件运动估计关节轴。这类运动信息很难从一张静态图像中直接获得。",
         "credit": "Xu、He 与 Song，UMPNet（RA-L / ICRA 2022）",
         "license_label": "官方项目图"
       },

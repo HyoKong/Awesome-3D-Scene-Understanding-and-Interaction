@@ -104,7 +104,7 @@
     "section": "语言引导的操作与智能体"
   },
   "pointgroup": {
-    "evidence": "通过预测点偏移和双集合，对点进行分组以生成 3D 实例掩码。",
+    "evidence": "通过预测点偏移和双集合，对点进行分组以生成 3D instance mask。",
     "section": "场景分割"
   },
   "hais": {
@@ -116,7 +116,7 @@
     "section": "场景分割"
   },
   "mask3d": {
-    "evidence": "使用 Transformer 实例查询，从点云预测语义实例掩码。",
+    "evidence": "使用 Transformer 实例查询，从点云预测带有语义类别的 instance mask。",
     "section": "场景分割"
   },
   "oneformer3d": {
@@ -128,7 +128,7 @@
     "section": "3D 骨干网络与表示学习"
   },
   "openmask3d": {
-    "evidence": "借助多视图图像和视觉语言特征，为 3D 实例掩码赋予开放词汇标签。",
+    "evidence": "借助多视图图像和视觉语言特征，为 3D instance mask 赋予开放词汇标签。",
     "section": "开放词汇场景与语言定位"
   },
   "openscene": {
@@ -136,7 +136,7 @@
     "section": "开放词汇场景与语言定位"
   },
   "open3dis": {
-    "evidence": "结合 2D 掩码与类别无关的 3D 候选区域，获得开放词汇 3D 实例。",
+    "evidence": "结合 2D mask 与类别无关的 3D 候选区域，获得开放词汇 3D 实例。",
     "section": "开放词汇场景与语言定位"
   },
   "conceptgraphs": {
@@ -336,7 +336,7 @@
     "section": "语言引导的操作与智能体"
   },
   "voxposer": {
-    "evidence": "用语言模型程序和三维价值图表达并落地观测场景中的操作约束。",
+    "evidence": "利用语言模型生成程序，结合视觉观测构建三维价值图，表示操作的目标位置和空间约束。",
     "section": "语言引导的操作与智能体"
   },
   "rpmart": {
@@ -352,7 +352,7 @@
     "section": "运动感知控制与操作"
   },
   "scenefun3d": {
-    "evidence": "在真实室内场景中连接功能元素掩码、可供性标签、任务描述与交互运动。",
+    "evidence": "在真实室内场景中连接功能区域的 mask、可供性标签、任务描述与交互运动。",
     "section": "功能部件、可供性与关节运动"
   },
   "segment-snap": {
@@ -392,7 +392,7 @@
     "section": "三维骨干与表示学习"
   },
   "lassm": {
-    "evidence": "结合由超点导出的语义—空间查询初始化、局部聚合和坐标引导的状态空间解码器，预测三维实例掩码。",
+    "evidence": "结合由超点导出的语义—空间查询初始化、局部聚合和坐标引导的状态空间解码器，预测 3D instance mask。",
     "section": "场景分割"
   },
   "sgiformer": {
@@ -400,7 +400,7 @@
     "section": "场景分割"
   },
   "spformer": {
-    "evidence": "构造超点，并通过超点交叉注意力和查询向量直接预测实例掩码，无需中间聚合阶段。",
+    "evidence": "构造超点，并通过超点交叉注意力和查询向量直接预测 instance mask，无需中间聚合阶段。",
     "section": "场景分割"
   },
   "robocasa": {
@@ -448,7 +448,7 @@
     "section": "神经场景表示与表面"
   },
   "gaussian-splatting": {
-    "evidence": "将采集场景表示为优化后的各向异性三维高斯，并以可见性感知 splatting 实现实时辐射场渲染。",
+    "evidence": "将采集场景表示为优化后的各向异性 3D Gaussian primitives，并以可见性感知 splatting 实现实时辐射场渲染。",
     "section": "神经场景表示与表面"
   },
   "neuralangelo": {
@@ -472,7 +472,7 @@
     "section": "增量重建、SLAM 与建图"
   },
   "splatam": {
-    "evidence": "使用在线 RGB-D 跟踪与建图流程，并借助可微渲染优化三维高斯场景地图。",
+    "evidence": "使用在线 RGB-D 跟踪与建图流程，并借助可微渲染优化 3D Gaussian map。",
     "section": "增量重建、SLAM 与建图"
   },
   "dust3r": {
@@ -496,7 +496,7 @@
     "section": "动态场景重建"
   },
   "four-d-gaussian-splatting": {
-    "evidence": "以规范三维高斯表示和学习到的时间形变建模动态场景，实现高效实时渲染。",
+    "evidence": "以 canonical 3D Gaussian representation 和学习到的时间形变建模动态场景，实现高效实时渲染。",
     "section": "动态场景重建"
   },
   "atiss": {
@@ -532,11 +532,11 @@
     "section": "文本与图像条件场景合成"
   },
   "luciddreamer": {
-    "evidence": "从单个文本提示或单张图像生成可漫游的高斯 splatting 场景，不依赖目标场景领域。",
+    "evidence": "从单个文本提示或单张图像生成可漫游的 Gaussian Splatting 场景，不依赖目标场景领域。",
     "section": "文本与图像条件场景合成"
   },
   "realmdreamer": {
-    "evidence": "通过基于扩散的补全和深度引导优化高斯 splatting 表示，合成面向前方的文本条件场景。",
+    "evidence": "通过基于扩散的补全和深度引导优化 Gaussian Splatting 表示，合成面向前方的文本条件场景。",
     "section": "文本与图像条件场景合成"
   },
   "wonderworld": {
@@ -580,19 +580,19 @@
     "section": "语义地图、记忆与导航"
   },
   "lm-nav": {
-    "evidence": "使用语言模型命名地标、图文关联将其落地，再以视觉导航模型执行长程语言指令。",
+    "evidence": "利用语言模型从指令中提取地标，通过图文关联定位地标，再由视觉导航模型执行长程指令。",
     "section": "语义地图、记忆与导航"
   },
   "llm-planner": {
-    "evidence": "通过少样本语言模型提示产生高层计划，并由低层具身控制器将其落地。",
-    "section": "语言落地规划与智能体"
+    "evidence": "通过少样本提示让语言模型生成高层计划，再由低层具身控制器执行。",
+    "section": "语言引导的规划与智能体"
   },
   "3d-llm": {
     "evidence": "为语言模型增加三维场景特征，支持三维问答、对话、规划、导航和操作任务。",
     "section": "三维推理与具身通用智能体"
   },
   "leo": {
-    "evidence": "用三维视觉语言对齐及视觉语言动作指令微调训练多模态智能体，覆盖落地、推理、规划、导航和操作。",
+    "evidence": "通过三维视觉语言对齐与视觉语言动作指令微调训练多模态智能体，支持目标定位、推理、规划、导航和操作。",
     "section": "三维推理与具身通用智能体"
   },
   "openvla": {
