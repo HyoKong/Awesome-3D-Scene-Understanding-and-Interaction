@@ -60,7 +60,8 @@ def main():
             assert f'({benchmark["leaderboard_url"]})' in datasets, benchmark["id"]
     readme = (ROOT / "README.md").read_text()
     contents = readme.split("## Contents\n", 1)[1].split("## Reading routes\n", 1)[0]
-    assert readme.index("assets/survey-teaser.png") < readme.index("## Contents") < readme.index("## Reading routes")
+    assert "](assets/survey-teaser.svg)](assets/survey-teaser.png)" in readme
+    assert readme.index("assets/survey-teaser.svg") < readme.index("## Contents") < readme.index("## Reading routes")
     for route in reading_routes["routes"]:
         assert f'(#route-{route["id"]})' in contents, f"Route missing from contents: {route['id']}"
     for category, _, _ in TOPICS:

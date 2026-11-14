@@ -215,7 +215,7 @@ if __name__ == "__main__":
     value = svg.read_text()
     value = value.replace("<defs>", "<title>From scene perception to robotic interaction</title>\n<desc>A survey map of articulated 3D research. Left: official RoboCasa simulator frame with illustrative vector annotations. Callout 1 identifies scene objects; 2 marks a cabinet hinge and opening motion; 3 outlines a microwave model; 4 shows a robot reach. Matching numbers and colors connect these examples to the four research areas and representative papers on the right. Annotations illustrate research questions and are not measured predictions or robot trajectories.</desc>\n<defs>", 1)
     svg.write_text(value)
-    fig.savefig(ASSETS / "survey-teaser.png", dpi=200)
+    fig.savefig(ASSETS / "survey-teaser.png", dpi=400)
     tree = ET.parse(svg)
     namespace = {"s": "http://www.w3.org/2000/svg"}
     assert tree.find("s:title", namespace) is not None and tree.find("s:desc", namespace) is not None

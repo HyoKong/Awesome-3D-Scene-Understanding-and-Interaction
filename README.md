@@ -2,7 +2,7 @@
 
 > Perception, reconstruction, generation, robotic manipulation, and embodied agents.
 
-[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/survey-teaser.png)](assets/survey-teaser.svg)
+[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/survey-teaser.svg)](assets/survey-teaser.png)
 
 ## Contents
 

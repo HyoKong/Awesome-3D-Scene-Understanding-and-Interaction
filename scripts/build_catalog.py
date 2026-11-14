@@ -125,11 +125,11 @@ def build_contents(reading_routes):
 
 
 def build_readme(catalog, reading_routes, paper_map):
-    hero = "survey-teaser.png"
+    hero = "survey-teaser.svg"
     lines = [
         f"# {catalog['title']}", "",
         "> Perception, reconstruction, generation, robotic manipulation, and embodied agents.", "",
-        f"[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/{hero})](assets/survey-teaser.svg)", "",
+        f"[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/{hero})](assets/survey-teaser.png)", "",
     ]
     lines += build_contents(reading_routes)
     lines += [
