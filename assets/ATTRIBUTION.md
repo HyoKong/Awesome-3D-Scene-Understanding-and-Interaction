@@ -4,7 +4,7 @@ The survey teaser uses a simulation frame from **RoboCasa, Nasiriany et al.**, e
 
 RoboCasa assets and datasets are provided under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as stated in the [official repository](https://github.com/robocasa/robocasa#license).
 
-The source frame is stored in [teaser-source/robocasa-kitchen-robot.png](teaser-source/robocasa-kitchen-robot.png). The README teaser adds labels, outlines, a schematic hinge, and a reach arrow. The website teaser connects the four survey chapters to a cabinet outline, a surface wireframe, a room-layout outline, and a robot reach arrow. These annotations illustrate the survey's scope; they are not model predictions or recorded robot actions.
+The source frame is stored in [teaser-source/robocasa-kitchen-robot.png](teaser-source/robocasa-kitchen-robot.png). The README and website teasers connect the four survey chapters to a cabinet outline, a surface wireframe, a room-layout outline, and a robot reach arrow. These annotations illustrate the survey's scope; they are not model predictions or recorded robot actions.
 
 ## Figures and videos in the web survey
 

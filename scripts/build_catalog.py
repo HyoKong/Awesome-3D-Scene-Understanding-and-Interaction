@@ -8,6 +8,7 @@ import json
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
+WEBSITE_URL = "https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/"
 TOPICS = [
     ("perception", "Scene and functional perception", "from 3D observations to parts, semantics, affordances, state, and language-grounded scene structure"),
     ("reconstruction", "Scene reconstruction and digital twins", "recovering scene geometry, appearance, camera motion, dynamic structure, and interactive digital twins"),
@@ -132,33 +133,64 @@ def build_reading_routes(data, paper_map):
 def build_contents(reading_routes):
     routes = "<br>".join(f"[{route['title']}](#route-{route['id']})" for route in reading_routes["routes"])
     topics = "<br>".join(f"[{title}](topics/{category}.md)" for category, title, _ in TOPICS)
-    topics += "<br><br>**Resources**<br>[Research map](#research-map)<br>[Paper index](PAPERS.md)<br>[Benchmark guide](BENCHMARKS.md)<br>[Contributing](CONTRIBUTING.md)"
-    return ["## Contents", "", "| Reading routes | Topic collections |", "| --- | --- |", f"| {routes} | {topics} |", ""]
+    topics += "<br><br>**Resources**<br>[Survey chapters](#survey-chapters)<br>[Research map](#research-map)<br>[Paper index](PAPERS.md)<br>[Benchmark guide](BENCHMARKS.md)<br>[Contributing](CONTRIBUTING.md)"
+    return [
+        "## Contents", "",
+        "[Survey chapters](#survey-chapters) · [Reading routes](#reading-routes) · [Research map](#research-map) · [Benchmarks](#benchmarks) · [Contributing](#contributing)", "",
+        "| Reading routes | Topic collections |", "| --- | --- |", f"| {routes} | {topics} |", "",
+    ]
+
+
+def build_chapter_directory():
+    chapters = [
+        ("overview", "Scope and overview", "How scene perception, reconstruction, generation, and interaction fit together."),
+        ("perception", "Scene perception", "Point-cloud features, segmentation, language grounding, parts, and motion."),
+        ("reconstruction", "Scene reconstruction", "Reconstructing 3D scenes from images and scans, including appearance, camera poses, and changing geometry."),
+        ("generation", "Scene generation", "Layouts, visual worlds, procedural environments, and articulated assets."),
+        ("robotics", "Robots & embodied agents", "Spatial memory, navigation, planning, manipulation, touch, and generalist policies."),
+        ("datasets", "Datasets and evaluation", "Scene datasets, functional annotations, simulators, and robot task evaluation."),
+        ("outlook", "Research directions", "Dynamic environments, active perception, generated training data, and world models."),
+    ]
+    lines = [
+        "## Survey chapters", "",
+        "The survey explains the methods with figures and videos from the original projects. Read it in order, or open a chapter below. Both English and Chinese editions are available.", "",
+        "| Chapter | What it covers | Read |", "| --- | --- | --- |",
+    ]
+    for number, (chapter, title, description) in enumerate(chapters, 1):
+        lines.append(f"| **{number:02d}. {title}** | {description} | [English]({WEBSITE_URL}{chapter}.html) · [中文]({WEBSITE_URL}zh/{chapter}.html) |")
+    return lines + [""]
 
 
 def build_readme(catalog, reading_routes, paper_map):
     hero = "survey-teaser.svg"
     lines = [
         f"# {catalog['title']}", "",
-        "> Perception, reconstruction, generation, robotic manipulation, and embodied agents.", "",
-        f"[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/{hero})](assets/survey-teaser.png)", "",
+        "An illustrated survey of 3D scene perception, reconstruction, generation, and embodied interaction, with papers, official project pages, code, and benchmarks.", "",
+        f"**[Browse topics]({WEBSITE_URL}#reading-routes) · [Full survey]({WEBSITE_URL}survey.html) · [Search papers]({WEBSITE_URL}library.html)**", "",
+        f"Read the website in [English]({WEBSITE_URL}) or [中文]({WEBSITE_URL}zh/).", "",
+        f"[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/{hero})](assets/survey-teaser.png)", "",
     ]
     lines += build_contents(reading_routes)
-    lines += [
-        "A collection of papers and resources on 3D scene understanding, reconstruction, generation, and embodied interaction. Topics span scene geometry and appearance, spatial reasoning, generated environments, navigation, manipulation, and articulated objects.", "",
-        "Explore the reading routes, illustrated chapters, and searchable paper library on the website: [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/).", "",
-    ]
+    lines += build_chapter_directory()
     lines += build_reading_routes(reading_routes, paper_map)
     lines += [
-        "## Research map", "", "The [research roadmap](assets/survey-roadmap.svg) connects scene understanding, reconstruction, generation, and robotic interaction. Browse the topic collections below for more papers.", "",
-        "| Topic | What it covers |", "| --- | --- |",
+        "## Research map", "", "The four areas in the teaser are expanded in the [detailed roadmap](assets/survey-roadmap.svg). The collections below group papers by method and task, with official project and code links where available.", "",
+        "| Area | What it covers | Paper collection |", "| --- | --- | --- |",
     ]
-    for category, title, description in TOPICS:
-        lines.append(f"| [{title}](topics/{category}.md) | {description} |")
+    for category, title, description in [
+        ("perception", "Scene perception", "Objects, parts, motion, open-vocabulary representations, scene graphs, and language grounding."),
+        ("reconstruction", "Scene reconstruction", "3D scenes from images and scans: geometry, appearance, camera motion, SLAM, and dynamic structure."),
+        ("generation", "Scene generation", "Scene layouts, 3D environments, procedural worlds, and interactive assets."),
+        ("robotics", "Robots & embodied agents", "Spatial memory, navigation, embodied reasoning, task planning, policies, and manipulation."),
+    ]:
+        lines.append(f"| [{title}]({WEBSITE_URL}{category}.html) | {description} | [Papers](topics/{category}.md) |")
     lines += [
-        "", "## Benchmarks", "", "The [benchmark guide](BENCHMARKS.md) collects scene understanding and robotics benchmarks, with links to datasets, evaluation protocols, and related papers.", "",
+        "", "## Benchmarks", "",
+        f"Use the [website benchmark guide]({WEBSITE_URL}benchmarks.html) or the [repository guide](BENCHMARKS.md) to find datasets, simulators, evaluation protocols, and related papers.", "",
+        "Scene data and functional understanding include [ScanNet++](PAPERS.md#scannetpp), [MultiScan](PAPERS.md#multiscan), [SceneFun3D](PAPERS.md#scenefun3d), and [Articulate3D](PAPERS.md#articulate3d). For robot interaction, see [SAPIEN](PAPERS.md#sapien), [ManiSkill2](PAPERS.md#maniskill2), [RLBench](PAPERS.md#rlbench), [RoboCasa365](PAPERS.md#robocasa365), and [BEHAVIOR-1K](PAPERS.md#behavior1k).", "",
+        f"[Datasets and evaluation chapter]({WEBSITE_URL}datasets.html) · [Dataset and simulator papers](topics/datasets.md)", "",
         "## Contributing", "", "Contributions are welcome: suggest papers, add official project or code links, correct entries, or improve the organization. See the [contribution guide](CONTRIBUTING.md).", "",
-        "[Survey scope](ROADMAP.md) · [Figure attribution](assets/ATTRIBUTION.md)",
+        "[Figure and video credits](assets/ATTRIBUTION.md) · [Complete paper index](PAPERS.md)",
     ]
     write(ROOT / "README.md", lines)
 

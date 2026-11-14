@@ -1,18 +1,34 @@
 # Awesome 3D Scene Understanding and Interaction
 
-> Perception, reconstruction, generation, robotic manipulation, and embodied agents.
+An illustrated survey of 3D scene perception, reconstruction, generation, and embodied interaction, with papers, official project pages, code, and benchmarks.
 
-[![Survey map: four numbered callouts on a RoboCasa kitchen-and-robot scene match the sections on perception, functional understanding, reconstruction and generation, and manipulation and agents.](assets/survey-teaser.svg)](assets/survey-teaser.png)
+**[Browse topics](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/#reading-routes) · [Full survey](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/survey.html) · [Search papers](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/library.html)**
+
+Read the website in [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/) or [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/).
+
+[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/survey-teaser.svg)](assets/survey-teaser.png)
 
 ## Contents
 
+[Survey chapters](#survey-chapters) · [Reading routes](#reading-routes) · [Research map](#research-map) · [Benchmarks](#benchmarks) · [Contributing](#contributing)
+
 | Reading routes | Topic collections |
 | --- | --- |
-| [🏙️ Recognize objects in a 3D scene](#route-scene-perception)<br>[🗣️ Find objects and parts using language](#route-language-and-function)<br>[🏗️ Reconstruct a room from photos or video](#route-scene-reconstruction)<br>[🌍 Generate a 3D environment](#route-scene-generation)<br>[⚙️ Work out how doors and drawers move](#route-articulated-perception)<br>[🧩 Rebuild an object with moving parts](#route-reconstruction)<br>[🛠️ Generate objects with joints](#route-generation)<br>[🧭 Help an agent find its way](#route-spatial-navigation)<br>[💡 Let an agent explore and answer questions](#route-embodied-reasoning)<br>[🦾 Get a robot to grasp, push, or open](#route-manipulation)<br>[🤖 Understand general-purpose robot policies](#route-policies-and-agents)<br>[📊 Pick a dataset and decide what to measure](#route-data-and-evaluation) | [Scene and functional perception](topics/perception.md)<br>[Scene reconstruction and digital twins](topics/reconstruction.md)<br>[Scene generation and asset authoring](topics/generation.md)<br>[Embodied agents and robotic interaction](topics/robotics.md)<br>[Datasets, simulators, and benchmarks](topics/datasets.md)<br><br>**Resources**<br>[Research map](#research-map)<br>[Paper index](PAPERS.md)<br>[Benchmark guide](BENCHMARKS.md)<br>[Contributing](CONTRIBUTING.md) |
+| [🏙️ Recognize objects in a 3D scene](#route-scene-perception)<br>[🗣️ Find objects and parts using language](#route-language-and-function)<br>[🏗️ Reconstruct a room from photos or video](#route-scene-reconstruction)<br>[🌍 Generate a 3D environment](#route-scene-generation)<br>[⚙️ Work out how doors and drawers move](#route-articulated-perception)<br>[🧩 Rebuild an object with moving parts](#route-reconstruction)<br>[🛠️ Generate objects with joints](#route-generation)<br>[🧭 Help an agent find its way](#route-spatial-navigation)<br>[💡 Let an agent explore and answer questions](#route-embodied-reasoning)<br>[🦾 Get a robot to grasp, push, or open](#route-manipulation)<br>[🤖 Understand general-purpose robot policies](#route-policies-and-agents)<br>[📊 Pick a dataset and decide what to measure](#route-data-and-evaluation) | [Scene and functional perception](topics/perception.md)<br>[Scene reconstruction and digital twins](topics/reconstruction.md)<br>[Scene generation and asset authoring](topics/generation.md)<br>[Embodied agents and robotic interaction](topics/robotics.md)<br>[Datasets, simulators, and benchmarks](topics/datasets.md)<br><br>**Resources**<br>[Survey chapters](#survey-chapters)<br>[Research map](#research-map)<br>[Paper index](PAPERS.md)<br>[Benchmark guide](BENCHMARKS.md)<br>[Contributing](CONTRIBUTING.md) |
 
-A collection of papers and resources on 3D scene understanding, reconstruction, generation, and embodied interaction. Topics span scene geometry and appearance, spatial reasoning, generated environments, navigation, manipulation, and articulated objects.
+## Survey chapters
 
-Explore the reading routes, illustrated chapters, and searchable paper library on the website: [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/).
+The survey explains the methods with figures and videos from the original projects. Read it in order, or open a chapter below. Both English and Chinese editions are available.
+
+| Chapter | What it covers | Read |
+| --- | --- | --- |
+| **01. Scope and overview** | How scene perception, reconstruction, generation, and interaction fit together. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/overview.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/overview.html) |
+| **02. Scene perception** | Point-cloud features, segmentation, language grounding, parts, and motion. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/perception.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/perception.html) |
+| **03. Scene reconstruction** | Reconstructing 3D scenes from images and scans, including appearance, camera poses, and changing geometry. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/reconstruction.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/reconstruction.html) |
+| **04. Scene generation** | Layouts, visual worlds, procedural environments, and articulated assets. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/generation.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/generation.html) |
+| **05. Robots & embodied agents** | Spatial memory, navigation, planning, manipulation, touch, and generalist policies. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/robotics.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/robotics.html) |
+| **06. Datasets and evaluation** | Scene datasets, functional annotations, simulators, and robot task evaluation. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/datasets.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/datasets.html) |
+| **07. Research directions** | Dynamic environments, active perception, generated training data, and world models. | [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/outlook.html) · [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/outlook.html) |
 
 ## Reading routes
 
@@ -253,22 +269,25 @@ Scene segmentation and opening a cabinet need different data and different tests
 
 ## Research map
 
-The [research roadmap](assets/survey-roadmap.svg) connects scene understanding, reconstruction, generation, and robotic interaction. Browse the topic collections below for more papers.
+The four areas in the teaser are expanded in the [detailed roadmap](assets/survey-roadmap.svg). The collections below group papers by method and task, with official project and code links where available.
 
-| Topic | What it covers |
-| --- | --- |
-| [Scene and functional perception](topics/perception.md) | from 3D observations to parts, semantics, affordances, state, and language-grounded scene structure |
-| [Scene reconstruction and digital twins](topics/reconstruction.md) | recovering scene geometry, appearance, camera motion, dynamic structure, and interactive digital twins |
-| [Scene generation and asset authoring](topics/generation.md) | generating scene layouts, 3D environments, procedural worlds, and interactive assets |
-| [Embodied agents and robotic interaction](topics/robotics.md) | connecting spatial memory, navigation, embodied reasoning, task planning, and manipulation |
-| [Datasets, simulators, and benchmarks](topics/datasets.md) | the data, environments, and evaluation protocols that make comparisons meaningful |
+| Area | What it covers | Paper collection |
+| --- | --- | --- |
+| [Scene perception](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/perception.html) | Objects, parts, motion, open-vocabulary representations, scene graphs, and language grounding. | [Papers](topics/perception.md) |
+| [Scene reconstruction](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/reconstruction.html) | 3D scenes from images and scans: geometry, appearance, camera motion, SLAM, and dynamic structure. | [Papers](topics/reconstruction.md) |
+| [Scene generation](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/generation.html) | Scene layouts, 3D environments, procedural worlds, and interactive assets. | [Papers](topics/generation.md) |
+| [Robots & embodied agents](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/robotics.html) | Spatial memory, navigation, embodied reasoning, task planning, policies, and manipulation. | [Papers](topics/robotics.md) |
 
 ## Benchmarks
 
-The [benchmark guide](BENCHMARKS.md) collects scene understanding and robotics benchmarks, with links to datasets, evaluation protocols, and related papers.
+Use the [website benchmark guide](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/benchmarks.html) or the [repository guide](BENCHMARKS.md) to find datasets, simulators, evaluation protocols, and related papers.
+
+Scene data and functional understanding include [ScanNet++](PAPERS.md#scannetpp), [MultiScan](PAPERS.md#multiscan), [SceneFun3D](PAPERS.md#scenefun3d), and [Articulate3D](PAPERS.md#articulate3d). For robot interaction, see [SAPIEN](PAPERS.md#sapien), [ManiSkill2](PAPERS.md#maniskill2), [RLBench](PAPERS.md#rlbench), [RoboCasa365](PAPERS.md#robocasa365), and [BEHAVIOR-1K](PAPERS.md#behavior1k).
+
+[Datasets and evaluation chapter](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/datasets.html) · [Dataset and simulator papers](topics/datasets.md)
 
 ## Contributing
 
 Contributions are welcome: suggest papers, add official project or code links, correct entries, or improve the organization. See the [contribution guide](CONTRIBUTING.md).
 
-[Survey scope](ROADMAP.md) · [Figure attribution](assets/ATTRIBUTION.md)
+[Figure and video credits](assets/ATTRIBUTION.md) · [Complete paper index](PAPERS.md)

@@ -100,6 +100,17 @@ def main():
     pages = {page_name(p, output): Page(p.read_text()) for p in page_files}
     expected_pages = {path for path in expected if path.endswith(".html")}
     assert set(pages) == expected_pages and len(pages) == 24, "Expected exactly 24 public HTML pages"
+    readme_urls = set(re.findall(r'\]\((https://[^\s)]+)\)', (ROOT / "README.md").read_text()))
+    readme_site_urls = {url for url in readme_urls if url.startswith(PUBLIC_URL)}
+    assert readme_site_urls, "README must link to the survey website"
+    for url in readme_site_urls:
+        target = urlsplit(url[len(PUBLIC_URL):])
+        name = unquote(target.path)
+        if not name or name.endswith("/"):
+            name += "index.html"
+        assert name in pages, f"README links to a missing website page: {url}"
+        if target.fragment:
+            assert unquote(target.fragment) in pages[name].ids, f"README links to a missing website section: {url}"
     for name, page in pages.items():
         source_path = output / name
         source = source_path.read_text()
@@ -256,7 +267,7 @@ def main():
             if item["src"].startswith("assets/"):
                 target = output / item["src"]
                 assert target.is_file(), f"Missing copied local media: {item['src']}"
-    print(f"Validated {len(pages)} website pages, all catalog records and resources, "
+    print(f"Validated {len(pages)} website pages, {len(readme_site_urls)} README website links, all catalog records and resources, "
           f"all routes and benchmarks, and the exact {len(expected)}-file deployment boundary.")
 
 
