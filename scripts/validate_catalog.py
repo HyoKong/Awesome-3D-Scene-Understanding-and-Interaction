@@ -3,6 +3,7 @@
 
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
@@ -60,7 +61,8 @@ def main():
             assert f'({benchmark["leaderboard_url"]})' in datasets, benchmark["id"]
     readme = (ROOT / "README.md").read_text()
     contents = readme.split("## Contents\n", 1)[1].split("## Reading routes\n", 1)[0]
-    assert "](assets/survey-teaser.svg)](assets/survey-teaser.png)" in readme
+    hero_version = hashlib.sha256((ROOT / "assets/survey-teaser.svg").read_bytes()).hexdigest()[:12]
+    assert f"](assets/survey-teaser.svg?v={hero_version})](assets/survey-teaser.png)" in readme
     assert readme.index("assets/survey-teaser.svg") < readme.index("## Contents") < readme.index("## Reading routes")
     for route in reading_routes["routes"]:
         assert f'(#route-{route["id"]})' in contents, f"Route missing from contents: {route['id']}"

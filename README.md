@@ -6,7 +6,7 @@ An illustrated survey of 3D scene perception, reconstruction, generation, and em
 
 Read the website in [English](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/) or [中文](https://hyokong.github.io/Awesome-3D-Scene-Understanding-and-Interaction/zh/).
 
-[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/survey-teaser.svg)](assets/survey-teaser.png)
+[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/survey-teaser.svg?v=b94c20372423)](assets/survey-teaser.png)
 
 ## Contents
 

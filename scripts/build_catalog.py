@@ -4,6 +4,7 @@
 from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlparse
+import hashlib
 import json
 import re
 
@@ -163,12 +164,13 @@ def build_chapter_directory():
 
 def build_readme(catalog, reading_routes, paper_map):
     hero = "survey-teaser.svg"
+    hero_version = hashlib.sha256((ROOT / "assets" / hero).read_bytes()).hexdigest()[:12]
     lines = [
         f"# {catalog['title']}", "",
         "An illustrated survey of 3D scene perception, reconstruction, generation, and embodied interaction, with papers, official project pages, code, and benchmarks.", "",
         f"**[Browse topics]({WEBSITE_URL}#reading-routes) · [Full survey]({WEBSITE_URL}survey.html) · [Search papers]({WEBSITE_URL}library.html)**", "",
         f"Read the website in [English]({WEBSITE_URL}) or [中文]({WEBSITE_URL}zh/).", "",
-        f"[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/{hero})](assets/survey-teaser.png)", "",
+        f"[![Four research areas illustrated on a RoboCasa kitchen scene: perception identifies objects and parts, reconstruction builds a 3D scene from images and scans, generation creates layouts and environments, and robots navigate and manipulate. Numbered labels and arrows connect each task to the scene.](assets/{hero}?v={hero_version})](assets/survey-teaser.png)", "",
     ]
     lines += build_contents(reading_routes)
     lines += build_chapter_directory()
